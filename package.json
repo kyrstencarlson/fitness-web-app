@@ -1,0 +1,41 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "## Im gonna start a website to learn how to do this from scratch",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack serve --port 4000 --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyrstencarlson/website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyrstencarlson/website/issues"
+  },
+  "homepage": "https://github.com/kyrstencarlson/website#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "babel-loader": "^9.1.2",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
