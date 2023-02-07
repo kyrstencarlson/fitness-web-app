@@ -1,3 +1,3 @@
 # website
 
-## Im gonna start a webiste to learn how to do this from scratch
+## Im gonna start a website to learn how to do this from scratch
