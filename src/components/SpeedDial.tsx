@@ -1,34 +1,41 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
-import { toast } from '../utils/alerts';
+import { Box, SpeedDial, SpeedDialIcon, SpeedDialAction } from '@mui/material';
+import { alert, toast } from '../utils/alerts';
+import { BreakfastDining, NotificationImportant } from '@mui/icons-material';
+import { Theme } from '@mui/material/styles';
 
-const actions = [
-    {
-        icon: <FileCopyIcon />,
-        name: 'Copy'
-    },
-    {
-        icon: <SaveIcon />,
-        name: 'Save'
-    },
-    {
-        icon: <PrintIcon />,
-        name: 'Print'
-    },
-    {
-        icon: <ShareIcon />,
-        name: 'Share'
-    }
-];
+interface Props {
+    theme: Theme;
+}
+interface Action {
+    icon: JSX.Element;
+    name: string;
+    onClick: () => void;
+}
 
-export default function BasicSpeedDial() {
+
+export const BasicSpeedDial = ({ theme }: Props) => {
+
+    const actions: Action[] = [
+        {
+            icon: <BreakfastDining />,
+            name: 'Toast',
+            onClick: () => toast({
+                title: 'I am a toast!',
+                theme
+            })
+        },
+        {
+            icon: <NotificationImportant />,
+            name: 'Alert',
+            onClick: () => alert.fire({
+                title: 'I am an alert!',
+                background: theme.palette.background.paper,
+                color: theme.palette.text.primary
+            })
+        }
+    ];
+
     return (
         <Box sx={{
             height: 320,
@@ -49,12 +56,10 @@ export default function BasicSpeedDial() {
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
-                        onClick={() => toast({
-                            title: `You pressed ${action.name}`
-                        })}
+                        onClick={action.onClick}
                     />
                 ))}
             </SpeedDial>
         </Box>
     );
-}
+};

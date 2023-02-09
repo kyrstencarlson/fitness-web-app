@@ -1,7 +1,7 @@
 {
-  "name": "website",
+  "name": "react-app",
   "version": "1.0.0",
-  "description": "## Im gonna start a website to learn how to do this from scratch",
+  "description": "react app with MUI",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --port 4000 --config webpack.config.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kyrstencarlson/website.git"
+    "url": "git+https://github.com/kyrstencarlson/react-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kyrstencarlson/website/issues"
+    "url": "https://github.com/kyrstencarlson/react-app/issues"
   },
-  "homepage": "https://github.com/kyrstencarlson/website#readme",
+  "homepage": "https://github.com/kyrstencarlson/react-app#readme",
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-class-properties": "^7.18.6",

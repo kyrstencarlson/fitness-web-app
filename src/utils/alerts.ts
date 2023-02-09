@@ -1,8 +1,10 @@
+import { Theme, ThemeProvider } from '@mui/material';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 type ToastProps = {
-    icon?: SweetAlertIcon,
-    title?: string
+    icon?: SweetAlertIcon;
+    title?: string;
+    theme?: Theme;
 };
 
 export const baseAlert = Swal.mixin({
@@ -11,9 +13,11 @@ export const baseAlert = Swal.mixin({
     }
 });
 
-export const toast = ({ icon = 'success', title = 'success' }: ToastProps) => baseAlert.fire({
+export const toast = ({ icon = 'success', title = 'success', theme }: ToastProps) => (baseAlert.fire({
     icon,
     title,
+    background: theme?.palette.background.paper || '#fff',
+    color: theme?.palette.text.primary || '#000',
     toast: true,
     position: 'bottom-end',
     showConfirmButton: false,
@@ -24,7 +28,9 @@ export const toast = ({ icon = 'success', title = 'success' }: ToastProps) => ba
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
     }
+}));
+
+
+export const alert = baseAlert.mixin({
+    showCancelButton: true
 });
-
-
-export const alert = baseAlert.mixin({ showCancelButton: true });

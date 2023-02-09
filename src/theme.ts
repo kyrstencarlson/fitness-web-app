@@ -68,7 +68,9 @@ export const darkTheme = createTheme({
         info: {
             main: orange[400]
         },
-
+        text: {
+            primary: grey[100]
+        },
         tonalOffset: 0.2
     }
 });
@@ -92,6 +94,9 @@ export const lightTheme = createTheme({
         },
         info: {
             main: orange[400]
+        },
+        text: {
+            primary: grey[900]
         },
         tonalOffset: 0.2
     }
