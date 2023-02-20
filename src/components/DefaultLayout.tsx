@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Menu } from '@mui/icons-material';
+import { AccountCircle, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Logout, Menu } from '@mui/icons-material';
 import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
@@ -26,13 +26,18 @@ export const ResponsiveDrawer = (props: Props) => {
     const theme = useTheme();
     const container = window === undefined ? undefined : () => window().document.body;
 
+    const path = pathname.split('/')[1];
+    const currentLocation = drawerItems.find(item => item.path === pathname) || drawerItems.find(item => item.text.toLowerCase() === path);
+    const currentIndex = currentLocation ? drawerItems.indexOf(currentLocation) : -1;
+
+
     const drawer = (
         <div>
             <Toolbar />
             <Divider />
             <List>
-                {drawerItems.map(item => {
-                    const active = pathname === item.path;
+                {drawerItems.map((item, index) => {
+                    const active = currentIndex === index;
 
                     return (
                         <ListItem key={item.path} selected={active} disablePadding>
@@ -45,6 +50,18 @@ export const ResponsiveDrawer = (props: Props) => {
                         </ListItem>
                     );
                 })}
+
+                {mobileOpen &&
+                    <>
+                        <Divider style={{ margin: '20px 0' }} />
+                        <ListItemButton onClick={() => console.log('logout')}>
+                            <ListItemIcon>
+                                <Logout />
+                            </ListItemIcon>
+                            <ListItemText primary={'Logout'} />
+                        </ListItemButton>
+                    </>
+                }
             </List>
         </div>
     );
@@ -74,7 +91,7 @@ export const ResponsiveDrawer = (props: Props) => {
                     </IconButton>
 
                     <Typography variant='h6' noWrap component='div'>
-                        Engine
+                        The Gains Lab
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />
