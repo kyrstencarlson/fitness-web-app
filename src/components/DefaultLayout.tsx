@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Circle, HeartBroken, House, Menu } from '@mui/icons-material';
+import { AccountCircle, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Menu } from '@mui/icons-material';
 import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
@@ -31,7 +31,7 @@ export const ResponsiveDrawer = (props: Props) => {
             <Toolbar />
             <Divider />
             <List>
-                {drawerItems.map((item, index) => {
+                {drawerItems.map(item => {
                     const active = pathname === item.path;
 
                     return (
@@ -74,7 +74,7 @@ export const ResponsiveDrawer = (props: Props) => {
                     </IconButton>
 
                     <Typography variant='h6' noWrap component='div'>
-                        React App
+                        Engine
                     </Typography>
 
                     <Box sx={{ flexGrow: 1 }} />
@@ -140,7 +140,7 @@ export const ResponsiveDrawer = (props: Props) => {
                 <Box sx={{ minHeight: '55vh' }}>
                     <Outlet />
                 </Box>
-                <BasicSpeedDial theme={theme} />
+                {/* <BasicSpeedDial theme={theme} /> */}
             </Box>
         </Box>
     );
@@ -153,13 +153,23 @@ const drawerItems = [
         path: '/'
     },
     {
-        text: 'Foo',
-        icon: <HeartBroken />,
-        path: '/foo'
+        text: 'Workouts',
+        icon: <FitnessCenter />,
+        path: '/workouts'
     },
     {
-        text: 'Bar',
-        icon: <Circle />,
-        path: '/bar'
+        text: 'Results',
+        icon: <Menu />,
+        path: '/results'
+    },
+    {
+        text: 'About',
+        icon: <InfoOutlined />,
+        path: '/about'
+    },
+    {
+        text: 'Profile',
+        icon: <AccountCircle />,
+        path: '/profile'
     }
 ];

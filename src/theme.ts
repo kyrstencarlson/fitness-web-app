@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { purple, blue, grey, red, orange } from '@mui/material/colors';
+import { green, blue, grey, red, orange } from '@mui/material/colors';
 
 const theme = createTheme({
     typography: {
@@ -57,10 +57,10 @@ export const darkTheme = createTheme({
             default: grey[900]
         },
         primary: {
-            main: purple[500]
+            main: blue[400]
         },
         secondary: {
-            main: blue[400]
+            main: green[400]
         },
         error: {
             main: red[400]
@@ -84,10 +84,10 @@ export const lightTheme = createTheme({
             default: grey[100]
         },
         primary: {
-            main: purple[500]
+            main: blue[400]
         },
         secondary: {
-            main: blue[400]
+            main: green[400]
         },
         error: {
             main: red[400]
