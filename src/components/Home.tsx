@@ -39,7 +39,7 @@ const Home = () => {
                     return (
                         <Grid item key={i} xs={12} md={4}>
                             <Card>
-                                <CardActionArea onClick={() => navigate(`/workouts/month${i + 1}`)}>
+                                <CardActionArea onClick={() => navigate(`/workouts/${i + 1}`)}>
                                     <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
                                     <CardContent>
                                         <Typography variant='h5' mb={2}>
@@ -74,7 +74,7 @@ const Home = () => {
                     return (
                         <Grid item key={i} xs={12} md={4}>
                             <Card>
-                                <CardActionArea onClick={() => navigate(`/workouts/month-${i}`)}>
+                                <CardActionArea onClick={() => navigate(`/workouts/${i}`)}>
                                     <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
                                     <CardContent>
                                         <Typography variant='h5' mb={2}>

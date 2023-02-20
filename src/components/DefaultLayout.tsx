@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Logout, Menu } from '@mui/icons-material';
+import { AccountCircle, Book, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
 import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
@@ -42,7 +42,7 @@ export const ResponsiveDrawer = (props: Props) => {
                     return (
                         <ListItem key={item.path} selected={active} disablePadding>
                             <ListItemButton onClick={() => navigate(item.path)}>
-                                <ListItemIcon>
+                                <ListItemIcon sx={{ pl: 1 }}>
                                     {item.icon}
                                 </ListItemIcon>
                                 <ListItemText primary={item.text} sx={{ textTransform: 'capitalize' }} />
@@ -51,17 +51,13 @@ export const ResponsiveDrawer = (props: Props) => {
                     );
                 })}
 
-                {mobileOpen &&
-                    <>
-                        <Divider style={{ margin: '20px 0' }} />
-                        <ListItemButton onClick={() => console.log('logout')}>
-                            <ListItemIcon>
-                                <Logout />
-                            </ListItemIcon>
-                            <ListItemText primary={'Logout'} />
-                        </ListItemButton>
-                    </>
-                }
+                <Divider style={{ margin: '20px 0' }} />
+                <ListItemButton onClick={() => console.log('logout')}>
+                    <ListItemIcon sx={{ pl: 1 }}>
+                        <Logout />
+                    </ListItemIcon>
+                    <ListItemText primary={'Logout'} />
+                </ListItemButton>
             </List>
         </div>
     );
@@ -165,19 +161,24 @@ export const ResponsiveDrawer = (props: Props) => {
 
 const drawerItems = [
     {
-        text: 'Home',
-        icon: <House />,
+        text: 'Workouts',
+        icon: <FitnessCenter />,
         path: '/'
     },
     {
-        text: 'Workouts',
-        icon: <FitnessCenter />,
-        path: '/workouts'
+        text: 'Results',
+        icon: <Book />,
+        path: '/results'
     },
     {
-        text: 'Results',
-        icon: <Menu />,
-        path: '/results'
+        text: 'Leaderboard',
+        icon: <Leaderboard />,
+        path: '/leaderboard'
+    },
+    {
+        text: 'Library',
+        icon: <LibraryBooks />,
+        path: '/library'
     },
     {
         text: 'About',

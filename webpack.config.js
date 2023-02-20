@@ -7,7 +7,9 @@ module.exports = {
     mode: prod ? 'production' : 'development',
     entry: './src/index.tsx',
     output: {
-        path: `${__dirname }/dist/`
+        path: `${__dirname }/dist/`,
+        filename: 'index_bundle.js',
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -24,6 +26,9 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true
     },
     devtool: prod ? undefined : 'source-map',
     plugins: [

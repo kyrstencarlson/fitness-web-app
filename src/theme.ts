@@ -16,16 +16,16 @@ const theme = createTheme({
         },
         body1: {
             '@media (min-width:0px)': {
-                fontSize: '0.6rem'
+                fontSize: '0.9rem'
             },
             '@media (min-width:600px)': {
-                fontSize: '0.7rem'
+                fontSize: '0.9rem'
             },
             '@media (min-width:900px)': {
-                fontSize: '0.8rem'
+                fontSize: '0.925rem'
             },
             '@media (min-width:1200px)': {
-                fontSize: '0.9rem'
+                fontSize: '0.95rem'
             },
             '@media (min-width:1536px)': {
                 fontSize: '1rem'
@@ -41,7 +41,7 @@ const theme = createTheme({
         MuiDialog: {
             defaultProps: {
                 PaperProps: {
-                    elevation: 0
+                    elevation: 1
                 }
             }
         }
@@ -69,7 +69,11 @@ export const darkTheme = createTheme({
             main: orange[400]
         },
         text: {
-            primary: grey[100]
+            primary: grey[100],
+            secondary: grey[300]
+        },
+        grey: {
+            500: grey[500]
         },
         tonalOffset: 0.2
     }
@@ -96,7 +100,11 @@ export const lightTheme = createTheme({
             main: orange[400]
         },
         text: {
-            primary: grey[900]
+            primary: grey[900],
+            secondary: grey[700]
+        },
+        grey: {
+            500: grey[500]
         },
         tonalOffset: 0.2
     }
