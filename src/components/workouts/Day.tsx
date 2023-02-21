@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { month } from './Month';
 import { definitions } from '../library/Library';
 import ToolTipIcon from '../../utils/ToolTipIcon';
-
+import SubmitForm from './SubmitForm';
 
 const Day = () => {
 
@@ -20,6 +20,7 @@ const Day = () => {
     const fontSize = mobile ? 'small' : 'medium';
 
     const [open, setOpen] = React.useState(false);
+    const [initialValues, setInitialValues] = React.useState<any>(null);
 
     return (
         <>
@@ -28,7 +29,7 @@ const Day = () => {
                 const def = definitions.find(def => def.name === days.type)?.text;
 
                 return (
-                    <Accordion sx={{ alignContent: 'center' }}>
+                    <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMore />}
                             aria-controls='panel1a-content'
@@ -72,7 +73,19 @@ const Day = () => {
                                 <Grid item xs={mobile ? 5.5 : 2.5} textAlign={'right'}>
                                     <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
                                     <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
-                                    <ToolTipIcon icon={<Edit fontSize={fontSize} />} text={'Submit / Edit'} onClick={() => setOpen(true)} />
+                                    <ToolTipIcon
+                                        icon={<Edit fontSize={fontSize} />}
+                                        text={'Submit / Edit'}
+                                        onClick={() => {
+                                            setOpen(true);
+                                            setInitialValues({
+                                                day: i + 1,
+                                                week: +w,
+                                                month: +m,
+                                                entires: ''
+                                            });
+                                        }}
+                                    />
                                 </Grid>
                             </Grid>
                         </AccordionDetails>
@@ -80,18 +93,16 @@ const Day = () => {
                 );
             })}
 
-            <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='sm'>
+            <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
                 <DialogContent>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography variant='h5' sx={{ textAlign: 'center' }}>Submit Workout</Typography>
-                        </Grid>
-                    </Grid>
+                    <SubmitForm
+                        initialValues={initialValues}
+                        closeDialog={() => setOpen(false)}
+                    />
                 </DialogContent>
             </Dialog>
         </>
     );
 };
-
 
 export default Day;

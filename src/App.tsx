@@ -21,6 +21,7 @@ import Month from './components/workouts/Month';
 import Library from './components/library/Library';
 import Day from './components/workouts/Day';
 import Leaderboard from './components/leaderboard/Leaderboard';
+import Workouts from './components/workouts/Workouts';
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
                     <Route path='/' element={<Home />} />
                     <Route path='about' element={<About />} />
                     <Route path='profile' element={<Profile />} />
+                    <Route path='workouts' element={<Workouts />} />
                     <Route path='workouts/:monthId' element={<Month />} />
                     <Route path='workouts/:monthId/:weekId' element={<Day />} />
                     <Route path='results' element={<Results />} />

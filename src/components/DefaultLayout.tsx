@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, Book, Circle, FitnessCenter, HeartBroken, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
+import { AccountCircle, Book, Circle, FitnessCenter, HeartBroken, Home, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
 import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
@@ -161,9 +161,14 @@ export const ResponsiveDrawer = (props: Props) => {
 
 const drawerItems = [
     {
+        text: 'Home',
+        icon: <Home />,
+        path: '/'
+    },
+    {
         text: 'Workouts',
         icon: <FitnessCenter />,
-        path: '/'
+        path: '/workouts'
     },
     {
         text: 'Results',
