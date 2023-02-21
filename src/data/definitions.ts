@@ -32,18 +32,22 @@ export const definitions: Definition[] = [
 export const paceDefinitions: PaceDefinition[] = [
     {
         type: 'endurance',
-        text: ''
-    },
-    {
-        type: 'race pace',
-        text: ''
+        text: 'This is a classic Zone 2 or “Steady State” day. This means RPE of about 7/10.  If you\'re using a HR Monitor, your heart rate should be about 70% of your max HR, to minimize glycolytic activity. Your pace should remain constant throughout the entire session.'
     },
     {
         type: 'max effort',
-        text: ''
+        text: 'For Max Effort, you should be at about a 9.8 / 10 RPE. Attack every interval, even if your pace drops off. Max Effort  can be a bit uncomfortable, but this is required to attain the desired stimulus.'
+    },
+    {
+        type: 'race pace',
+        text: 'Race Pace means accelerate to your highest sustainable speed and maintain that speed throughout. This is usually about 8.5 / 10 RPE. Consistency is important; a drop off means some muscle fibers were prematurely fatigued and not properly trained. On days where Race Pace is indicated, do not sprint at the end of the session.'
     },
     {
         type: 'consistency',
-        text: ''
+        text: 'Consistency is important for intervals. For example, hypothetical scores of 50-50-50-50-50 are better than 60-55-50-45-40. While both results average 50, the second example means that some muscle fibers were prematurely fatigued and not properly trained. Consistency means that the intended muscle fibers are properly trained. If you\'re unsure of your pace, start conservatively an increase each round, until you reach your maximum sustainable pace.'
+    },
+    {
+        type: 'time trial',
+        text: 'Time Trials are 10 minute tests in which you should try to achieve the highest possible score, using whatever pacing works for you. On time trials (unlike rest days), you are encouraged to sprint at the end, as well as to make whatever trade-offs are necessary to attain the highest possible score. The Time Trial is a benchmark which will be used throughout the program.'
     }
 ];

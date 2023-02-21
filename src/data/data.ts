@@ -28,7 +28,7 @@ export const month1: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1260,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -68,7 +68,7 @@ export const month1: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1440,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -108,7 +108,7 @@ export const month1: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1620,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -198,7 +198,7 @@ export const month1: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1800,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     }
 ];
@@ -232,7 +232,7 @@ export const month2: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1620,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -272,7 +272,7 @@ export const month2: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1200,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -312,7 +312,7 @@ export const month2: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1980,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -402,7 +402,7 @@ export const month2: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 2160,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     }
 
@@ -436,7 +436,7 @@ export const month3: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 1980,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -476,7 +476,7 @@ export const month3: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 2160,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -516,7 +516,7 @@ export const month3: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 2340,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     },
     {
@@ -606,7 +606,7 @@ export const month3: Month = [
         'type': 'endurance',
         'rounds': 1,
         'work': 2520,
-        'pace': 'endurance',
+        'pace': 'endurance pace',
         'rest': 0
     }
 ];

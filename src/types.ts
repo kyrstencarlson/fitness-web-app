@@ -22,8 +22,8 @@ export interface PaceDefinition {
     text: string;
 }
 
-export type DayType = 'endurance' | 'speed / threshold' | 'max aerobic power' | 'anaerobic' | 'interval' | 'time trial';
+export type DayType = 'endurance' | 'speed / threshold' | 'max aerobic power' | 'anaerobic' | 'interval' | 'time trial' ;
 
-export type PaceType = 'race pace' | 'endurance' | 'consistency' | 'max effort';
+export type PaceType = 'race pace' | 'endurance pace' | 'consistency' | 'max effort' | 'time trial';
 
 export type Month = Day[];
