@@ -3,9 +3,9 @@ import { Typography, Grid, Accordion, AccordionDetails, AccordionSummary, Toolti
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { month } from './Month';
-import { definitions } from '../library/Library';
 import ToolTipIcon from '../../utils/ToolTipIcon';
 import SubmitForm from './SubmitForm';
+import { definitions } from '../../data/definitions';
 
 const Day = () => {
 
