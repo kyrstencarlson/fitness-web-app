@@ -4,10 +4,11 @@
   "description": "react app with MUI",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack serve --port 4000 --config webpack.config.js",
+    "start": "webpack serve --port 3000 --config webpack.config.js",
     "build": "NODE_ENV=production webpack",
     "lint": "eslint ."
   },
+  "proxy": "http://localhost:4000",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kyrstencarlson/react-app.git"

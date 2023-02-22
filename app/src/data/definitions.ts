@@ -31,7 +31,7 @@ export const definitions: Definition[] = [
 
 export const paceDefinitions: PaceDefinition[] = [
     {
-        type: 'endurance',
+        type: 'endurance pace',
         text: 'This is a classic Zone 2 or “Steady State” day. This means RPE of about 7/10.  If you\'re using a HR Monitor, your heart rate should be about 70% of your max HR, to minimize glycolytic activity. Your pace should remain constant throughout the entire session.'
     },
     {

@@ -28,7 +28,12 @@ module.exports = {
         ]
     },
     devServer: {
-        historyApiFallback: true
+        historyApiFallback: true,
+        port: 3000,
+        open: true,
+        proxy: {
+            '/api': 'http://localhost:4000'
+        }
     },
     devtool: prod ? undefined : 'source-map',
     plugins: [
