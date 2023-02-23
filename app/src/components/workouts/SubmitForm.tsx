@@ -152,7 +152,6 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         field='location'
                         label='Location'
                         arrayItems={location}
-                        required
                         md={12}
                     />
 
@@ -160,7 +159,6 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         field='time'
                         label='Time'
                         arrayItems={time}
-                        required
                         md={12}
                     />
 
@@ -171,7 +169,6 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         itemKey='value'
                         itemLabel='label'
                         itemValue='label'
-                        required
                         md={12}
                     />
 
@@ -182,7 +179,6 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         itemKey='value'
                         itemLabel='label'
                         itemValue='label'
-                        required
                         md={12}
                     />
 
@@ -227,11 +223,7 @@ const validate = (values: Day) => {
         [
             'score',
             'units',
-            'modality',
-            'location',
-            'time',
-            'readiness',
-            'sleep'
+            'modality'
         ]
     );
 

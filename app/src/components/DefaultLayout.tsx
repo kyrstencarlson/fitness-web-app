@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AppBar, Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Box, Button, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, Book, Circle, FitnessCenter, HeartBroken, Home, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
+import { AccountCircle, ArrowBack, Book, Circle, FitnessCenter, HeartBroken, Home, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
 import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
@@ -151,6 +151,9 @@ export const ResponsiveDrawer = (props: Props) => {
             >
                 <Toolbar />
                 <Box sx={{ minHeight: '55vh' }}>
+                    <Button startIcon={<ArrowBack />} variant='text' onClick={() => navigate(-1)} sx={{ marginBottom: 2 }}>
+                        Back
+                    </Button>
                     <Outlet />
                 </Box>
                 {/* <BasicSpeedDial theme={theme} /> */}

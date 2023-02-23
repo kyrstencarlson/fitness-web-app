@@ -5,12 +5,12 @@ import { definitions } from '../../data/definitions';
 
 const Library = () => (
     <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
             {definitions.map(def => (
                 <Grid item xs={12} md={6}>
                     <ContentCard
-                        header={def.name}
-                        body={`${def.stimuli} \n ${def.text}`}
+                        header={def.type}
+                        body={def.text}
                     />
                 </Grid>
             ))}

@@ -1,5 +1,5 @@
-import { Check } from '@mui/icons-material';
-import { Typography, Card, CardActionArea, CardContent, CardHeader, LinearProgress, Divider, IconButton } from '@mui/material';
+import { Check, CheckCircle } from '@mui/icons-material';
+import { Typography, Card, CardActionArea, CardContent, CardHeader, LinearProgress, Divider, IconButton, Grid } from '@mui/material';
 import React from 'react';
 
 interface ContentCardProps {
@@ -7,14 +7,14 @@ interface ContentCardProps {
     header: string;
     body: string;
     style?: React.CSSProperties;
-    rightElement?: JSX.Element;
+    complete?: boolean;
 }
 
 
 const ContentCard = (props: ContentCardProps) => {
 
     const {
-        header, body, style = {}, rightElement, onClick
+        header, body, style = {}, complete, onClick
     } = props;
 
     return (
@@ -22,8 +22,12 @@ const ContentCard = (props: ContentCardProps) => {
             ...style,
             height: '100%'
         }}>
-            <CardActionArea onClick={onClick}>
-                <CardHeader sx={{ pb: 0.5 }} subheader={<Typography variant='h6'>{header}</Typography>}/>
+            <CardActionArea onClick={onClick} disabled={!onClick}>
+                <CardHeader
+                    sx={{ pb: 0.5 }}
+                    subheader={<Typography variant='h6'>{header}</Typography>}
+                    action={complete && <CheckCircle color='secondary' />}
+                />
                 <CardContent sx={{ pt: 0.5 }}>
                     <Typography variant='body1'>
                         {body}

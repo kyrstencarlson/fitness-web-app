@@ -1,4 +1,5 @@
-import { Month } from '../types';
+import { Month } from '../../types';
+
 
 export const month1: Month = [
     {
@@ -10,7 +11,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 600,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -38,7 +40,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 1260,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -93,8 +96,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 1440,
-                pace: 'endurance pace'
-
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -135,7 +138,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 720,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -148,7 +152,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 1620,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -189,7 +194,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 960,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -244,8 +250,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 600,
-                pace: 'max effort'
-
+                pace: 'max effort',
+                rest: 0
             }
         ]
     },
@@ -272,8 +278,8 @@ export const month1: Month = [
             {
                 rounds: 1,
                 work: 1800,
-                pace: 'endurance pace'
-
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     }
@@ -289,7 +295,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 1080,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -316,7 +323,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 1620,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -371,7 +379,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 1200,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -412,7 +421,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 900,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -425,7 +435,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 1980,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -466,8 +477,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 1080,
-                pace: 'race pace'
-
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -522,7 +533,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 600,
-                pace: 'max effort'
+                pace: 'max effort',
+                rest: 0
             }
         ]
     },
@@ -549,8 +561,8 @@ export const month2: Month = [
             {
                 rounds: 1,
                 work: 2160,
-                pace: 'endurance pace'
-
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     }
@@ -566,7 +578,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 960,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -593,8 +606,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 1980,
-                pace: 'endurance pace'
-
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -649,7 +662,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 2160,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -690,8 +704,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 1080,
-                pace: 'race pace'
-
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -704,7 +718,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 2340,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     },
@@ -745,7 +760,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 1080,
-                pace: 'race pace'
+                pace: 'race pace',
+                rest: 0
             }
         ]
     },
@@ -800,7 +816,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 600,
-                pace: 'max effort'
+                pace: 'max effort',
+                rest: 0
             }
         ]
     },
@@ -827,7 +844,8 @@ export const month3: Month = [
             {
                 rounds: 1,
                 work: 2520,
-                pace: 'endurance pace'
+                pace: 'endurance pace',
+                rest: 0
             }
         ]
     }
