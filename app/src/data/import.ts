@@ -1,3 +1,5 @@
+// csv to json conversion
+// still need to work on a few other things to get all the data into the right shape
 
 export const file = [
   {
@@ -6,7 +8,7 @@ export const file = [
     type: "threshold",
     week: 1,
     month: 1,
-        phase: 1,
+    phase: 1,
     phaseWeek: 1,
     phaseMonth: 1,
     blockWork: 600,
