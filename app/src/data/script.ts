@@ -1,4 +1,4 @@
-import { Burst, Day, DayType, PaceType, Stage, Workout } from "../types";
+import { Burst, Day, DayType, Stage, Workout } from "../types";
 
 export const reshapeData = (file: any): Day[] => {
   const data: any = [];
@@ -41,12 +41,40 @@ export const reshapeData = (file: any): Day[] => {
     // Change in Work/Rest
     if (f.changeWorkDuration !== 0 || f.changeRestDuration !== 0) {
       for (let r = 0; r < f.rounds; r++) {
+        let pace: string = "";
+        if (f.pace) {
+          const paceNum = f.pace && f.pace + f.changePacePerInterval * r;
+          if (paceNum === 0) {
+            pace = "TT";
+          }
+          if (paceNum > 0) {
+            pace = `TT+${paceNum}`;
+          }
+          if (paceNum < 0) {
+            pace = `TT${paceNum}`;
+          }
+        }
+
         const changeWork = {
           work: f.work + f.changeWorkDuration * r,
           rest: f.rest + f.changeRestDuration * r,
-          pace: `TT${f.pace > 0 ? "+" : "-"}${f.pace}`,
+          pace,
         };
         cycles.push(changeWork);
+      }
+    }
+
+    let pace: string = "";
+    if (f.pace) {
+      const paceNum = f.pace;
+      if (paceNum === 0) {
+        pace = "TT";
+      }
+      if (paceNum > 0) {
+        pace = `TT+${paceNum}`;
+      }
+      if (paceNum < 0) {
+        pace = `TT${paceNum}`;
       }
     }
 
@@ -78,7 +106,7 @@ export const reshapeData = (file: any): Day[] => {
       ...(!cycles.length && f.work && { work: f.work }),
       ...(!cycles.length && f.rest && { rest: f.rest }),
       ...(f.fluxDuration && { fluxWork: f.fluxDuration }),
-      ...(!cycles.length && f.pace && { pace: (f.pace ?? "") as PaceType }),
+      ...(!cycles.length && f.pace && { pace }),
     };
     if (found) {
       found.workout.push(workout);

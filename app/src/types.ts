@@ -21,7 +21,7 @@ export interface Workout {
   fluxWork?: number;
   //seconds
   setRest?: number;
-  pace: PaceType;
+  pace?: string | null;
   comment?: string;
   stages?: Stage[];
   cycles?: Cycle[];
@@ -37,6 +37,7 @@ export interface Burst {
 export interface Cycle {
   work: number;
   rest: number;
+  pace?: string | null;
 }
 
 export interface Definition {
@@ -112,7 +113,7 @@ export type ImportDay = {
   numFluxStages: number;
   fluxesPerStage: number;
   increaseFluxPercent: number;
-  pace: string | number;
+  pace: number | null;
   changePacePerInterval: number;
   initialBurst: number;
   numBurst: number;
