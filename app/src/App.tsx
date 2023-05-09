@@ -1,27 +1,25 @@
+import { DarkMode, LightMode } from '@mui/icons-material';
+import { CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import React from 'react';
 import {
-    createBrowserRouter,
-    RouterProvider,
-    Link,
-    Outlet,
-    createRoutesFromElements,
     Route,
-    Routes
+    RouterProvider,
+    createBrowserRouter,
+    createRoutesFromElements
 } from 'react-router-dom';
-import { ErrorPage } from './components/NotFoundPage';
-import { Box, CssBaseline, IconButton, ThemeProvider } from '@mui/material';
-import { DarkMode, LightMode } from '@mui/icons-material';
-import { darkTheme, lightTheme } from './theme';
 import { ResponsiveDrawer } from './components/DefaultLayout';
 import Home from './components/Home';
+import { ErrorPage } from './components/NotFoundPage';
 import About from './components/about/About';
+import Leaderboard from './components/leaderboard/Leaderboard';
+import Library from './components/library/Library';
 import Profile from './components/profile/Profile';
 import Results from './components/results/Results';
-import Month from './components/workouts/Month';
-import Library from './components/library/Library';
 import Day from './components/workouts/Day';
-import Leaderboard from './components/leaderboard/Leaderboard';
+import Month from './components/workouts/Month';
 import Workouts from './components/workouts/Workouts';
+import { darkTheme, lightTheme } from './theme';
+// import ResponsiveDrawer from './components/DefaultLayout copy';
 
 const App = () => {
 

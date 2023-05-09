@@ -12,6 +12,7 @@ export interface Day {
 export interface Workout {
   title?: string;
   rounds: number | string;
+  totalWork: number;
   //seconds
   work: number;
   //seconds
@@ -23,6 +24,19 @@ export interface Workout {
   pace: PaceType;
   comment?: string;
   stages?: Stage[];
+  cycles?: Cycle[];
+  bursts?: Burst[];
+}
+
+export interface Burst {
+  initialBurst?: number;
+  burst: number;
+  locations: number[];
+}
+
+export interface Cycle {
+  work: number;
+  rest: number;
 }
 
 export interface Definition {
@@ -68,9 +82,40 @@ export type Month = Day[];
 export type Week = Day[];
 
 export type Stage = {
+  //percent increase
   increase: number | string;
   //seconds or comment
   time: number | string;
   // time in seconds
   locations: number[];
+};
+
+export type ImportDay = {
+  id: number;
+  day: number;
+  type: string;
+  week: number;
+  month: number;
+  phase: number;
+  phaseWeek: number;
+  phaseMonth: number;
+  blockWork: number;
+  totalWork: number;
+  rounds: number | string;
+  work: number;
+  rest: number;
+  setRest: number;
+  changeWorkDuration: number;
+  changeRestDuration: number;
+  fluxDuration: number;
+  fluxPercent: number;
+  numFluxStages: number;
+  fluxesPerStage: number;
+  increaseFluxPercent: number;
+  pace: string | number;
+  changePacePerInterval: number;
+  initialBurst: number;
+  numBurst: number;
+  timeBetweenBursts: number;
+  burstDuration: number;
 };

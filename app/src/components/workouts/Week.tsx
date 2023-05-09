@@ -1,26 +1,25 @@
 import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Dialog, DialogContent, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { definitions } from '../../data/definitions';
+import { Day } from '../../types';
 import ToolTipIcon from '../../utils/ToolTipIcon';
-import { getWeeksFromMonth } from '../../utils/getWeeksFromMonth';
 import { Exercise } from './Exercise';
-import { months } from './Month';
 import SubmitForm from './SubmitForm';
+import { useNavigate } from 'react-router-dom';
 
-const Day = () => {
+interface WeekProps {
+    week: Day[];
+}
+
+const Week = (props: WeekProps) => {
+
+    const { week } = props;
 
     const navigation = useNavigate();
-    const { pathname } = useLocation();
-    const [, , m, w] = pathname.split('/');
-    const month = months[+m - 1];
-    const week = getWeeksFromMonth(month)[+w - 1];
-
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
     const fontSize = mobile ? 'small' : 'medium';
-
 
     const [open, setOpen] = React.useState(false);
     const [initialValues, setInitialValues] = React.useState<any>(null);
@@ -30,9 +29,10 @@ const Day = () => {
             {week.map((days, i) => {
 
                 const def = definitions.find(def => def.type === days.type)?.text;
+                const totalWork = days.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60;
 
                 return (
-                    <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
+                    <Accordion key={`${days.day}`} sx={{ alignContent: 'center' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMore />}
                             aria-controls='panel1a-content'
@@ -60,7 +60,7 @@ const Day = () => {
                                 width: '10%',
                                 alignSelf: 'center'
                             }}>
-                                {/* {days.completed ? `Completed Pace: ${pace}` : null} */}
+                                {/* completed pace */}
                             </Typography>
 
                             <ToolTipIcon
@@ -86,9 +86,10 @@ const Day = () => {
                                             setOpen(true);
                                             setInitialValues({
                                                 day: i + 1,
-                                                week: +w,
-                                                month: +m,
-                                                entires: ''
+                                                week: +days.week,
+                                                month: +days.month,
+                                                entires: '',
+                                                totalWork
                                             });
                                         }}
                                     />
@@ -111,4 +112,4 @@ const Day = () => {
     );
 };
 
-export default Day;
+export default Week;

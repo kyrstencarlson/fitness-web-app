@@ -1,5 +1,5 @@
-import { Check, CheckCircle } from '@mui/icons-material';
-import { Typography, Card, CardActionArea, CardContent, CardHeader, LinearProgress, Divider, IconButton, Grid } from '@mui/material';
+import { CheckCircle } from '@mui/icons-material';
+import { Card, CardActionArea, CardContent, CardHeader, Typography } from '@mui/material';
 import React from 'react';
 
 interface ContentCardProps {

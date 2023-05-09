@@ -1,19 +1,20 @@
-import { Typography, Grid, Container, Divider } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import React from 'react';
-import ContentCard from '../../utils/Card';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { month1, month2, month3 } from '../../data/data';
+import { useLocation } from 'react-router-dom';
+import { file } from '../../data/import';
+import { reshapeData } from '../../data/script';
+import { getMonths } from '../../utils/getMonths';
 import { getWeeksFromMonth } from '../../utils/getWeeksFromMonth';
+import Week from './Week';
 
-export const months = [month1, month2, month3];
+const data = reshapeData(file);
+export const months = getMonths(data);
 
 const Month = () => {
 
-    const navigate = useNavigate();
     const { pathname } = useLocation();
     const m = pathname.split('/')[2];
-    const month = months[+m - 1];
-
+    const month = months[+m - 1].flat();
     const weeks = getWeeksFromMonth(month);
 
     return (
@@ -23,17 +24,13 @@ const Month = () => {
                 justifyContent: 'center'
             }}>
                 <Grid item xs={12}>
-                    <Typography variant={'h5'}>Month {m}</Typography>
+                    <Typography textAlign={'center'} fontWeight={'600'} variant={'h4'}>Month {m}</Typography>
                 </Grid>
 
                 {weeks.map((week, i) => (
                     <Grid key={i} item xs={12}>
-                        <ContentCard
-                            // complete={week.filter(w => w.complete)}
-                            header={`Week ${i + 1}`}
-                            body={`${0} / ${week.length} Completed`}
-                            onClick={() => navigate(`/workouts/${m}/${i + 1}`)}
-                        />
+                        <Typography variant='h6' sx={{ pl: 1, pb: 1}}>Week {i + 1}</Typography>
+                        <Week week={week} />
                     </Grid>
                 ))}
             </Grid>

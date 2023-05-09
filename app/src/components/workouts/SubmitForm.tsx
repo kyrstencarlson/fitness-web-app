@@ -1,9 +1,10 @@
-import { Form, Field } from 'react-final-form';
-import { TextField, Divider, Stack, Button, Typography, Box, Grid, IconButton } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
 import React from 'react';
+import { Field, Form } from 'react-final-form';
 import DropdownSelect from '../../utils/DropdownSelect';
 import { FinalFormErrors, requiredFields } from '../../utils/final-form';
-import { Delete } from '@mui/icons-material';
+import { toast } from '../../utils/alerts';
 
 interface Day {
     month: number;
@@ -13,11 +14,6 @@ interface Day {
     score: number;
     units: string;
     modality: string;
-    location: string;
-    time: string;
-    rating: number;
-    readiness: number;
-    sleep: number;
     notes?: string;
 }
 
@@ -28,47 +24,50 @@ interface FormProps {
         month: number;
         week: number;
         day: number;
+        totalWork: number;
     };
     closeDialog: () => void;
 }
 
 const units = ['meters', 'calories', 'watts', 'kilometers', 'miles', 'reps'];
 const modality = ['bike erg', 'rowing', 'assault bike', 'echo bike', 'other bike', 'ski erg', 'run (treadmill)', 'run', 'metcon'];
-const location = ['home gyn', 'gym / box', 'travel gym', 'hotel gym'];
-const time = ['1st thing', 'morning', 'afternoon', 'evening'];
-const rating = [
-    {
-        value: 1,
-        label: '1/5 - Poor'
-    },
-    {
-        value: 2,
-        label: '2/5 - Fair'
-    },
-    {
-        value: 3,
-        label: '3/5 - Average'
-    },
-    {
-        value: 4,
-        label: '4/5 - Good'
-    },
-    {
-        value: 5,
-        label: '5/5 - Excellent'
-    }
-];
+// const location = ['home gyn', 'gym / box', 'travel gym', 'hotel gym'];
+// const time = ['1st thing', 'morning', 'afternoon', 'evening'];
+// const rating = [
+//     {
+//         value: 1,
+//         label: '1/5 - Poor'
+//     },
+//     {
+//         value: 2,
+//         label: '2/5 - Fair'
+//     },
+//     {
+//         value: 3,
+//         label: '3/5 - Average'
+//     },
+//     {
+//         value: 4,
+//         label: '4/5 - Good'
+//     },
+//     {
+//         value: 5,
+//         label: '5/5 - Excellent'
+//     }
+// ];
 
 const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
 
     const {
-        month, week, day, entries
+        month, week, day, entries, totalWork
     } = initialValues;
 
     const [pace, setPace] = React.useState<any>(null);
 
 
     const onSubmit = (values: any) => {
+        console.log(values);
+        toast({ title: 'Workout Submitted' });
         closeDialog();
     };
 
@@ -129,7 +128,7 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         marginTop: '3px',
                         marginBottom: '5px'
                     }}>
-                        <Typography sx={{ pl: 2 }}>Pace: {pace / 10}</Typography>
+                        <Typography sx={{ pl: 2 }}>Pace: {pace / totalWork}</Typography>
                     </Box>
 
                     <DropdownSelect
@@ -145,40 +144,6 @@ const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
                         label='Modality'
                         arrayItems={modality}
                         required
-                        md={12}
-                    />
-
-                    <DropdownSelect
-                        field='location'
-                        label='Location'
-                        arrayItems={location}
-                        md={12}
-                    />
-
-                    <DropdownSelect
-                        field='time'
-                        label='Time'
-                        arrayItems={time}
-                        md={12}
-                    />
-
-                    <DropdownSelect
-                        field='readiness'
-                        label='How I Feel'
-                        arrayItems={rating}
-                        itemKey='value'
-                        itemLabel='label'
-                        itemValue='label'
-                        md={12}
-                    />
-
-                    <DropdownSelect
-                        field='sleep'
-                        label='How I Slept'
-                        arrayItems={rating}
-                        itemKey='value'
-                        itemLabel='label'
-                        itemValue='label'
                         md={12}
                     />
 
