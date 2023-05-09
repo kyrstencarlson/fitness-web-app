@@ -1,13 +1,13 @@
 import { Container, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { file } from '../../data/import';
+import { allDays } from '../../data/data';
 import { reshapeData } from '../../data/script';
 import { getMonths } from '../../utils/getMonths';
 import { getWeeksFromMonth } from '../../utils/getWeeksFromMonth';
 import Week from './Week';
 
-const data = reshapeData(file);
+const data = reshapeData(allDays);
 export const months = getMonths(data);
 
 const Month = () => {
@@ -27,12 +27,16 @@ const Month = () => {
                     <Typography textAlign={'center'} fontWeight={'600'} variant={'h4'}>Month {m}</Typography>
                 </Grid>
 
-                {weeks.map((week, i) => (
-                    <Grid key={i} item xs={12}>
-                        <Typography variant='h6' sx={{ pl: 1, pb: 1}}>Week {i + 1}</Typography>
-                        <Week week={week} />
-                    </Grid>
-                ))}
+                {weeks.map((week, i) => {
+                    const month = week[0].month;
+
+                    return (
+                        <Grid key={`${month}-week${i+1}`} item xs={12}>
+                            <Typography variant='h6' sx={{ pl: 1, pb: 1}}>Week {i + 1}</Typography>
+                            <Week week={week} />
+                        </Grid>
+                    )})
+                }
             </Grid>
         </Container>
     );

@@ -52,13 +52,13 @@ export interface PaceDefinition {
 
 export type DayType =
   | "endurance"
-  | "speed / threshold"
+  | "threshold"
   | "max aerobic power"
   | "anaerobic"
   | "interval"
   | "time trial"
   | "polarized"
-  | "rocket races A/B"
+  | "rocket races"
   | "flux"
   | "hybrid"
   | "flux stages"
@@ -83,9 +83,9 @@ export type Week = Day[];
 
 export type Stage = {
   //percent increase
-  increase: number | string;
+  increase: string;
   //seconds or comment
-  time: number | string;
+  time: number;
   // time in seconds
   locations: number[];
 };

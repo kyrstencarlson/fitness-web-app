@@ -14,12 +14,12 @@ const Cycles = ({ cycles }: CycleProps) => (
             const { work, rest } = cycle;
 
             return (
-                <Box justifyContent={'flex-start'} display={'flex'}  sx={{ marginBlock: '10px' }}>
-                    <Typography key={`${work}-${i}`} textTransform={'capitalize'} sx={{ pr: 1}}>
+                <Box key={`${work}-${rest}-${i}`}  justifyContent={'flex-start'} display={'flex'}  sx={{ marginBlock: '10px' }}>
+                    <Typography textTransform={'capitalize'} sx={{ pr: 1}}>
                         Work: {convertTime(work)}
                     </Typography>
 
-                    {rest && <Typography key={`${rest}-${i}`}>Rest: {convertTime(rest)}</Typography>}
+                    {rest && <Typography>Rest: {convertTime(rest)}</Typography>}
                 </Box>
             );
         })}

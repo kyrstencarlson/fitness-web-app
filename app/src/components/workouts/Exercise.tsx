@@ -16,13 +16,13 @@ const Exercise = ({ workouts }: ExerciseProps) => (
         {workouts.map((workout, i) => {
 
             const {
-                rounds, work, rest, pace, setRest, comment, stages,  bursts, cycles
+                rounds, work, rest, pace, setRest, comment, stages, bursts, cycles,
             } = workout;
             const length = workouts.length;
             const isLast = length - 1 === i;
 
             return (
-                <React.Fragment key={`${rounds}-${work}-${rest}`}>
+                <React.Fragment key={`${rounds}-${work}-${rest}-${i}`}>
                     <Box>
                         <Typography sx={{ fontWeight: '700'}}>{rounds} {rounds === 1 ? 'Round' : 'Rounds'} {cycles && 'as'}</Typography>
                         {work && <Typography textTransform={'capitalize'}>Work: {convertTime(work)} {pace && `@ ${pace}`}</Typography>}

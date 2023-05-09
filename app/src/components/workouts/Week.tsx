@@ -27,8 +27,7 @@ const Week = (props: WeekProps) => {
     return (
         <>
             {week.map((days, i) => {
-
-                const def = definitions.find(def => def.type === days.type)?.text;
+                const def = definitions.find(def => days.type.includes(def.type))?.text;
                 const totalWork = days.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60;
 
                 return (

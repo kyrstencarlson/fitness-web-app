@@ -10,31 +10,21 @@ export interface StageProps {
 
 const Stages = ({ stages }: StageProps) => (
     <>
-        {stages.map((stage, i) => {
+        {stages.map((stage) => {
             const { increase, time, locations } = stage;
 
-            const forTime = () => {
-                if (typeof time === 'string') {
-                    return time;
-                }
-
-                return `For ${convertTime(time)}`;
-            };
-
-            const forIncrease = () => `Increase ${increase}`
-
             return (
-                <Box sx={{ marginBlock: '10px' }}>
+                <Box key={`${increase}-${time}-${locations}`} sx={{ marginBlock: '10px' }}>
                     <Typography sx={{ textDecoration: 'underline'}}>At times: </Typography>
-                    <Box justifyContent={'flex-start'} display={'flex'} key={`${increase}-${time}-${i}`}>
+                    <Box justifyContent={'flex-start'} display={'flex'}>
                         {locations.map((location, i) => (
-                            <Typography sx={{ pr: 1 }} key={`${location}-${i}`}>
+                            <Typography key={`${increase}-${time}-${location}-${i}`} sx={{ pr: 1 }}>
                                 {convertTime(location)}
                             </Typography>
                         ))}
                     </Box>
-                    <Typography key={`${increase}-${i}`}>{forIncrease()}</Typography>
-                    <Typography key={`${time}-${i}`}>{forTime()}</Typography>
+                    <Typography>{`Increase ${increase}`}</Typography>
+                    <Typography>{`For ${convertTime(time)}`}</Typography>
                 </Box>
             );
         })}
