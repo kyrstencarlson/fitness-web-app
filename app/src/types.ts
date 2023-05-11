@@ -14,7 +14,7 @@ export interface Workout {
   rounds: number | string;
   totalWork: number;
   //seconds
-  work: number;
+  work?: number;
   //seconds
   rest?: number;
   //seconds
@@ -30,6 +30,7 @@ export interface Workout {
 
 export interface Burst {
   initialBurst?: number;
+  work: number;
   burst: number;
   locations: number[];
 }
@@ -69,7 +70,8 @@ export type DayType =
   | "towers"
   | "afterburner"
   | "atomic"
-  | "synthesis";
+  | "synthesis"
+  | string;
 
 export type PaceType =
   | "race pace"

@@ -15,10 +15,10 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 2017,
         sourceType: 'module'
-    }
-    // rules: {
+    },
+    rules: {
     //     'prettier/prettier': 0,
-    //     'no-unused-vars': ['off'],
+        'no-unused-vars': ['off'],
     //     quotes: ['error', 'single'],
     //     'no-console': 'warn',
     //     '@typescript-eslint/no-unused-vars': ['off'],
@@ -162,5 +162,5 @@ module.exports = {
     //     'prefer-spread': 'error',
     //     'prefer-template': 'error',
     //     'yield-star-spacing': ['error', 'after']
-    // }
+    }
 };

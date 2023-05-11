@@ -5,6 +5,15 @@ export const reshapeData = (file: any): Day[] => {
   for (const f of file) {
     const found = data.find((item: any) => item.day === f.day);
 
+    // Type
+    if (f.type.includes("block")) {
+      const t = f.type.split(" ");
+      f.type = `${t[0]} ${t[1]}`;
+    }
+    if (f.type.includes("rocket races")) {
+      f.type = "rocket races";
+    }
+
     // Flux Stages
     const stages: Stage[] = [];
     const cycles = [];
@@ -28,9 +37,7 @@ export const reshapeData = (file: any): Day[] => {
         }
 
         const stage: Stage = {
-          increase: `${
-            f.fluxPercent * 100 + f.increaseFluxPercent * 100 * st
-          }%`,
+          increase: `${f.fluxPercent + f.increaseFluxPercent * st}%`,
           time: f.fluxDuration,
           locations,
         };

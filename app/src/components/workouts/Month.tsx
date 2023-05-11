@@ -1,14 +1,17 @@
 import { Container, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { allDays } from '../../data/data';
-import { reshapeData } from '../../data/script';
+import { allDaysFormatted } from '../../data/data';
 import { getMonths } from '../../utils/getMonths';
 import { getWeeksFromMonth } from '../../utils/getWeeksFromMonth';
 import Week from './Week';
+import { allDays } from '../../data/import';
+import { reshapeData } from '../../data/script';
 
-const data = reshapeData(allDays);
-export const months = getMonths(data);
+// const data = reshapeData(allDays);
+// export const months = getMonths(data);
+
+export const months = getMonths(allDaysFormatted);
 
 const Month = () => {
 

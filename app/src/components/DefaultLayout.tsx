@@ -1,8 +1,7 @@
-import * as React from 'react';
+import { AccountCircle, ArrowBack, Book, FitnessCenter, Home, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
 import { AppBar, Box, Button, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme } from '@mui/material';
+import * as React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, ArrowBack, Book, Circle, FitnessCenter, HeartBroken, Home, House, InfoOutlined, Leaderboard, LibraryBooks, Logout, Menu } from '@mui/icons-material';
-import { BasicSpeedDial } from './SpeedDial';
 
 const drawerWidth = 240;
 
