@@ -1,16 +1,18 @@
 import { Typography, Grid } from '@mui/material';
 import React from 'react';
 
-const About = () => {
 
-    const x = 1;
+const Admin = () => {
+
+    // const x = 1;
+
 
     return (
         <Grid>
-            <Typography>About</Typography>
+            <Typography>Admin</Typography>
         </Grid>
     );
 };
 
 
-export default About;
+export default Admin;

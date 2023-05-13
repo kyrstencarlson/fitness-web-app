@@ -9207,6 +9207,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -9326,6 +9327,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+1",
       },
     ],
@@ -9386,6 +9388,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -9494,6 +9497,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+1",
       },
     ],
@@ -9594,6 +9598,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -9713,6 +9718,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -9778,6 +9784,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -9892,6 +9899,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+4",
       },
     ],
@@ -9987,6 +9995,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -10091,6 +10100,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -10161,6 +10171,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -10259,6 +10270,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+4",
       },
     ],
@@ -10374,6 +10386,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -10475,6 +10488,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -10539,6 +10553,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -10645,6 +10660,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -10745,6 +10761,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -10846,6 +10863,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -10911,6 +10929,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -11012,6 +11031,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -11122,6 +11142,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -11228,6 +11249,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -11293,6 +11315,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+3",
       },
     ],
@@ -11399,6 +11422,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: 1,
         totalWork: 0,
+        work: 300,
         pace: "TT+2",
       },
     ],
@@ -14388,6 +14412,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14451,6 +14476,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14473,6 +14499,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14548,6 +14575,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14616,6 +14644,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14650,7 +14679,7 @@ export const allDaysFormatted: Day[] = [
     phase: 11,
     phaseWeek: 3,
     phaseMonth: 1,
-    type: "intervals",
+    type: "interval",
     workout: [
       {
         rounds: 10,
@@ -14679,6 +14708,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14701,6 +14731,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -14776,6 +14807,7 @@ export const allDaysFormatted: Day[] = [
       {
         rounds: "MAX",
         totalWork: 0,
+        work: 300,
       },
     ],
   },
@@ -15112,7 +15144,7 @@ export const allDaysFormatted: Day[] = [
     phase: 11,
     phaseWeek: 7,
     phaseMonth: 2,
-    type: "intervals",
+    type: "interval",
     workout: [
       {
         rounds: 6,
@@ -15589,7 +15621,7 @@ export const allDaysFormatted: Day[] = [
     phase: 11,
     phaseWeek: 11,
     phaseMonth: 3,
-    type: "intervals",
+    type: "interval",
     workout: [
       {
         rounds: 6,

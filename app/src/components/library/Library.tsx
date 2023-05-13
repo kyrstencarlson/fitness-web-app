@@ -10,7 +10,7 @@ const Library = () => (
                 <Grid item xs={12} md={6}>
                     <ContentCard
                         header={def.type}
-                        body={def.text}
+                        body={def.description}
                     />
                 </Grid>
             ))}

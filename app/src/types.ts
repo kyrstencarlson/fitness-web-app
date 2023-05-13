@@ -13,15 +13,12 @@ export interface Workout {
   title?: string;
   rounds: number | string;
   totalWork: number;
-  //seconds
   work?: number;
-  //seconds
   rest?: number;
-  //seconds
   fluxWork?: number;
-  //seconds
   setRest?: number;
   pace?: string | null;
+  instruction?: string;
   comment?: string;
   stages?: Stage[];
   cycles?: Cycle[];
@@ -39,17 +36,14 @@ export interface Cycle {
   work: number;
   rest: number;
   pace?: string | null;
+  instruction?: string;
 }
 
 export interface Definition {
   type: DayType;
-  text: string;
+  description: string;
+  instruction?: string;
   stimuli?: string;
-}
-
-export interface PaceDefinition {
-  type: PaceType;
-  text: string;
 }
 
 export type DayType =
@@ -62,23 +56,17 @@ export type DayType =
   | "polarized"
   | "rocket races"
   | "flux"
-  | "hybrid"
+  | "hybrid block"
   | "flux stages"
   | "ascending"
   | "devour"
-  | "infinity"
-  | "towers"
-  | "afterburner"
-  | "atomic"
-  | "synthesis"
-  | string;
-
-export type PaceType =
-  | "race pace"
-  | "endurance pace"
-  | "consistency"
-  | "max effort"
-  | "time trial";
+  | "infinity block"
+  | "towers block"
+  | "afterburners block"
+  | "atomic block"
+  | "synthesis block"
+  | "ascending devour"
+  | "descending devour";
 
 export type Month = Day[];
 

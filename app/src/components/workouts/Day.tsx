@@ -4,7 +4,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { definitions } from '../../data/definitions';
 import ToolTipIcon from '../../utils/ToolTipIcon';
-import { getWeeksFromMonth } from '../../utils/getWeeksFromMonth';
+import { getWeeksFromMonth } from '../../utils/formatDays';
 import { Exercise } from './Exercise';
 import { months } from './Month';
 import SubmitForm from './SubmitForm';
@@ -29,7 +29,7 @@ const Day = () => {
         <>
             {week.map((days, i) => {
 
-                const def = definitions.find(def => def.type === days.type)?.text;
+                const def = definitions.find(def => def.type === days.type)?.description;
 
                 return (
                     <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
