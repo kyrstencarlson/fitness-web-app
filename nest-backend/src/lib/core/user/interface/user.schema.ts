@@ -19,6 +19,7 @@ export const userSchema = new Schema({
     type: String,
     required: true,
   },
+  roles: [{ type: String, enum: ['admin', 'engine', 'skills', 'strength'] }],
   profile: {
     name: { type: String },
     birthday: { type: Date },

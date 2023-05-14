@@ -1,16 +1,16 @@
 import { IUser } from '../../user';
+import {
+  IAuthParamsForgotPassword,
+  IAuthParamsRegister,
+} from './auth.interface';
 
 /**
  * @Controller('api/auth')
  */
 export interface IAuthController {
-  login(email: string, password: string): Promise<IUser>;
-  register(params: {
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }): Promise<IUser>;
+  login(IAuthParamsLogin): Promise<IUser>;
+  register(params: IAuthParamsRegister): Promise<IUser>;
   logout(): Promise<void>;
   // refreshToken(): Promise<void>;
-  forgotPassword(email: string): Promise<void>;
+  forgotPassword(params: IAuthParamsForgotPassword): Promise<void>;
 }

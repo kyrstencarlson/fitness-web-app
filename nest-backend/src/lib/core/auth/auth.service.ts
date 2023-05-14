@@ -1,9 +1,15 @@
 import { InjectModel } from '@nestjs/mongoose';
+import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { DB_ENGINE } from 'src/config';
-import { USER_SCHEMA_NAME, ModelUser } from '../user';
+import { ModelUser, USER_SCHEMA_NAME } from '../user';
 import { UserService } from '../user/user.service';
-import * as bcrypt from 'bcrypt';
+import {
+  IAuthParamsForgotPassword,
+  IAuthParamsLogin,
+  IAuthParamsRegister,
+  IAuthParamsResetPassword,
+} from './interface/auth.interface';
 
 export class AuthService {
   // eslint-disable-next-line no-useless-constructor
@@ -22,7 +28,8 @@ export class AuthService {
   comparePassword = (password: string, hash: string) =>
     bcrypt.compareSync(password, hash);
 
-  public async login(email: string, password: string) {
+  public async login(body: IAuthParamsLogin) {
+    const { email, password } = body;
     const user = await this._ModelUser.findOne({ email });
 
     if (!user) {
@@ -44,11 +51,7 @@ export class AuthService {
     console.log('logout');
   }
 
-  public async register(params: {
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) {
+  public async register(params: IAuthParamsRegister) {
     if (!params || !Object.keys(params).length) {
       throw new Error('Missing params');
     }
@@ -72,15 +75,11 @@ export class AuthService {
     }
   }
 
-  public async forgotPassword(email: string) {
+  public async forgotPassword(body: IAuthParamsForgotPassword) {
     console.log('forgotPassword');
   }
 
-  public async resetPassword(
-    token: string,
-    password: string,
-    confirmPassword: string,
-  ) {
+  public async resetPassword(body: IAuthParamsResetPassword) {
     console.log('resetPassword');
   }
 }
