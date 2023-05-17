@@ -10,6 +10,7 @@ import {
   IAuthParamsRegister,
   IAuthParamsResetPassword,
 } from './interface/auth.interface';
+import { JwtService } from '@nestjs/jwt';
 
 export class AuthService {
   // eslint-disable-next-line no-useless-constructor
@@ -17,6 +18,7 @@ export class AuthService {
     @InjectModel(USER_SCHEMA_NAME, DB_ENGINE)
     private readonly _ModelUser: Model<ModelUser>,
     private userService: UserService,
+    private jwtService: JwtService,
   ) {}
 
   hashPassword = (password: string) => {
@@ -42,9 +44,14 @@ export class AuthService {
       throw new Error('Password is incorrect');
     }
 
-    // generate token
+    const accessToken = await this.jwtService.signAsync({
+      email: user.email,
+      sub: user._id,
+    });
 
-    return user;
+    return {
+      accessToken,
+    };
   }
 
   public async logout() {
@@ -68,8 +75,13 @@ export class AuthService {
     const hashed = this.hashPassword(password);
     try {
       const newUser = await this.userService.create(email, hashed);
-      //token
-      return newUser;
+
+      const accessToken = await this.jwtService.signAsync({
+        email: newUser.email,
+        sub: newUser._id,
+      });
+
+      return { accessToken };
     } catch (error) {
       throw new Error(error);
     }
@@ -81,5 +93,9 @@ export class AuthService {
 
   public async resetPassword(body: IAuthParamsResetPassword) {
     console.log('resetPassword');
+  }
+
+  public async getUser(userId: string) {
+    return this.userService.findOne({ _id: userId });
   }
 }

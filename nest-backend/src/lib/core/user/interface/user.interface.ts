@@ -6,6 +6,7 @@ export enum EUserRoles {
 }
 
 export class IUser {
+  _id: string;
   email: string;
   password: string;
   token: string;

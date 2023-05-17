@@ -5,10 +5,17 @@ import { USER_SCHEMA_NAME, userSchema } from '../user';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './interface/auth.constant';
 
 @Module({
   imports: [
     UserModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '15m' },
+    }),
     MongooseModule.forFeature(
       [
         {

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { IUser } from '../user/interface/user.interface';
 import { AuthService } from './auth.service';
 import { IAuthController } from './interface';
@@ -7,13 +7,14 @@ import {
   IAuthParamsLogin,
   IAuthParamsRegister,
 } from './interface/auth.interface';
+import { AuthGuard } from './auth.guard';
 
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController implements IAuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(@Body() body: IAuthParamsLogin): Promise<IUser> {
+  async login(@Body() body: IAuthParamsLogin) {
     return this.authService.login(body);
   }
 
@@ -21,7 +22,7 @@ export class AuthController implements IAuthController {
   async register(
     @Body()
     body: IAuthParamsRegister,
-  ): Promise<IUser> {
+  ) {
     return this.authService.register(body);
   }
 
@@ -38,5 +39,11 @@ export class AuthController implements IAuthController {
   @Post('forgot-password')
   async forgotPassword(@Body() body: IAuthParamsForgotPassword) {
     return this.authService.forgotPassword(body);
+  }
+
+  @Get(':user_id')
+  @UseGuards(AuthGuard)
+  async getUser(@Param('user_id') userId: string) {
+    return this.authService.getUser(userId);
   }
 }

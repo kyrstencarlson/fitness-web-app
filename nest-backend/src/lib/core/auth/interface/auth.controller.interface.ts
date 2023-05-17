@@ -8,8 +8,8 @@ import {
  * @Controller('api/auth')
  */
 export interface IAuthController {
-  login(IAuthParamsLogin): Promise<IUser>;
-  register(params: IAuthParamsRegister): Promise<IUser>;
+  login(IAuthParamsLogin);
+  register(params: IAuthParamsRegister);
   logout(): Promise<void>;
   // refreshToken(): Promise<void>;
   forgotPassword(params: IAuthParamsForgotPassword): Promise<void>;

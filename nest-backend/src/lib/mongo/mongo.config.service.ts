@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
-  MongooseOptionsFactory,
   MongooseModuleOptions,
+  MongooseOptionsFactory,
 } from '@nestjs/mongoose';
 import { PROVIDER } from 'src/config';
 import { environment } from './environment';
@@ -29,6 +29,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
           readPreferenceTags: [{ provider: PROVIDER }],
         };
       default:
+        console.log('default', process.env.MONGO_TEST_URI);
         return {
           uri: process.env.MONGO_TEST_URI,
           readPreference: 'nearest',
