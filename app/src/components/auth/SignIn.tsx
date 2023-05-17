@@ -8,21 +8,34 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import { ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { lightTheme } from '../../theme';
+import { api } from '../../utils/api';
 import Copyright from './Copyright';
 
+
 const SignInSide = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    api.post('/auth/login', {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }).then(function (response) {
+      if (response.data.accessToken) {
+        localStorage.setItem('__engine__', response.data.accessToken);
+        navigate('/')
+      }
+    })
+
   };
 
   return (

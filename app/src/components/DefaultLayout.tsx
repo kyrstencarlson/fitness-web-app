@@ -83,7 +83,10 @@ export const ResponsiveDrawer = (props: Props) => {
 
         <Divider style={{ margin: "20px 0" }} />
 
-        <ListItemButton onClick={() => alert("logout")}>
+        <ListItemButton onClick={() => {
+            localStorage.removeItem('__engine__')
+            navigate('/login')
+          }}>
           <ListItemIcon sx={{ pl: 1 }}>
             <Logout />
           </ListItemIcon>
@@ -242,10 +245,5 @@ const drawerItems = [
     text: "Profile",
     icon: <AccountCircle />,
     path: "/profile",
-  },
-  {
-    text: "Login",
-    icon: <Login />,
-    path: "/login",
   },
 ];
