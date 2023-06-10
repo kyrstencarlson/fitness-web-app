@@ -1,4 +1,4 @@
-import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
+import { BarChart, Edit, ExpandMore, History, InfoOutlined, Timer } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,14 +11,17 @@ import { SubmitFormProps } from './SubmitForm';
 export interface DayProps {
     user_id: string;
     day: IEngineWorkoutDay;
+    timerOpen: boolean;
+    setWorkouts: (value: IEngineWorkoutDay['workout']) => void;
     setInitialValues: (value: SubmitFormProps['initialValues']) => void;
     setOpen: (value: boolean ) => void;
+    setTimerOpen: (value: boolean ) => void;
     log?: IEngineWorkoutLogBase
 }
 
 const Day = (props: DayProps) => {
 
-    const { user_id, day, log,  setInitialValues, setOpen } = props;
+    const { user_id, day, log,setTimerOpen, setWorkouts, timerOpen,  setInitialValues, setOpen } = props;
     const navigation = useNavigate();
 
     const windowSize = window.innerWidth;
@@ -75,6 +78,14 @@ const Day = (props: DayProps) => {
                                 </Grid>
 
                                 <Grid item xs={2.5} textAlign={'right'}>
+                                    <ToolTipIcon
+                                        icon={<Timer fontSize={fontSize}/>}
+                                        text={'Timer'}
+                                        onClick={() => {
+                                            setTimerOpen(!timerOpen)
+                                            setWorkouts(day.workout);
+                                        }}
+                                    />
                                     <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
                                     <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
                                     <ToolTipIcon

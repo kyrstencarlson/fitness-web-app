@@ -1,4 +1,5 @@
-import { Typography, Grid, Paper, CircularProgress } from '@mui/material';
+import { Typography, Grid, Paper, CircularProgress, IconButton, Box } from '@mui/material';
+import { EditSharp, Save } from '@mui/icons-material';
 import React from 'react';
 import { useFetchUser, useGetUserProfile } from '../../api';
 import { useAuth } from '../../utils/AuthContext';
@@ -10,73 +11,164 @@ const Profile = () => {
 
     const mobile = window.innerWidth < 650;
 
+    const [edit, setEdit] = React.useState(false);
+    const [password, setPassword] = React.useState(false);
+
+    const profile = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@doe.com',
+        height: 72,
+        weight: 180,
+        gender: 'male',
+    };
+
     if (!user || isLoading) {
         return <CircularProgress />;
     }
 
+    if (edit) {
+        return (
+            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
+                <Grid container justifyContent={'space-between'}>
+                    <Grid item xs={11}>
+                        <Typography variant="h4" component="div" gutterBottom>
+                            Profile
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <IconButton aria-label="edit" onClick={() => setEdit(!edit)}>
+                            <Save />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+
+                <Typography>
+                    Edit
+                </Typography>
+            </Paper>
+        )
+    }
+
     return (
         <>
-            <Grid item xs={12} sx={{ mb: 2}}>
-                <Typography textAlign={'center'} fontWeight={'600'} variant={'h4'}>
-                    Profile
-                </Typography>
-            </Grid>
+            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
 
-            <Paper sx={{
-                p: 2,
-                margin: mobile ?  'auto' : 4,
-                flexGrow: 1
-            }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
-                            Name
-                        </Typography>
-                        <Typography variant='h5' component='h2'>
-                            {user.profile?.first_name} {user.profile?.last_name}
+                <Grid container justifyContent={'space-between'}>
+                    <Grid item xs={11}>
+                        <Typography variant="h4" component="div" gutterBottom>
+                            Profile
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
+                    <Grid item xs={1}>
+                        <IconButton aria-label="edit" onClick={() => setEdit(!edit)}>
+                            <EditSharp />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+
+                <Grid container spacing={3} mt={2}>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            First Name
+                        </Typography>
+                        <Typography variant='body1' mb={2}>
+                            {profile.firstName}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            Last Name
+                        </Typography>
+                        <Typography variant='body1' mb={2}>
+                            {profile.lastName}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
                             Email
                         </Typography>
-                        <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            {user.email}
+                        <Typography variant='body1' mb={2}>
+                            {profile.email}
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
-                            Birthday
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            height
                         </Typography>
-                        <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            {user.profile?.birthday as any}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
-                            Gender
-                        </Typography>
-                        <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-                            {user.profile?.gender}
+                        <Typography variant='body1' mb={2}>
+                            {profile.height}
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
-                            Height
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            weight
                         </Typography>
-                        <Typography variant='h5' component='h2'>
-                            {user.profile?.height}
+                        <Typography variant='body1' mb={2}>
+                            {profile.weight}
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant='h5' component='h2'>
-                            Weight
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            gender
                         </Typography>
-                        <Typography variant='h5' component='h2'>
-                            {user.profile?.weight}
+                        <Typography variant='body1' mb={2}>
+                            {profile.gender}
                         </Typography>
                     </Grid>
                 </Grid>
+            </Paper>
+
+            <Box mt={4} />
+
+            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
+
+                <Grid container justifyContent={'space-between'}>
+                    <Grid item xs={11}>
+                        <Typography variant="h4" component="div" gutterBottom>
+                            Change Password
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <IconButton aria-label="edit" onClick={() => setPassword(!password)}>
+                            <EditSharp />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+
+               {password &&  <Grid container spacing={3} mt={2}>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            Current Password
+                        </Typography>
+                        <Typography variant='body1' mb={2}>
+                            {/* {profile.firstName} */}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            New Password
+                        </Typography>
+                        <Typography variant='body1' mb={2}>
+                            {/* {profile.lastName} */}
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                        <Typography variant='h6' mb={0}>
+                            Confirm New Password
+                        </Typography>
+                        <Typography variant='body1' mb={2}>
+                            {/* {profile.lastName} */}
+                        </Typography>
+                    </Grid>
+                </Grid>}
             </Paper>
         </>
     );

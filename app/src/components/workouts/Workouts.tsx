@@ -20,11 +20,14 @@ const Workouts = () => {
         total: month.length
     }));
 
+    const completed = sortedMonths.map((month, i) => {
+        return month.complete / month.total;
+    }).map((c)=> c === 1).reduce((a, b) => a && b);
+
 
     return (
         <Container>
-            <Grid container spacing={3} mt={2}>
-
+            <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography variant='h4' mb={1}>
                         Active
@@ -53,18 +56,16 @@ const Workouts = () => {
                     );
                 })}
 
-                <Grid item xs={12} sx={{
-                    mt: 4,
-                    mb: 2
-                }}>
+            {completed && <>
+                <Grid item xs={12} sx={{mt: 4,mb: 2}}>
                     <Divider />
                 </Grid>
 
-                <Grid item xs={12}>
-                    <Typography variant='h4' mb={1}>
-                        Completed
-                    </Typography>
-                </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant='h4' mb={1}>
+                            Completed
+                        </Typography>
+                    </Grid>
 
                 {sortedMonths.map((month, i) => {
                     const complete = month.complete / month.total;
@@ -87,6 +88,7 @@ const Workouts = () => {
                         </Grid>
                     );
                 })}
+            </>}
             </Grid>
         </Container>
     );
