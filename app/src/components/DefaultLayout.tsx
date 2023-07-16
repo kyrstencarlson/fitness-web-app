@@ -32,6 +32,8 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
+import { getScope } from "../utils/scope";
 
 const drawerWidth = 240;
 
@@ -45,11 +47,19 @@ export const ResponsiveDrawer = (props: Props) => {
   const { _window, children } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { logout, scope = [] } = useAuth();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const _scope = getScope(scope);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  React.useEffect(() => {
+      if (/admin/.test(pathname) && _scope === 'admin') {
+          navigate('/admin');
+      }
+  }, [pathname]);
 
   const theme = useTheme();
   const container =
@@ -83,10 +93,7 @@ export const ResponsiveDrawer = (props: Props) => {
 
         <Divider style={{ margin: "20px 0" }} />
 
-        <ListItemButton onClick={() => {
-            localStorage.removeItem('__engine__')
-            navigate('/login')
-          }}>
+        <ListItemButton onClick={() => logout()}>
           <ListItemIcon sx={{ pl: 1 }}>
             <Logout />
           </ListItemIcon>

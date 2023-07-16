@@ -21,6 +21,21 @@ import Results from './components/results/Results';
 import Month from './components/workouts/Month';
 import Workouts from './components/workouts/Workouts';
 import { darkTheme, lightTheme } from './theme';
+import { AuthProvider } from './utils/AuthContext';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            cacheTime: 5 * 60 * 1000,
+            staleTime: Infinity
+        }
+
+    }
+});
 
 const App = () => {
 
@@ -58,10 +73,18 @@ const App = () => {
     );
 
     return (
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-            <CssBaseline />
-            <RouterProvider router={router} />
-        </ThemeProvider>
+        <React.StrictMode>
+            {/* <QueryClientProvider client={queryClient}> */}
+            <AuthProvider>
+                <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+                    <CssBaseline />
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </AuthProvider>
+
+            {/* {isDevelopment && <ReactQueryDevtools initialIsOpen={false} />}
+           </QueryClientProvider> */}
+        </React.StrictMode>
     );
 };
 

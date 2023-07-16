@@ -2,17 +2,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import { ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { lightTheme } from '../../theme';
+import AuthLayout from '../AuthLayout';
 import Copyright from './Copyright';
 
 const ForgotPassword = () => {
@@ -26,23 +22,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://images.squarespace-cdn.com/content/v1/5650ba65e4b0e332af39118e/db2ea7ab-57c9-460a-9159-f8e0f0975655/Gains+Lab+Logo.png?format=1500w)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+    <AuthLayout>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -89,8 +69,7 @@ const ForgotPassword = () => {
             </Box>
           </Box>
         </Grid>
-      </Grid>
-    </ThemeProvider>
+      </AuthLayout>
   );
 }
 export default ForgotPassword;
