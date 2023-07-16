@@ -10,29 +10,24 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { api } from '../../utils/api';
+import { useAuth } from '../../utils/AuthContext';
 import AuthLayout from '../AuthLayout';
 import Copyright from './Copyright';
 
 
 const SignInSide = () => {
 
-  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    api.post('/auth/login', {
+    const payload = {
       email: data.get('email'),
       password: data.get('password'),
-    }).then(function (response) {
-      if (response.data.accessToken) {
-        localStorage.setItem('__engine__', response.data.accessToken);
-        navigate('/')
-      }
-    })
+    }
+
+    await login(payload as any);
 
   };
 

@@ -51,11 +51,14 @@ export class AuthService {
 
     return {
       accessToken,
+      _id: user._id,
+      roles: user.roles,
     };
   }
 
   public async logout() {
-    console.log('logout');
+    // await this.jwtService.
+    return;
   }
 
   public async register(params: IAuthParamsRegister) {

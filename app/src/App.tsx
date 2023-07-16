@@ -2,10 +2,12 @@ import { DarkMode, LightMode } from '@mui/icons-material';
 import { CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import React from 'react';
 import {
+    BrowserRouter,
     Route,
     RouterProvider,
     createBrowserRouter,
-    createRoutesFromElements
+    createRoutesFromElements,
+    useNavigate
 } from 'react-router-dom';
 import Admin from './components/Admin';
 import { ResponsiveDrawer } from './components/DefaultLayout';
@@ -37,6 +39,7 @@ const queryClient = new QueryClient({
     }
 });
 
+
 const App = () => {
 
     const [darkMode, setDarkMode] = React.useState(false);
@@ -54,13 +57,14 @@ const App = () => {
             <>
                 <Route path='/' element={<HeaderLayout />}>
                     <Route path='/' element={<Home />} />
-                    <Route path='admin' element={<Admin />} />
                     <Route path='profile' element={<Profile />} />
                     <Route path='workouts' element={<Workouts />} />
                     <Route path='workouts/:monthId' element={<Month />} />
                     <Route path='results' element={<Results />} />
                     <Route path='library' element={<Library />} />
                     <Route path='leaderboard' element={<Leaderboard />} />
+                    {/* admin */}
+                    <Route path='admin' element={<Admin />} />
                 </Route>
 
                 <Route path='*' element={<ErrorPage />} />
@@ -74,6 +78,7 @@ const App = () => {
 
     return (
         <React.StrictMode>
+
             {/* <QueryClientProvider client={queryClient}> */}
             <AuthProvider>
                 <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>

@@ -47,9 +47,9 @@ export const ResponsiveDrawer = (props: Props) => {
   const { _window, children } = props;
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { logout, scope = [] } = useAuth();
+  const { logout, roles = [] } = useAuth();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const _scope = getScope(scope);
+  const _scope = getScope(roles);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

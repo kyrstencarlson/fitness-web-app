@@ -2,3 +2,4 @@ node_modules
 
 ./nest-backend/node_modules
 ./nest-backend/dist
+./nest-backend/.env

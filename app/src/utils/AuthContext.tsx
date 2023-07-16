@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { api } from './api';
 import { toast } from './alerts';
+import { api } from './api';
 import * as auth from './auth-provider';
-import { useNavigate, useNavigation } from 'react-router-dom';
 
 interface AuthContextType extends Partial<auth.AuthResponse> {
     login(payload: { email: string; password: string }): void;
@@ -50,12 +49,11 @@ export interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
-    // const navigate = useNavigation();
+    // const navigate = useNavigate();
     const [authorization, setAuth] = React.useState<string>('');
-    const { authorization: storedAuthToken, id, scope } = auth.getAuth();
+    const { accessToken: storedAuthToken, _id, roles } = auth.getAuth();
 
     const handle401 = () => {
-        console.log('401');
         auth.forceLogout();
         setAuth('');
         window.location.assign('/login');
@@ -72,7 +70,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         if (!authorization && !storedAuthToken) {
             console.log('no auth');
-            // window.location.assign('/login');
+            if (!window.location.pathname.includes('login')) {
+                console.log('redirecting to login');
+                window.location.replace('/login');
+            }
         }
 
     }, [authorization, storedAuthToken]);
@@ -81,24 +82,26 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const user = await auth.login(payload);
 
         if (user) {
-            setAuth(user?.authorization);
+            setAuth(user.accessToken);
+            window.location.assign('/');
         }
     };
 
     const logout = async () => {
         await auth.logout();
         setAuth('');
+        window.location.assign('/login');
     };
 
     const contextValue = React.useMemo(() => ({
         login,
         logout,
         authorization,
-        id,
-        scope
+        _id,
+        roles
     }), [authorization]);
 
-    return <AuthContext.Provider value={contextValue}> {children || <></>} </AuthContext.Provider>;
+    return <AuthContext.Provider value={contextValue}> {children} </AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextType => React.useContext(AuthContext);

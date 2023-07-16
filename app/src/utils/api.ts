@@ -3,7 +3,7 @@ import { toast } from "./alerts";
 
 const baseURL = "http://localhost:4000";
 
-const storedToken = JSON.parse(localStorage.getItem("__engine__") || "{}");
+const storedToken = localStorage.getItem("__engine__") || "";
 
 const axiosOpts = {
   baseURL: `${baseURL}/api/`,
@@ -47,5 +47,5 @@ api.interceptors.response.use(
 );
 
 if (storedToken) {
-  addAuthorization(storedToken.authorization);
+  addAuthorization(storedToken);
 }

@@ -1,12 +1,12 @@
 import { toast } from "./alerts";
 import { api, addAuthorization, removeAuthorization } from "./api";
 
-export const localStorageKey = "__engine-app__";
+export const localStorageKey = "__engine__";
 
 export type AuthResponse = {
-  authorization: string;
-  id: string;
-  scope: string[];
+  accessToken: string;
+  _id: string;
+  roles: string[];
 };
 
 export const getAuth = () =>
@@ -16,18 +16,18 @@ export const getAuth = () =>
 
 export const login = async (payload: { email: string; password: string }) =>
   api
-    .put("/auth", payload)
+    .post("/auth/login", payload)
     .then(({ data }: { data: AuthResponse }) => {
-      const { scope } = data;
+      // const { scope } = data;
 
-      const hasAccess = scope.filter((_scope) => _scope !== "user").length;
+      // const hasAccess = scope.filter((_scope) => _scope !== "user").length;
 
-      if (!hasAccess) {
-        throw new Error("Access Denied");
-      }
+      // if (!hasAccess) {
+      //   throw new Error("Access Denied");
+      // }
 
       localStorage.setItem(localStorageKey, JSON.stringify(data));
-      addAuthorization(data.authorization);
+      addAuthorization(data.accessToken);
       toast({
         icon: "success",
         title: "Signed In",
@@ -43,9 +43,10 @@ export const login = async (payload: { email: string; password: string }) =>
     });
 
 export const forceLogout = () => {
+  console.log("forceLogout");
   localStorage.removeItem(localStorageKey);
   removeAuthorization();
 };
 
 export const logout = () =>
-  api.delete("/auth").then(forceLogout).catch(forceLogout);
+  api.post("/auth/logout").then(forceLogout).catch(forceLogout);
