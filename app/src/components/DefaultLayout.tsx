@@ -1,22 +1,25 @@
 import {
   AccountCircle,
-  AccountCircleTwoTone,
   AdminPanelSettings,
   ArrowBack,
   Book,
+  Edit,
+  ExpandLess,
+  ExpandMore,
   FitnessCenter,
   Home,
   InfoOutlined,
   Leaderboard,
   LibraryBooks,
-  Login,
   Logout,
   Menu,
+  Rocket
 } from "@mui/icons-material";
 import {
   AppBar,
   Box,
   Button,
+  Collapse,
   CssBaseline,
   Divider,
   Drawer,
@@ -28,7 +31,7 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -36,6 +39,13 @@ import { useAuth } from "../utils/AuthContext";
 import { getScope } from "../utils/scope";
 
 const drawerWidth = 240;
+
+interface NestedListProps {
+  isOpen?: boolean;
+  type: 'engine' | 'skills' | 'strength';
+  icon: React.ReactNode;
+  drawerItems: any[];
+}
 
 interface Props {
   _window?: () => Window;
@@ -56,7 +66,7 @@ export const ResponsiveDrawer = (props: Props) => {
   };
 
   React.useEffect(() => {
-      if (/admin/.test(pathname) && _scope === 'admin') {
+      if (/admin/.test(pathname) && _scope.includes('admin')) {
           navigate('/admin');
       }
   }, [pathname]);
@@ -67,29 +77,85 @@ export const ResponsiveDrawer = (props: Props) => {
 
   const path = pathname.split("/")[1];
   const currentLocation =
-    drawerItems.find((item) => item.path === pathname) ||
-    drawerItems.find((item) => item.text.toLowerCase() === path);
+    engineDrawerItems.find((item) => item.path === pathname) ||
+    engineDrawerItems.find((item) => item.text.toLowerCase() === path);
   const currentIndex = currentLocation
-    ? drawerItems.indexOf(currentLocation)
+    ? engineDrawerItems.indexOf(currentLocation)
     : -1;
+
+  const NestedList = (props: NestedListProps) => {
+    const { isOpen = true, icon, drawerItems, type } = props;
+    const [open, setOpen] = React.useState(isOpen);
+
+
+    //TODO
+    // if (type === 'engine' && !_scope.includes('engine') && !_scope.includes('admin')) {
+    //   return null;
+    // }
+
+    // if (type === 'skills' && !_scope.includes('skills') && !_scope.includes('admin')) {
+    //   return null;
+    // }
+
+    // if (type === 'strength' && !_scope.includes('strength') && !_scope.includes('admin')) {
+    //   return null;
+    // }
+
+    const handleClick = () => {
+      setOpen(!open);
+    };
+
+    return (
+      <List
+        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+        component="nav"
+      >
+        <ListItemButton onClick={handleClick}>
+          <ListItemIcon sx={{ pl: 1 }}>
+            {icon}
+          </ListItemIcon>
+          <ListItemText primary={type} sx={{ textTransform: 'capitalize'}} />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {drawerItems.map((item, index) => {
+            const active = currentIndex === index;
+
+            return (
+              <ListItem key={item.path} selected={active} disablePadding>
+                <ListItemButton onClick={() => item.path ? navigate(item.path) : window.open(item.open, '_blank')}>
+                  <ListItemIcon sx={{ pl: 3 }}>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ textTransform: "capitalize", pl: 2 }} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+          </List>
+        </Collapse>
+      </List>
+    );
+  }
+
 
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
-      <List>
-        {drawerItems.map((item, index) => {
-          const active = currentIndex === index;
 
-          return (
-            <ListItem key={item.path} selected={active} disablePadding>
-              <ListItemButton onClick={() => item.path ? navigate(item.path) : window.open(item.open, '_blank')}>
-                <ListItemIcon sx={{ pl: 1 }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} sx={{ textTransform: "capitalize" }} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+      <List>
+        <ListItemButton onClick={() => navigate('/')}>
+          <ListItemIcon sx={{ pl: 1 }}>
+            <Home />
+          </ListItemIcon>
+          <ListItemText primary={"Home"} />
+        </ListItemButton>
+
+        <NestedList type="engine" icon={<Rocket />} drawerItems={engineDrawerItems} />
+
+        {/* todo skills app */}
+        {/* <NestedList type="skills" icon={<Edit />} drawerItems={[]} isOpen={false} /> */}
 
         <Divider style={{ margin: "20px 0" }} />
 
@@ -102,6 +168,13 @@ export const ResponsiveDrawer = (props: Props) => {
 
         <Divider style={{ margin: "20px 0" }} />
 
+        <ListItemButton onClick={() => navigate('/profile')}>
+          <ListItemIcon sx={{ pl: 1 }}>
+            <AccountCircle />
+          </ListItemIcon>
+          <ListItemText primary={"Profile"} />
+        </ListItemButton>
+
         <ListItemButton onClick={() => navigate('/admin')}>
           <ListItemIcon sx={{ pl: 1 }}>
             <AdminPanelSettings />
@@ -109,6 +182,7 @@ export const ResponsiveDrawer = (props: Props) => {
           <ListItemText primary={"Admin"} />
         </ListItemButton>
       </List>
+
     </div>
   );
 
@@ -143,6 +217,7 @@ export const ResponsiveDrawer = (props: Props) => {
           <Box sx={{ flexGrow: 1 }} />
 
           {children}
+
         </Toolbar>
       </AppBar>
       <Box
@@ -217,40 +292,31 @@ export const ResponsiveDrawer = (props: Props) => {
   );
 };
 
-const drawerItems = [
-  {
-    text: "Home",
-    icon: <Home />,
-    path: "/",
-  },
+
+const engineDrawerItems = [
   {
     text: "Workouts",
     icon: <FitnessCenter />,
-    path: "/workouts",
+    path: "/engine/workouts",
   },
   {
     text: "Results",
     icon: <Book />,
-    path: "/results",
+    path: "/engine/results",
   },
   {
     text: "Leaderboard",
     icon: <Leaderboard />,
-    path: "/leaderboard",
+    path: "/engine/leaderboard",
   },
   {
     text: "Library",
     icon: <LibraryBooks />,
-    path: "/library",
+    path: "/engine/library",
   },
   {
     text: "About",
     icon: <InfoOutlined />,
     open: 'https://www.thegainslab.com/yoeinfo'
-  },
-  {
-    text: "Profile",
-    icon: <AccountCircle />,
-    path: "/profile",
   },
 ];

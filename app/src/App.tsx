@@ -57,12 +57,13 @@ const App = () => {
             <>
                 <Route path='/' element={<HeaderLayout />}>
                     <Route path='/' element={<Home />} />
+                    <Route path='/engine/workouts' element={<Workouts />} />
+                    <Route path='/engine/workouts/:monthId' element={<Month />} />
+                    <Route path='/engine/results' element={<Results />} />
+                    <Route path='/engine/library' element={<Library />} />
+                    <Route path='/engine/leaderboard' element={<Leaderboard />} />
+                    {/* user */}
                     <Route path='profile' element={<Profile />} />
-                    <Route path='workouts' element={<Workouts />} />
-                    <Route path='workouts/:monthId' element={<Month />} />
-                    <Route path='results' element={<Results />} />
-                    <Route path='library' element={<Library />} />
-                    <Route path='leaderboard' element={<Leaderboard />} />
                     {/* admin */}
                     <Route path='admin' element={<Admin />} />
                 </Route>
