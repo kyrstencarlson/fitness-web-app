@@ -12,6 +12,8 @@ export class IUser {
   token: string;
   roles: EUserRoles[];
   profile: IUserProfile;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class IUserProfile {
