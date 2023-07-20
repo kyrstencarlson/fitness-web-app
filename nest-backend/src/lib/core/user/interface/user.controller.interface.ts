@@ -1,4 +1,4 @@
-import { IUser } from './user.interface';
+import { IUser, IUserParamsCreate } from './user.interface';
 
 /**
  * @Controller('api/user')
@@ -6,10 +6,9 @@ import { IUser } from './user.interface';
 export interface IUserController {
   /**
    * @Post()
-   * @param email string
-   * @param password string
+   * @param params IUserParamsCreate
    */
-  create(email: string, password: string): Promise<IUser>;
+  create(params: IUserParamsCreate): Promise<IUser>;
   /**
    * @Post('get')
    * @param params Partial<IUser>

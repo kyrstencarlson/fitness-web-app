@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../auth/auth.guard';
 import { IEngineWorkoutController } from './interface/workout.controller.interface';
 import { EngineWorkoutService } from './workout.service';
@@ -16,9 +16,14 @@ export class EngineWorkoutController implements IEngineWorkoutController {
     return this.userService.findOne(params);
   }
 
-  @Post(':id')
+  @Get(':id')
   async getById(@Param('id') _id: string): Promise<IEngineWorkoutDay> {
     return this.userService.getById(_id);
+  }
+
+  @Get()
+  async listAll(): Promise<IEngineWorkoutDay[]> {
+    return this.userService.listAll();
   }
 
   @Post('month/:month')

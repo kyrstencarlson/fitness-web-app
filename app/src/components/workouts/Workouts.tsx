@@ -1,14 +1,19 @@
-import { Typography, Grid, Container, Card, CardActionArea, CardContent, CardHeader, LinearProgress, Divider } from '@mui/material';
+import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { months } from './Month';
+import { useGetMonthsFormatted } from '../../api';
 
 const Workouts = () => {
 
     const navigate = useNavigate();
+    const { data: months, isLoading } = useGetMonthsFormatted();
+
+    if (!months || isLoading) {
+        return <CircularProgress />;
+    }
 
     const sortedMonths = months.map((month, i) => ({
-        complete: 0,
+        complete: month.filter(day => day.completed).length,
         total: month.length
     }));
 

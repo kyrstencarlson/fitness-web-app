@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../auth/auth.guard';
 import {
   IEngineWorkoutLog,
@@ -18,7 +18,7 @@ export class EngineWorkoutLogController
     private readonly _EngineWorkoutLogService: EngineWorkoutLogService,
   ) {}
 
-  @Post(':user_id/find')
+  @Post(':user_id/find-one')
   async findOne(
     @Param('user_id') user_id: string,
     @Body() params: Partial<IEngineWorkoutLog>,
@@ -26,9 +26,14 @@ export class EngineWorkoutLogController
     return this._EngineWorkoutLogService.findOne(user_id, params);
   }
 
-  @Post(':id')
+  @Get(':id')
   async getById(@Param('id') _id: string): Promise<IEngineWorkoutLog> {
     return this._EngineWorkoutLogService.getById(_id);
+  }
+
+  @Get(':id/find')
+  async getAllForUser(@Param('id') _id: string): Promise<IEngineWorkoutLog[]> {
+    return this._EngineWorkoutLogService.allForUser(_id);
   }
 
   @Post(':user_id/month/:month')
@@ -48,14 +53,14 @@ export class EngineWorkoutLogController
   }
 
   @Post('modality')
-  async getPhase(
+  async getModality(
     @Body() body: IEngineWorkoutLogParamsModality,
   ): Promise<IEngineWorkoutLog[]> {
     return this._EngineWorkoutLogService.getAllByModality(body);
   }
 
-  @Post('units')
-  async getPhaseMonth(
+  @Post('modality-units')
+  async getModalityAndUnits(
     @Body() body: IEngineWorkoutLogParamsModalityUnits,
   ): Promise<IEngineWorkoutLog[]> {
     return this._EngineWorkoutLogService.getAllByModalityAndUnits(body);

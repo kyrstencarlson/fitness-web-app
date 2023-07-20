@@ -1,24 +1,20 @@
-import { Container, Grid, Typography } from '@mui/material';
+import { CircularProgress, Container, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { allDaysFormatted } from '../../data/data';
+import { useFetchMonth } from '../../api';
 import Week from './Week';
-import { allDays } from '../../data/import';
-import { reshapeData } from '../../data/script';
-import { getMonths, getWeeks, getWeeksFromMonth } from '../../utils/formatDays';
-
-// const data = reshapeData(allDays);
-// export const months = getMonths(data);
-
-export const months = getMonths(allDaysFormatted);
 
 
 const Month = () => {
 
     const { pathname } = useLocation();
     const m = pathname.split('/')[2];
-    const month = months[+m - 1].flat();
-    const weeks = getWeeksFromMonth(month);
+    const { data: weeks, isLoading } = useFetchMonth(+m-1);
+
+    if (!weeks || isLoading) {
+        return <CircularProgress />;
+    }
+
 
     return (
         <Container>

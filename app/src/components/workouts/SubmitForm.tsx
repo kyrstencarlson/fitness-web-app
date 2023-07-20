@@ -5,6 +5,7 @@ import { Field, Form } from 'react-final-form';
 import DropdownSelect from '../../utils/DropdownSelect';
 import { FinalFormErrors, requiredFields } from '../../utils/final-form';
 import { toast } from '../../utils/alerts';
+import { EWorkoutLogModality, EWorkoutLogUnits } from '../../../../types';
 
 interface Day {
     month: number;
@@ -29,32 +30,8 @@ interface FormProps {
     closeDialog: () => void;
 }
 
-const units = ['meters', 'calories', 'watts', 'kilometers', 'miles', 'reps'];
-const modality = ['bike erg', 'rowing', 'assault bike', 'echo bike', 'other bike', 'ski erg', 'run (treadmill)', 'run', 'metcon'];
-// const location = ['home gyn', 'gym / box', 'travel gym', 'hotel gym'];
-// const time = ['1st thing', 'morning', 'afternoon', 'evening'];
-// const rating = [
-//     {
-//         value: 1,
-//         label: '1/5 - Poor'
-//     },
-//     {
-//         value: 2,
-//         label: '2/5 - Fair'
-//     },
-//     {
-//         value: 3,
-//         label: '3/5 - Average'
-//     },
-//     {
-//         value: 4,
-//         label: '4/5 - Good'
-//     },
-//     {
-//         value: 5,
-//         label: '5/5 - Excellent'
-//     }
-// ];
+const units = Object.values(EWorkoutLogUnits)
+const modality = Object.values(EWorkoutLogModality)
 
 const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
 

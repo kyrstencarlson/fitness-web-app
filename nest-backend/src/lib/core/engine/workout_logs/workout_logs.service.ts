@@ -73,6 +73,20 @@ export class EngineWorkoutLogService {
     }
   }
 
+  public async allForUser(user_id: string): Promise<IEngineWorkoutLog[]> {
+    if (!user_id) {
+      throw new BadRequestException('user id is required');
+    }
+
+    const logs = await this._ModelEngineWorkoutLog.find({ user: user_id });
+
+    if (!logs) {
+      throw new BadRequestException('Could not find workout logs for user');
+    }
+
+    return logs;
+  }
+
   public async findOne(
     user_id: string,
     params: Omit<Partial<IEngineWorkoutLog>, 'user'>,

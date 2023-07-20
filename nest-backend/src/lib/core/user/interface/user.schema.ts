@@ -1,5 +1,5 @@
 import { Document, Schema } from 'mongoose';
-import { IUser } from './user.interface';
+import { EUserGender, EUserRoles, IUser } from './user.interface';
 
 export const userSchema = new Schema(
   {
@@ -16,14 +16,15 @@ export const userSchema = new Schema(
         },
       },
     },
-    password: {
-      type: String,
-      required: true,
-    },
-    roles: [{ type: String, enum: ['admin', 'engine', 'skills', 'strength'] }],
+    password: { type: String, required: true },
+    roles: [{ type: String, enum: EUserRoles }],
     profile: {
-      name: { type: String },
+      first_name: { type: String },
+      last_name: { type: String },
       birthday: { type: Date },
+      gender: { type: String, enum: EUserGender },
+      height: { type: Number },
+      weight: { type: Number },
     },
   },
   {

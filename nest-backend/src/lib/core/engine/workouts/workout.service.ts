@@ -46,6 +46,14 @@ export class EngineWorkoutService {
     return workout;
   }
 
+  public async listAll(): Promise<IEngineWorkoutDay[]> {
+    try {
+      return await this._ModelEngineWorkout.find();
+    } catch (error) {
+      throw new BadRequestException('Could not find workouts');
+    }
+  }
+
   public async getAllForMonth(month: number): Promise<IEngineWorkoutDay[]> {
     if (!month) {
       throw new BadRequestException('Month is required');

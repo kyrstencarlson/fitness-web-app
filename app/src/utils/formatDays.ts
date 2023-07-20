@@ -1,6 +1,7 @@
+import { IEngineWorkoutDay } from "../../../types";
 import { Day, Month } from "../types";
 
-export const getMonths = (months: Day[]) =>
+export const getMonths = (months: IEngineWorkoutDay[]) =>
   months.reduce((arr, item, index) => {
     //20 exercises per month
     const monthIndex = Math.floor(index / 20);
@@ -13,9 +14,9 @@ export const getMonths = (months: Day[]) =>
     arr[monthIndex].push(item);
 
     return arr;
-  }, [] as Month[]);
+  }, [] as IEngineWorkoutDay[][]);
 
-export const getWeeksFromMonth = (month: Month) =>
+export const getWeeksFromMonth = (month: IEngineWorkoutDay[]) =>
   month.reduce((arr, item, index) => {
     //5 exercises per week
     const chunkIndex = Math.floor(index / 5);
@@ -28,9 +29,9 @@ export const getWeeksFromMonth = (month: Month) =>
     arr[chunkIndex].push(item);
 
     return arr;
-  }, [] as Day[][]);
+  }, [] as IEngineWorkoutDay[][]);
 
-export const getWeeks = (days: Day[]) =>
+export const getWeeks = (days: IEngineWorkoutDay[]) =>
   days
     .reduce((arr, item, index) => {
       //5 exercises per week
@@ -44,7 +45,7 @@ export const getWeeks = (days: Day[]) =>
       arr[chunkIndex].push(item);
 
       return arr;
-    }, [] as Day[][])
+    }, [] as IEngineWorkoutDay[][])
     .reduce((arr, item, index) => {
       //4 weeks per month
       const chunkIndex = Math.floor(index / 4);
@@ -57,4 +58,4 @@ export const getWeeks = (days: Day[]) =>
       arr[chunkIndex].push(item);
 
       return arr;
-    }, [] as Day[][][]);
+    }, [] as IEngineWorkoutDay[][][]);

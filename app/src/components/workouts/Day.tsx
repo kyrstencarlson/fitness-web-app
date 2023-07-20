@@ -1,29 +1,33 @@
 import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, Dialog, DialogContent, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Dialog, DialogContent, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { definitions } from '../../data/definitions';
 import ToolTipIcon from '../../utils/ToolTipIcon';
 import { getWeeksFromMonth } from '../../utils/formatDays';
 import { Exercise } from './Exercise';
-import { months } from './Month';
 import SubmitForm from './SubmitForm';
+import { useFetchMonth } from '../../api';
 
 const Day = () => {
 
     const navigation = useNavigate();
     const { pathname } = useLocation();
     const [, , m, w] = pathname.split('/');
-    const month = months[+m - 1];
-    const week = getWeeksFromMonth(month)[+w - 1];
+
+    const { data: weeks, isLoading } = useFetchMonth(+m-1);
+    const week = weeks?.[+w - 1];
 
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
     const fontSize = mobile ? 'small' : 'medium';
 
-
     const [open, setOpen] = React.useState(false);
     const [initialValues, setInitialValues] = React.useState<any>(null);
+
+    if (!week || isLoading) {
+        return <CircularProgress />;
+    }
 
     return (
         <>

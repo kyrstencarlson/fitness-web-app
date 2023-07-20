@@ -5,6 +5,12 @@ export enum EUserRoles {
   STRENGTH = 'strength',
 }
 
+export enum EUserGender {
+  MALE = 'male',
+  FEMALE = 'female',
+  NOT_SPECIFIED = 'not specified',
+}
+
 export class IUser {
   _id: string;
   email: string;
@@ -17,8 +23,12 @@ export class IUser {
 }
 
 export class IUserProfile {
-  name: string;
+  first_name: string;
+  last_name: string;
   birthday: Date;
+  gender: EUserGender;
+  height: number;
+  weight: number;
 }
 
 export class IUserParamsCreate {
@@ -37,9 +47,13 @@ export class IUserParamsUpdate {
   email?: string;
   password?: string;
   token?: string;
-  roles?: EUserRoles[];
+  roles?: IUser['roles'];
   profile?: {
-    name?: string;
-    birthday?: Date;
+    first_name?: IUserProfile['first_name'];
+    last_name?: IUserProfile['last_name'];
+    birthday?: IUserProfile['birthday'];
+    gender?: IUserProfile['gender'];
+    height?: IUserProfile['height'];
+    weight?: IUserProfile['weight'];
   };
 }
