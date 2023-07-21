@@ -28,16 +28,16 @@ export class EngineWorkoutController implements IEngineWorkoutController {
 
   @Post('month/:month')
   async getAllForMonth(
-    @Param('month') month: number,
+    @Param('month') month: string,
   ): Promise<IEngineWorkoutDay[]> {
-    return this.userService.getAllForMonth(month);
+    return this.userService.getAllForMonth(+month);
   }
 
   @Post('week/:week')
   async getAllForWeek(
-    @Param('week') week: number,
+    @Param('week') week: string,
   ): Promise<IEngineWorkoutDay[]> {
-    return this.userService.getAllForWeek(week);
+    return this.userService.getAllForWeek(+week);
   }
 
   @Post('type/:type')
@@ -48,21 +48,21 @@ export class EngineWorkoutController implements IEngineWorkoutController {
   }
 
   @Post('phase/:phase')
-  async getPhase(@Param('phase') phase: number): Promise<IEngineWorkoutDay[]> {
-    return this.userService.getAllByPhase(phase);
+  async getPhase(@Param('phase') phase: string): Promise<IEngineWorkoutDay[]> {
+    return this.userService.getAllByPhase(+phase);
   }
 
   @Post('phase/month/:month')
   async getPhaseMonth(
-    @Param('month') month: number,
+    @Param('month') month: string,
   ): Promise<IEngineWorkoutDay[]> {
-    return this.userService.getAllByPhaseMonth(month);
+    return this.userService.getAllByPhaseMonth(+month);
   }
 
   @Post('phase/week/:week')
   async getPhaseWeek(
-    @Param('week') week: number,
+    @Param('week') week: string,
   ): Promise<IEngineWorkoutDay[]> {
-    return this.userService.getAllByPhaseWeek(week);
+    return this.userService.getAllByPhaseWeek(+week);
   }
 }

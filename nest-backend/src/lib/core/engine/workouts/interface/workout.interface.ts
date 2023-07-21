@@ -7,7 +7,6 @@ export interface IEngineWorkoutDay {
   phaseWeek?: number;
   phaseMonth?: number;
   workout: IWorkout[];
-  completed: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

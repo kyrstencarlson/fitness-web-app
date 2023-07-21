@@ -6,113 +6,120 @@ import { definitions } from '../../data/definitions';
 import ToolTipIcon from '../../utils/ToolTipIcon';
 import { getWeeksFromMonth } from '../../utils/formatDays';
 import { Exercise } from './Exercise';
-import SubmitForm from './SubmitForm';
+import SubmitForm, { SubmitFormProps } from './SubmitForm';
 import { useFetchMonth } from '../../api';
+import { getAuth } from '../../utils/auth-provider';
 
 const Day = () => {
 
-    const navigation = useNavigate();
-    const { pathname } = useLocation();
-    const [, , m, w] = pathname.split('/');
+    // const {_id } = getAuth()
 
-    const { data: weeks, isLoading } = useFetchMonth(+m-1);
-    const week = weeks?.[+w - 1];
+    // const navigation = useNavigate();
+    // const { pathname } = useLocation();
+    // const [, , , m, w] = pathname.split('/');
 
-    const windowSize = window.innerWidth;
-    const mobile = windowSize < 650;
-    const fontSize = mobile ? 'small' : 'medium';
+    // const { data: weeks, isLoading } = useFetchMonth(+m);
+    // const week = weeks?.[+w];
 
-    const [open, setOpen] = React.useState(false);
-    const [initialValues, setInitialValues] = React.useState<any>(null);
+    // const windowSize = window.innerWidth;
+    // const mobile = windowSize < 650;
+    // const fontSize = mobile ? 'small' : 'medium';
 
-    if (!week || isLoading) {
-        return <CircularProgress />;
-    }
+    // const [open, setOpen] = React.useState(false);
+    // const [initialValues, setInitialValues] = React.useState<SubmitFormProps['initialValues'] | null>(null);
 
-    return (
-        <>
-            {week.map((days, i) => {
+    // if (!week || isLoading) {
+    //     return <CircularProgress />;
+    // }
 
-                const def = definitions.find(def => def.type === days.type)?.description;
+    // window.alert('user id'+ _id)
 
-                return (
-                    <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMore />}
-                            aria-controls='panel1a-content'
-                            id='panel1a-header'
-                        >
-                            <Typography
-                                sx={{
-                                    width: '15%',
-                                    flexShrink: 0,
-                                    alignSelf: 'center'
-                                }}
-                            >
-                                Day {days.day}
-                            </Typography>
+    // return (
+    //     <>
+    //         {week.map((days, i) => {
 
-                            <Typography color={'text.secondary'} textTransform={'capitalize'}
-                                sx={{
-                                    width: '70%',
-                                    alignSelf: 'center'
-                                }}>
-                                {days.type}
-                            </Typography>
+    //             const def = definitions.find(def => def.type === days.type)?.description;
 
-                            <Typography color={'text.secondary'} sx={{
-                                width: '10%',
-                                alignSelf: 'center'
-                            }}>
-                                {/* {days.completed ? `Completed Pace: ${pace}` : null} */}
-                            </Typography>
+    //             return (
+    //                 <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
+    //                     <AccordionSummary
+    //                         expandIcon={<ExpandMore />}
+    //                         aria-controls='panel1a-content'
+    //                         id='panel1a-header'
+    //                     >
+    //                         <Typography
+    //                             sx={{
+    //                                 width: '15%',
+    //                                 flexShrink: 0,
+    //                                 alignSelf: 'center'
+    //                             }}
+    //                         >
+    //                             Day {days.day}
+    //                         </Typography>
 
-                            <ToolTipIcon
-                                text={def as string}
-                                icon={<InfoOutlined sx={{ height: '20px' }} />}
-                                placement='bottom-start'
-                            />
-                        </AccordionSummary>
+    //                         <Typography color={'text.secondary'} textTransform={'capitalize'}
+    //                             sx={{
+    //                                 width: '70%',
+    //                                 alignSelf: 'center'
+    //                             }}>
+    //                             {days.type}
+    //                         </Typography>
 
-                        <AccordionDetails>
-                            <Grid container>
-                                <Grid item xs={9.5}>
-                                    <Exercise workouts={days.workout} />
-                                </Grid>
+    //                         <Typography color={'text.secondary'} sx={{
+    //                             width: '10%',
+    //                             alignSelf: 'center'
+    //                         }}>
+    //                             {/* {days.completed ? `Completed Pace: ${pace}` : null} */}
+    //                         </Typography>
 
-                                <Grid item xs={2.5} textAlign={'right'}>
-                                    <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
-                                    <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
-                                    <ToolTipIcon
-                                        icon={<Edit fontSize={fontSize} />}
-                                        text={'Submit / Edit'}
-                                        onClick={() => {
-                                            setOpen(true);
-                                            setInitialValues({
-                                                day: i + 1,
-                                                week: +w,
-                                                month: +m,
-                                                entires: ''
-                                            });
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </AccordionDetails>
-                    </Accordion>
-                );
-            })}
+    //                         <ToolTipIcon
+    //                             text={def as string}
+    //                             icon={<InfoOutlined sx={{ height: '20px' }} />}
+    //                             placement='bottom-start'
+    //                         />
+    //                     </AccordionSummary>
 
-            <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
-                <DialogContent>
-                    <SubmitForm
-                        initialValues={initialValues}
-                        closeDialog={() => setOpen(false)}
-                    />
-                </DialogContent>
-            </Dialog>
-        </>
-    );
+    //                     <AccordionDetails>
+    //                         <Grid container>
+    //                             <Grid item xs={9.5}>
+    //                                 <Exercise workouts={days.workout} />
+    //                             </Grid>
+
+    //                             <Grid item xs={2.5} textAlign={'right'}>
+    //                                 <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
+    //                                 <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
+    //                                 <ToolTipIcon
+    //                                     icon={<Edit fontSize={fontSize} />}
+    //                                     text={'Submit / Edit'}
+    //                                     onClick={() => {
+    //                                         setOpen(true);
+    //                                         setInitialValues({
+    //                                             workout: days._id,
+    //                                             user_id: _id,
+    //                                             day: i + 1,
+    //                                             week: +w,
+    //                                             month: +m,
+    //                                             totalWork: days.workout.reduce((acc, curr) => acc + curr.totalWork, 0),
+    //                                         });
+    //                                     }}
+    //                                 />
+    //                             </Grid>
+    //                         </Grid>
+    //                     </AccordionDetails>
+    //                 </Accordion>
+    //             );
+    //         })}
+
+    //         <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
+    //             <DialogContent>
+    //                 <SubmitForm
+    //                     initialValues={initialValues as any}
+    //                     closeDialog={() => setOpen(false)}
+    //                 />
+    //             </DialogContent>
+    //         </Dialog>
+    //     </>
+    // );
 };
 
 export default Day;

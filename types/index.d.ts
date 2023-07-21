@@ -93,6 +93,7 @@ export class IEngineWorkoutLogBase {
   modality: string;
   notes?: string;
 
+  _id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -168,7 +169,8 @@ export interface IEngineWorkoutDay {
   phaseWeek?: number;
   phaseMonth?: number;
   workout: IWorkout[];
-  completed: boolean;
+
+  _id: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

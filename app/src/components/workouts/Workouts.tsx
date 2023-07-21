@@ -1,19 +1,22 @@
 import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetMonthsFormatted } from '../../api';
+import { useGetCompletedMonths, useGetMonthsFormatted } from '../../api';
+import { getAuth } from '../../utils/auth-provider';
 
 const Workouts = () => {
 
+    const { _id } = getAuth()
     const navigate = useNavigate();
     const { data: months, isLoading } = useGetMonthsFormatted();
+    const { data: completed } = useGetCompletedMonths(_id);
 
     if (!months || isLoading) {
         return <CircularProgress />;
     }
 
     const sortedMonths = months.map((month, i) => ({
-        complete: month.filter(day => day.completed).length,
+        complete: month.filter(day => completed?.includes(day.month)).length,
         total: month.length
     }));
 
@@ -36,7 +39,7 @@ const Workouts = () => {
                     return (
                         <Grid item key={i} xs={12} md={4}>
                             <Card>
-                                <CardActionArea onClick={() => navigate(`/workouts/${i + 1}`)}>
+                                <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
                                     <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
                                     <CardContent>
                                         <Typography variant='h5' mb={2}>
@@ -71,7 +74,7 @@ const Workouts = () => {
                     return (
                         <Grid item key={i} xs={12} md={4}>
                             <Card>
-                                <CardActionArea onClick={() => navigate(`/workouts/${i + 1}`)}>
+                                <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
                                     <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
                                     <CardContent>
                                         <Typography variant='h5' mb={2}>

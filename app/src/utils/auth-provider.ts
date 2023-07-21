@@ -9,7 +9,7 @@ export type AuthResponse = {
   roles: string[];
 };
 
-export const getAuth = () =>
+export const getAuth = (): AuthResponse =>
   JSON.parse(localStorage.getItem(localStorageKey) || "{}");
 
 //TODO DEFINE USER
@@ -43,7 +43,6 @@ export const login = async (payload: { email: string; password: string }) =>
     });
 
 export const forceLogout = () => {
-  console.log("forceLogout");
   localStorage.removeItem(localStorageKey);
   removeAuthorization();
 };

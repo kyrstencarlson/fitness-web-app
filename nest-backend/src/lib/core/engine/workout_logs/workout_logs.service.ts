@@ -25,14 +25,17 @@ export class EngineWorkoutLogService {
   public async create(
     body: IEngineWorkoutLogParamsCreate,
   ): Promise<IEngineWorkoutLog> {
-    const { user_id, workout, ...params } = body;
+    const { user_id, ...params } = body;
 
-    if (!user_id || !workout) {
+    if (!user_id || !params.workout) {
       throw new BadRequestException('User_id and workout_id are required');
     }
 
     try {
-      return await this._ModelEngineWorkoutLog.create(params);
+      return await this._ModelEngineWorkoutLog.create({
+        user: user_id,
+        ...params,
+      });
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Could not create workout log');
@@ -100,9 +103,9 @@ export class EngineWorkoutLogService {
       ...params,
     });
 
-    if (!logs) {
-      throw new BadRequestException('Could not find workout log');
-    }
+    // if (!logs) {
+    //   throw new BadRequestException('Could not find workout log');
+    // }
 
     return logs;
   }
@@ -235,5 +238,12 @@ export class EngineWorkoutLogService {
     }
 
     return log;
+  }
+
+  public async getCompletedMonths(user_id: string) {
+    const logs = await this._ModelEngineWorkoutLog.find({ user: user_id });
+    const months = logs.map((log) => log.workout_month);
+    const uniqueMonths = [...new Set(months)];
+    return uniqueMonths;
   }
 }

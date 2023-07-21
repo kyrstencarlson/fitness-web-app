@@ -3,7 +3,9 @@ import { toast } from "./alerts";
 
 const baseURL = "http://localhost:4000";
 
-const storedToken = localStorage.getItem("__engine__") || "";
+const storedToken = JSON.parse(
+  localStorage.getItem("__engine__") || "{}"
+).accessToken;
 
 const axiosOpts = {
   baseURL: `${baseURL}/api/`,
@@ -27,10 +29,11 @@ export const removeHeader = (name: string): void => {
 };
 
 export const addAuthorization = (token: string): void => {
-  addHeader("Authorization", token);
+  addHeader("Bearer", token);
 };
 
 export const removeAuthorization = (): void => {
+  removeHeader("Bearer");
   removeHeader("Authorization");
 };
 

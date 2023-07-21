@@ -77,7 +77,10 @@ export class AuthService {
 
     const hashed = this.hashPassword(password);
     try {
-      const newUser = await this.userService.create(email, hashed);
+      const newUser = await this.userService.create({
+        email,
+        password: hashed,
+      });
 
       const accessToken = await this.jwtService.signAsync({
         email: newUser.email,

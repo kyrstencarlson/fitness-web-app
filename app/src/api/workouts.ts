@@ -12,6 +12,7 @@ const WORKOUT_QUERY_KEY = "engine-workout";
 const fetchMonth = async (month: number) => {
   const { data } = await api.post(`/engine/workout/month/${month}`);
 
+  console.log({ data });
   const weeks = getWeeksFromMonth(data);
   return weeks;
 };

@@ -8,8 +8,8 @@ import Week from './Week';
 const Month = () => {
 
     const { pathname } = useLocation();
-    const m = pathname.split('/')[2];
-    const { data: weeks, isLoading } = useFetchMonth(+m-1);
+    const m = pathname.split('/')[3];
+    const { data: weeks, isLoading } = useFetchMonth(+m);
 
     if (!weeks || isLoading) {
         return <CircularProgress />;

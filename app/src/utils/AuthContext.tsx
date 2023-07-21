@@ -54,9 +54,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { accessToken: storedAuthToken, _id, roles } = auth.getAuth();
 
     const handle401 = () => {
-        auth.forceLogout();
-        setAuth('');
-        window.location.assign('/login');
+        console.log('401');
+        // auth.forceLogout();
+        // setAuth('');
+        // window.location.assign('/login');
     };
 
     configureInterceptor(handle401);

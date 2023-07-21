@@ -1,13 +1,41 @@
-import { UseQueryOptions, useQuery } from "react-query";
+import {
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import {
   IEngineWorkoutDay,
   IEngineWorkoutLog,
+  IEngineWorkoutLogBase,
+  IEngineWorkoutLogParamsCreate,
   IEngineWorkoutLogParamsModality,
   IEngineWorkoutLogParamsModalityUnits,
+  IEngineWorkoutLogParamsUpdate,
 } from "../../../types";
 import { api } from "../utils/api";
+import { toast } from "../utils/alerts";
 
 const WORKOUT_LOGS_QUERY_KEY = "engine-workout-logs";
+
+const createWorkoutLog = async (params: IEngineWorkoutLogParamsCreate) => {
+  const { data } = await api.post(`/engine/logs`, params);
+
+  return data;
+};
+
+const updateWorkoutLog = async (params: IEngineWorkoutLogParamsUpdate) => {
+  const { data } = await api.put(`/engine/logs`, params);
+
+  return data;
+};
+
+const deleteWorkoutLog = async (log_id: string) => {
+  const { data } = await api.delete(`/engine/logs/${log_id}`);
+
+  return data;
+};
 
 const fetchLogsMonth = async (user_id: string, month: number) => {
   const { data } = await api.post(`/engine/logs/${user_id}/month/${month}`);
@@ -40,11 +68,17 @@ const getWorkoutLog = async (id: string) => {
   return data;
 };
 
-const findWorkoutLogs = async (
-  user_id: string,
-  params: Partial<IEngineWorkoutDay>
-) => {
-  const { data } = await api.post(`/engine/logs/${user_id}/find-one`, params);
+const getCompletedMonths = async (user_id: string) => {
+  const { data } = await api.get(`/engine/logs/${user_id}/completed`);
+
+  return data;
+};
+
+const findWorkoutLog = async (params: Partial<IEngineWorkoutLogBase>) => {
+  const { data } = await api.post(
+    `/engine/logs/${params.user_id}/find-one`,
+    params
+  );
 
   return data;
 };
@@ -53,6 +87,70 @@ const findUserWorkoutLogs = async (user_id: string) => {
   const { data } = await api.get(`/engine/logs/${user_id}/find`);
 
   return data;
+};
+
+//
+
+export const useCreateWorkoutLog = (
+  queryOptions?: UseMutationOptions<
+    IEngineWorkoutLogParamsCreate,
+    unknown,
+    IEngineWorkoutLogParamsCreate
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation(createWorkoutLog, {
+    onSettled: () => {
+      queryClient.invalidateQueries(WORKOUT_LOGS_QUERY_KEY);
+    },
+    onSuccess: () => {
+      toast({
+        icon: "success",
+        title: "Score Created",
+      });
+    },
+    ...queryOptions,
+  });
+};
+
+export const useUpdateWorkoutLog = (
+  queryOptions?: UseMutationOptions<
+    IEngineWorkoutLogParamsUpdate,
+    unknown,
+    IEngineWorkoutLogParamsUpdate
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation(updateWorkoutLog, {
+    onSettled: () => {
+      queryClient.invalidateQueries(WORKOUT_LOGS_QUERY_KEY);
+    },
+    onSuccess: () => {
+      toast({
+        icon: "success",
+        title: "Score Updated",
+      });
+    },
+    ...queryOptions,
+  });
+};
+
+export const useDeleteWorkoutLog = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation((id: string) => deleteWorkoutLog(id), {
+    onSettled: () => {
+      queryClient.invalidateQueries(WORKOUT_LOGS_QUERY_KEY);
+    },
+    onSuccess: () => {
+      toast({
+        icon: "success",
+        title: "Score Deleted",
+      });
+    },
+  });
 };
 
 export const useFetchWorkoutLog = (
@@ -68,12 +166,12 @@ export const useFetchWorkoutLog = (
 export const useFetchUserWorkoutLogs = (
   id: string,
   queryOptions?: UseQueryOptions<
-    IEngineWorkoutLog[],
+    IEngineWorkoutLogBase[],
     unknown,
-    IEngineWorkoutLog[]
+    IEngineWorkoutLogBase[]
   >
 ) =>
-  useQuery<IEngineWorkoutLog[], unknown>(
+  useQuery<IEngineWorkoutLogBase[], unknown>(
     [WORKOUT_LOGS_QUERY_KEY, id],
     () => findUserWorkoutLogs(id),
     queryOptions
@@ -134,5 +232,25 @@ export const useFetchUserLogsModalityUnits = (
   useQuery<IEngineWorkoutLog[], unknown>(
     [WORKOUT_LOGS_QUERY_KEY, "modality-units"],
     () => fetchLogsModalityUnits(params),
+    queryOptions
+  );
+
+export const useGetCompletedMonths = (
+  user_id: string,
+  queryOptions?: UseQueryOptions<number[], unknown, number[]>
+) =>
+  useQuery<number[], unknown>(
+    [WORKOUT_LOGS_QUERY_KEY, "completed"],
+    () => getCompletedMonths(user_id),
+    queryOptions
+  );
+
+export const useFindWorkoutLog = (
+  params: Partial<IEngineWorkoutLogBase>,
+  queryOptions?: UseQueryOptions<IEngineWorkoutLog, unknown, IEngineWorkoutLog>
+) =>
+  useQuery<IEngineWorkoutLog, unknown>(
+    [WORKOUT_LOGS_QUERY_KEY, "search"],
+    () => findWorkoutLog(params),
     queryOptions
   );

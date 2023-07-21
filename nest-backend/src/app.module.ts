@@ -5,11 +5,14 @@ import { AppService } from './app.service';
 import { AuthModule } from './lib/core/auth/auth.module';
 import { UserModule } from './lib/core/user/user.module';
 import { MongoDatabaseModule } from './lib/mongo/mongo.module';
-import { EngineWorkoutModule } from './lib/core/engine';
+import {
+  EngineWorkoutLogsModule,
+  EngineWorkoutModule,
+} from './lib/core/engine';
 
 const CORE_MODULES = [UserModule, AuthModule];
 
-const ENGINE_MODULES = [EngineWorkoutModule];
+const ENGINE_MODULES = [EngineWorkoutModule, EngineWorkoutLogsModule];
 
 @Module({
   imports: [

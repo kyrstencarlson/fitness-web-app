@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '../../auth/auth.guard';
 import {
   IEngineWorkoutLog,
+  IEngineWorkoutLogParamsCreate,
   IEngineWorkoutLogParamsModality,
   IEngineWorkoutLogParamsModalityUnits,
+  IEngineWorkoutLogParamsUpdate,
   IEngineWorkoutLogsController,
 } from './interface';
 import { EngineWorkoutLogService } from './workout_logs.service';
@@ -17,6 +28,25 @@ export class EngineWorkoutLogController
   constructor(
     private readonly _EngineWorkoutLogService: EngineWorkoutLogService,
   ) {}
+
+  @Post()
+  async create(
+    @Body() body: IEngineWorkoutLogParamsCreate,
+  ): Promise<IEngineWorkoutLog> {
+    return this._EngineWorkoutLogService.create(body);
+  }
+
+  @Put()
+  async update(
+    @Body() body: IEngineWorkoutLogParamsUpdate,
+  ): Promise<IEngineWorkoutLog> {
+    return this._EngineWorkoutLogService.update(body);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') _id: string): Promise<IEngineWorkoutLog> {
+    return this._EngineWorkoutLogService.delete(_id);
+  }
 
   @Post(':user_id/find-one')
   async findOne(
@@ -64,5 +94,10 @@ export class EngineWorkoutLogController
     @Body() body: IEngineWorkoutLogParamsModalityUnits,
   ): Promise<IEngineWorkoutLog[]> {
     return this._EngineWorkoutLogService.getAllByModalityAndUnits(body);
+  }
+
+  @Get(':user_id/completed')
+  async getCompleted(@Param('user_id') user_id: string) {
+    return this._EngineWorkoutLogService.getCompletedMonths(user_id);
   }
 }

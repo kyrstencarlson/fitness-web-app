@@ -107,6 +107,7 @@ export const ResponsiveDrawer = (props: Props) => {
 
     return (
       <List
+        key={drawerItems[0].text}
         sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
         component="nav"
       >

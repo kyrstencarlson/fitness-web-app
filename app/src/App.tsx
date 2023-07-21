@@ -32,7 +32,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            cacheTime: 5 * 60 * 1000,
+            cacheTime: 1000 * 60 * 5, // 5 minutes
             staleTime: Infinity
         }
 
@@ -79,8 +79,7 @@ const App = () => {
 
     return (
         <React.StrictMode>
-
-            {/* <QueryClientProvider client={queryClient}> */}
+            <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
                     <CssBaseline />
@@ -88,8 +87,8 @@ const App = () => {
                 </ThemeProvider>
             </AuthProvider>
 
-            {/* {isDevelopment && <ReactQueryDevtools initialIsOpen={false} />}
-           </QueryClientProvider> */}
+            {/* {isDevelopment && <ReactQueryDevtools initialIsOpen={true} />} */}
+           </QueryClientProvider>
         </React.StrictMode>
     );
 };

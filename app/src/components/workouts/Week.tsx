@@ -1,37 +1,45 @@
 import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Dialog, DialogContent, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { definitions } from '../../data/definitions';
-import { Day } from '../../types';
-import ToolTipIcon from '../../utils/ToolTipIcon';
-import { Exercise } from './Exercise';
-import SubmitForm from './SubmitForm';
 import { useNavigate } from 'react-router-dom';
+import { IEngineWorkoutDay } from '../../../../types';
+import { useFetchUserWorkoutLogs } from '../../api';
+import { definitions } from '../../data/definitions';
+import ToolTipIcon from '../../utils/ToolTipIcon';
+import { getAuth } from '../../utils/auth-provider';
+import { Exercise } from './Exercise';
+import SubmitForm, { SubmitFormProps } from './SubmitForm';
 
 interface WeekProps {
-    week: Day[];
+    week: IEngineWorkoutDay[];
 }
 
 const Week = (props: WeekProps) => {
 
     const { week } = props;
 
+    const { _id } = getAuth()
     const navigation = useNavigate();
+      const {data: logs, isLoading } = useFetchUserWorkoutLogs(_id);
+
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
     const fontSize = mobile ? 'small' : 'medium';
 
+
     const [open, setOpen] = React.useState(false);
-    const [initialValues, setInitialValues] = React.useState<any>(null);
+    const [initialValues, setInitialValues] = React.useState<SubmitFormProps['initialValues'] | null>(null);
+
 
     return (
         <>
-            {week.map((days, i) => {
-                const def = definitions.find(def => days.type.includes(def.type))?.description;
-                const totalWork = days.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60;
+            {week.map((day, i) => {
+                const def = definitions.find(def => day.type.includes(def.type))?.description;
+                const totalWork = day.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60
+                const log = logs?.find(log => log.workout === day._id)
 
                 return (
-                    <Accordion key={`${days.day}`} sx={{ alignContent: 'center' }}>
+                    <Accordion key={`${day.day}`} sx={{ alignContent: 'center' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMore />}
                             aria-controls='panel1a-content'
@@ -44,7 +52,7 @@ const Week = (props: WeekProps) => {
                                     alignSelf: 'center'
                                 }}
                             >
-                                Day {days.day}
+                                Day {day.day}
                             </Typography>
 
                             <Typography color={'text.secondary'} textTransform={'capitalize'}
@@ -52,14 +60,14 @@ const Week = (props: WeekProps) => {
                                     width: '70%',
                                     alignSelf: 'center'
                                 }}>
-                                {days.type}
+                                {day.type}
                             </Typography>
 
                             <Typography color={'text.secondary'} sx={{
                                 width: '10%',
                                 alignSelf: 'center'
                             }}>
-                                {/* completed pace */}
+                                {log && `Score: ${log.score / totalWork }`}
                             </Typography>
 
                             <ToolTipIcon
@@ -72,7 +80,7 @@ const Week = (props: WeekProps) => {
                         <AccordionDetails>
                             <Grid container>
                                 <Grid item xs={9.5}>
-                                    <Exercise workouts={days.workout} />
+                                    <Exercise workouts={day.workout} />
                                 </Grid>
 
                                 <Grid item xs={2.5} textAlign={'right'}>
@@ -83,12 +91,10 @@ const Week = (props: WeekProps) => {
                                         text={'Submit / Edit'}
                                         onClick={() => {
                                             setOpen(true);
-                                            setInitialValues({
-                                                day: i + 1,
-                                                week: +days.week,
-                                                month: +days.month,
-                                                entires: '',
-                                                totalWork
+                                             setInitialValues({
+                                                 user_id: _id,
+                                                 workout: day,
+                                                 log
                                             });
                                         }}
                                     />
@@ -102,7 +108,7 @@ const Week = (props: WeekProps) => {
             <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
                 <DialogContent>
                     <SubmitForm
-                        initialValues={initialValues}
+                        initialValues={initialValues as any}
                         closeDialog={() => setOpen(false)}
                     />
                 </DialogContent>

@@ -47,7 +47,6 @@ export const engineWorkoutSchema = new Schema(
         ],
       },
     ],
-    completed: { type: Boolean, default: false },
   },
   {
     autoIndex: true,

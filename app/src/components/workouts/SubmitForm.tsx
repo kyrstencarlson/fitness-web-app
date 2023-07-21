@@ -1,176 +1,234 @@
-import { Delete } from '@mui/icons-material';
-import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
-import React from 'react';
-import { Field, Form } from 'react-final-form';
-import DropdownSelect from '../../utils/DropdownSelect';
-import { FinalFormErrors, requiredFields } from '../../utils/final-form';
-import { toast } from '../../utils/alerts';
-import { EWorkoutLogModality, EWorkoutLogUnits } from '../../../../types';
+import { Delete } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import { Field, Form } from "react-final-form";
+import { IEngineWorkoutDay, IEngineWorkoutLog, IEngineWorkoutLogBase } from "../../../../types";
+import { useCreateWorkoutLog, useDeleteWorkoutLog, useFindWorkoutLog, useUpdateWorkoutLog } from "../../api";
+import DropdownSelect from "../../utils/DropdownSelect";
+import { FinalFormErrors, requiredFields } from "../../utils/final-form";
+import { confirmationPrompt } from "../../utils/confirmationPrompt";
 
-interface Day {
-    month: number;
-    week: number;
-    day: number;
-    type: string;
-    score: number;
-    units: string;
-    modality: string;
-    notes?: string;
+export enum EWorkoutLogUnits {
+  METERS = "meters",
+  REPS = "reps",
+  CALORIES = "calories",
+  WATTS = "watts",
+  KILOMETERS = "kilometers",
+  MILES = "miles",
 }
 
-
-interface FormProps {
-    initialValues: {
-        entries?: any;
-        month: number;
-        week: number;
-        day: number;
-        totalWork: number;
-    };
-    closeDialog: () => void;
+export enum EWorkoutLogModality {
+  ROW = "row",
+  OTHER_BIKE = "other bike",
+  ASSAULT_BIKE = "assault bike",
+  ECHO_BIKE = "echo bike",
+  BIKE_ERG = "bike erg",
+  AIR_RUNNER = "air runner",
+  TREADMILL = "treadmill",
+  RUN = "run",
+  SKI = "ski",
+  SWIM = "swim",
+  OTHER = "other",
 }
 
-const units = Object.values(EWorkoutLogUnits)
-const modality = Object.values(EWorkoutLogModality)
+export interface SubmitFormProps {
+  initialValues: {
+    user_id: string;
+    workout: IEngineWorkoutDay;
+    log?: IEngineWorkoutLogBase | undefined
+  };
+  closeDialog: () => void;
+}
 
-const SubmitForm = ({ initialValues, closeDialog }: FormProps) => {
+const UNITS = Object.values(EWorkoutLogUnits);
+const MODALITY = Object.values(EWorkoutLogModality);
 
-    const {
-        month, week, day, entries, totalWork
-    } = initialValues;
+const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
+  const {
+    user_id,
+    workout,
+    log
+  } = initialValues;
 
-    const [pace, setPace] = React.useState<any>(null);
+  const [pace, setPace] = React.useState<any>(null);
+
+  const { mutate: createWorkoutLog } = useCreateWorkoutLog();
+  const { mutate: updateWorkoutLog } = useUpdateWorkoutLog();
+  const { mutate: deleteWorkoutLog } = useDeleteWorkoutLog();
+
+  const totalWork = workout.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60
+
+  React.useEffect(() => {
+    if (log) {
+      setPace(log.score / totalWork)
+    }
+  }, [log, totalWork])
 
 
-    const onSubmit = (values: any) => {
-        console.log(values);
-        toast({ title: 'Workout Submitted' });
-        closeDialog();
-    };
+  const onSubmit = (values: any) => {
 
-    return (
-        <Form
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validate={validate}
-            render={({ handleSubmit, submitting, pristine }) => (
-                <div>
+    if (log) {
+        updateWorkoutLog({ ...values,
+          log_id: log._id,
+        workout: workout._id,
+        workout_month: workout.month,
+        workout_type: workout.type,
+        user_id
+       });
+    } else {
+      const createParams = {
+        ...values,
+        workout: workout._id,
+        workout_month: workout.month,
+        workout_type: workout.type,
+        user_id,
+      }
+      createWorkoutLog(createParams);
+    }
 
-                    {entries &&
-                        <Grid textAlign={'right'} mb={0.5}>
-                            <Button
-                                onClick={closeDialog}
-                                variant='outlined'
-                                color='error'
-                                startIcon={<Delete />}
-                            >
-                                Delete
-                            </Button>
-                        </Grid>
-                    }
+    closeDialog();
+  };
 
-                    <Divider textAlign='center' style={{ textTransform: 'capitalize' }}>
-                        {entries ? 'Edit' : 'Submit'}
-                    </Divider>
+  const deleteScore = () => {
+    if (log) {
+      confirmationPrompt({
+        firstMessage: 'Are you sure you want to delete this score?',
+        actionFunction: () => deleteWorkoutLog(log._id),
+        closeDialog
+      })
+    }
+  }
 
-                    <Typography variant='body2' display='block' align='center' mt={0.5}>
-                        Month {month} Week {week} Day {day}
-                    </Typography>
 
-                    <Field name='score'>
-                        {({ input, meta }) => (
-                            <TextField
-                                {...input}
-                                error={meta.error && meta.touched}
-                                helperText={meta.error && meta.touched ? meta.error : null}
-                                label='Score'
-                                fullWidth
-                                margin='normal'
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    input.onChange(e.target.value);
-                                    setPace(e.target.value);
-                                }}
-                            />
-                        )}
-                    </Field>
+  return (
+    <Form
+      initialValues={log}
+      onSubmit={onSubmit}
+      validate={validate}
+      render={({ handleSubmit, submitting, pristine }) => (
+        <div>
+          {log && (
+            <Grid textAlign={"right"} mb={0.5}>
+              <Button
+                onClick={deleteScore}
+                variant="outlined"
+                color="error"
+                startIcon={<Delete />}
+              >
+                Delete
+              </Button>
+            </Grid>
+          )}
 
-                    <Box style={{
-                        display: 'flex',
-                        borderWidth: 1,
-                        borderColor: 'grey',
-                        borderStyle: 'solid',
-                        borderRadius: '4px',
-                        height: '55px',
-                        alignItems: 'center',
-                        marginTop: '3px',
-                        marginBottom: '5px'
-                    }}>
-                        <Typography sx={{ pl: 2 }}>Pace: {pace / totalWork}</Typography>
-                    </Box>
+          <Divider textAlign="center" style={{ textTransform: "capitalize" }}>
+            {log ? "Edit" : "Submit"}
+          </Divider>
 
-                    <DropdownSelect
-                        field='units'
-                        label='Units'
-                        arrayItems={units}
-                        required
-                        md={12}
-                    />
+          <Typography variant="body2" display="block" align="center" mt={0.5}>
+            Month {workout.month} Week {workout.week} Day {workout.day}
+          </Typography>
 
-                    <DropdownSelect
-                        field='modality'
-                        label='Modality'
-                        arrayItems={modality}
-                        required
-                        md={12}
-                    />
-
-                    <Field name='notes'>
-                        {({ input, meta }) => (
-                            <TextField
-                                {...input}
-                                error={meta.error && meta.touched}
-                                helperText={meta.error && meta.touched ? meta.error : null}
-                                label='Notes'
-                                fullWidth
-                                margin='normal'
-                                multiline
-                            />
-                        )}
-                    </Field>
-
-                    <Stack
-                        direction='row'
-                        spacing={2}
-                        sx={{ mt: 2 }}
-                        style={{ float: 'right' }}
-                    >
-                        <Button variant='outlined' onClick={closeDialog}>Cancel</Button>
-                        <Button onClick={handleSubmit} disabled={pristine || submitting}>
-                            Submit
-                        </Button>
-                    </Stack>
-                </div>
+          <Field name="score">
+            {({ input, meta }) => (
+              <TextField
+                {...input}
+                error={meta.error && meta.touched}
+                helperText={meta.error && meta.touched ? meta.error : null}
+                label="Score"
+                fullWidth
+                margin="normal"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  console.log({ input, meta})
+                  input.onChange(e.target.value);
+                  setPace(e.target.value);
+                }}
+              />
             )}
-        />
-    );
+          </Field>
+
+          <Box
+            style={{
+              display: "flex",
+              borderWidth: 1,
+              borderColor: "grey",
+              borderStyle: "solid",
+              borderRadius: "4px",
+              height: "55px",
+              alignItems: "center",
+              marginTop: "3px",
+              marginBottom: "5px",
+            }}
+          >
+            <Typography sx={{ pl: 2 }}>Pace: {pace / totalWork}</Typography>
+          </Box>
+
+          <DropdownSelect
+            field="units"
+            label="Units"
+            arrayItems={UNITS}
+            required
+            md={12}
+          />
+
+          <DropdownSelect
+            field="modality"
+            label="Modality"
+            arrayItems={MODALITY}
+            required
+            md={12}
+          />
+
+          <Field name="notes">
+            {({ input, meta }) => (
+              <TextField
+                {...input}
+                error={meta.error && meta.touched}
+                helperText={meta.error && meta.touched ? meta.error : null}
+                label="Notes"
+                fullWidth
+                margin="normal"
+                multiline
+              />
+            )}
+          </Field>
+
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ mt: 2 }}
+            style={{ float: "right" }}
+          >
+            <Button variant="outlined" onClick={closeDialog}>
+              Cancel
+            </Button>
+            <Button onClick={handleSubmit} disabled={pristine || submitting}>
+              Submit
+            </Button>
+          </Stack>
+        </div>
+      )}
+    />
+  );
 };
 
-const validate = (values: Day) => {
+const validate = (values: IEngineWorkoutLog) => {
+  const errors: FinalFormErrors<IEngineWorkoutLog> = {};
 
-    const errors: FinalFormErrors<Day> = {};
+  requiredFields<IEngineWorkoutLog>(values, errors, [
+    "score",
+    "units",
+    "modality",
+  ]);
 
-    requiredFields<Day>(
-        values,
-        errors,
-        [
-            'score',
-            'units',
-            'modality'
-        ]
-    );
-
-    return errors;
+  return errors;
 };
-
 
 export default SubmitForm;
