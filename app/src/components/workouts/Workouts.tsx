@@ -20,10 +20,6 @@ const Workouts = () => {
         total: month.length
     }));
 
-    const completed = sortedMonths.map((month, i) => {
-        return month.complete / month.total;
-    }).map((c)=> c === 1).reduce((a, b) => a && b);
-
 
     return (
         <Container>

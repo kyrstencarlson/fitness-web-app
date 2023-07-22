@@ -14,15 +14,6 @@ const Profile = () => {
     const [edit, setEdit] = React.useState(false);
     const [password, setPassword] = React.useState(false);
 
-    const profile = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@doe.com',
-        height: 72,
-        weight: 180,
-        gender: 'male',
-    };
-
     if (!user || isLoading) {
         return <CircularProgress />;
     }
@@ -73,7 +64,7 @@ const Profile = () => {
                             First Name
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.firstName}
+                            {user.profile?.first_name ?? 'N/A'}
                         </Typography>
                     </Grid>
 
@@ -82,7 +73,7 @@ const Profile = () => {
                             Last Name
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.lastName}
+                            {user.profile?.last_name ?? 'N/A'}
                         </Typography>
                     </Grid>
 
@@ -91,7 +82,7 @@ const Profile = () => {
                             Email
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.email}
+                            {user.email}
                         </Typography>
                     </Grid>
 
@@ -100,7 +91,7 @@ const Profile = () => {
                             height
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.height}
+                            {user.profile?.height ?? 'N/A'}
                         </Typography>
                     </Grid>
 
@@ -109,7 +100,7 @@ const Profile = () => {
                             weight
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.weight}
+                            {user.profile?.weight ?? 'N/A'}
                         </Typography>
                     </Grid>
 
@@ -118,7 +109,7 @@ const Profile = () => {
                             gender
                         </Typography>
                         <Typography variant='body1' mb={2}>
-                            {profile.gender}
+                            {user.profile?.gender ?? 'N/A'}
                         </Typography>
                     </Grid>
                 </Grid>

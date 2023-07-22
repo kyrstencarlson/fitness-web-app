@@ -18,7 +18,6 @@ const Week = (props: WeekProps) => {
     const { week } = props;
 
     const { _id } = getAuth()
-    const navigation = useNavigate();
       const {data: logs, isLoading } = useFetchUserWorkoutLogs(_id);
 
     const windowSize = window.innerWidth;

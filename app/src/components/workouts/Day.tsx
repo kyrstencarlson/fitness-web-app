@@ -78,14 +78,14 @@ const Day = (props: DayProps) => {
                                 </Grid>
 
                                 <Grid item xs={2.5} textAlign={'right'}>
-                                    <ToolTipIcon
+                                    {/* <ToolTipIcon
                                         icon={<Timer fontSize={fontSize}/>}
                                         text={'Timer'}
                                         onClick={() => {
                                             setTimerOpen(!timerOpen)
                                             setWorkouts(day.workout);
                                         }}
-                                    />
+                                    /> */}
                                     <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
                                     <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
                                     <ToolTipIcon
