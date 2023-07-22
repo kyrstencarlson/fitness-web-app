@@ -50,7 +50,7 @@ export class AuthService {
     });
 
     return {
-      accessToken,
+      accessToken: 'Bearer ' + accessToken,
       _id: user._id,
       roles: user.roles,
     };

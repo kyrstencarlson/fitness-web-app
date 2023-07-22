@@ -29,11 +29,10 @@ export const removeHeader = (name: string): void => {
 };
 
 export const addAuthorization = (token: string): void => {
-  addHeader("Bearer", token);
+  addHeader("Authorization", token);
 };
 
 export const removeAuthorization = (): void => {
-  removeHeader("Bearer");
   removeHeader("Authorization");
 };
 
