@@ -1,0 +1,23 @@
+.swal2-input {
+    color: white;
+}
+.swal2-container, .sweet-alert-container, .swal2-popup.swal2-modal.swal2-show, .swal2-popup.swal2-toast.swal2-show {
+	z-index: 50000;
+	box-shadow: none;
+}
+
+.swal2-html-container {
+    color: white !important;
+}
+
+.swal2-container.swal2-center.sweet-alert-container.swal2-backdrop-show {
+    z-index: 50000;
+}
+
+.sweet-alert-confirm-button {
+	margin-right: 10px;
+}
+
+.swal2-title {
+	color: white !important;
+}

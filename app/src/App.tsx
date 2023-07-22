@@ -2,10 +2,12 @@ import { DarkMode, LightMode } from '@mui/icons-material';
 import { CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import React from 'react';
 import {
+    BrowserRouter,
     Route,
     RouterProvider,
     createBrowserRouter,
-    createRoutesFromElements
+    createRoutesFromElements,
+    useNavigate
 } from 'react-router-dom';
 import Admin from './components/Admin';
 import { ResponsiveDrawer } from './components/DefaultLayout';
@@ -21,6 +23,22 @@ import Results from './components/results/Results';
 import Month from './components/workouts/Month';
 import Workouts from './components/workouts/Workouts';
 import { darkTheme, lightTheme } from './theme';
+import { AuthProvider } from './utils/AuthContext';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            cacheTime: 1000 * 60 * 5, // 5 minutes
+            staleTime: Infinity
+        }
+
+    }
+});
+
 
 const App = () => {
 
@@ -39,13 +57,15 @@ const App = () => {
             <>
                 <Route path='/' element={<HeaderLayout />}>
                     <Route path='/' element={<Home />} />
-                    <Route path='admin' element={<Admin />} />
+                    <Route path='/engine/workouts' element={<Workouts />} />
+                    <Route path='/engine/workouts/:monthId' element={<Month />} />
+                    <Route path='/engine/results' element={<Results />} />
+                    <Route path='/engine/library' element={<Library />} />
+                    <Route path='/engine/leaderboard' element={<Leaderboard />} />
+                    {/* user */}
                     <Route path='profile' element={<Profile />} />
-                    <Route path='workouts' element={<Workouts />} />
-                    <Route path='workouts/:monthId' element={<Month />} />
-                    <Route path='results' element={<Results />} />
-                    <Route path='library' element={<Library />} />
-                    <Route path='leaderboard' element={<Leaderboard />} />
+                    {/* admin */}
+                    <Route path='admin' element={<Admin />} />
                 </Route>
 
                 <Route path='*' element={<ErrorPage />} />
@@ -58,10 +78,18 @@ const App = () => {
     );
 
     return (
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-            <CssBaseline />
-            <RouterProvider router={router} />
-        </ThemeProvider>
+        <React.StrictMode>
+            <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+                    <CssBaseline />
+                    <RouterProvider router={router} />
+                </ThemeProvider>
+            </AuthProvider>
+
+            {/* {isDevelopment && <ReactQueryDevtools initialIsOpen={true} />} */}
+           </QueryClientProvider>
+        </React.StrictMode>
     );
 };
 

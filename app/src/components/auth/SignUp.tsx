@@ -1,18 +1,14 @@
-import * as React from 'react';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { lightTheme } from '../../theme';
+import * as React from 'react';
+import AuthLayout from '../AuthLayout';
 
 const SignUpSide = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,23 +21,7 @@ const SignUpSide = () => {
   };
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://images.squarespace-cdn.com/content/v1/5650ba65e4b0e332af39118e/db2ea7ab-57c9-460a-9159-f8e0f0975655/Gains+Lab+Logo.png?format=1500w)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+    <AuthLayout>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -127,8 +107,7 @@ const SignUpSide = () => {
           </Box>
           </Box>
         </Grid>
-      </Grid>
-    </ThemeProvider>
+      </AuthLayout>
   );
 }
 export default SignUpSide;

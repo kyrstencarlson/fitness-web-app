@@ -1,38 +1,36 @@
 import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, Dialog, DialogContent, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { IEngineWorkoutDay, IEngineWorkoutLog, IEngineWorkoutLogBase } from '../../../../types';
 import { definitions } from '../../data/definitions';
 import ToolTipIcon from '../../utils/ToolTipIcon';
-import { getWeeksFromMonth } from '../../utils/formatDays';
 import { Exercise } from './Exercise';
-import { months } from './Month';
-import SubmitForm from './SubmitForm';
+import { SubmitFormProps } from './SubmitForm';
 
-const Day = () => {
+export interface DayProps {
+    user_id: string;
+    day: IEngineWorkoutDay;
+    setInitialValues: (value: SubmitFormProps['initialValues']) => void;
+    setOpen: (value: boolean ) => void;
+    log?: IEngineWorkoutLogBase
+}
 
+const Day = (props: DayProps) => {
+
+    const { user_id, day, log,  setInitialValues, setOpen } = props;
     const navigation = useNavigate();
-    const { pathname } = useLocation();
-    const [, , m, w] = pathname.split('/');
-    const month = months[+m - 1];
-    const week = getWeeksFromMonth(month)[+w - 1];
 
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
     const fontSize = mobile ? 'small' : 'medium';
 
-
-    const [open, setOpen] = React.useState(false);
-    const [initialValues, setInitialValues] = React.useState<any>(null);
+    const totalWork = day.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60
+    const def = definitions.find(def => day.type.includes(def.type))?.description;
 
     return (
         <>
-            {week.map((days, i) => {
-
-                const def = definitions.find(def => def.type === days.type)?.description;
-
-                return (
-                    <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
+            <Accordion key={`${day.day}`} sx={{ alignContent: 'center' }}>
                         <AccordionSummary
                             expandIcon={<ExpandMore />}
                             aria-controls='panel1a-content'
@@ -45,7 +43,7 @@ const Day = () => {
                                     alignSelf: 'center'
                                 }}
                             >
-                                Day {days.day}
+                                Day {day.day}
                             </Typography>
 
                             <Typography color={'text.secondary'} textTransform={'capitalize'}
@@ -53,14 +51,14 @@ const Day = () => {
                                     width: '70%',
                                     alignSelf: 'center'
                                 }}>
-                                {days.type}
+                                {day.type}
                             </Typography>
 
                             <Typography color={'text.secondary'} sx={{
                                 width: '10%',
                                 alignSelf: 'center'
                             }}>
-                                {/* {days.completed ? `Completed Pace: ${pace}` : null} */}
+                                {log && `Score: ${log.score / totalWork }`}
                             </Typography>
 
                             <ToolTipIcon
@@ -73,7 +71,7 @@ const Day = () => {
                         <AccordionDetails>
                             <Grid container>
                                 <Grid item xs={9.5}>
-                                    <Exercise workouts={days.workout} />
+                                    <Exercise workouts={day.workout} />
                                 </Grid>
 
                                 <Grid item xs={2.5} textAlign={'right'}>
@@ -84,11 +82,10 @@ const Day = () => {
                                         text={'Submit / Edit'}
                                         onClick={() => {
                                             setOpen(true);
-                                            setInitialValues({
-                                                day: i + 1,
-                                                week: +w,
-                                                month: +m,
-                                                entires: ''
+                                             setInitialValues({
+                                                 user_id,
+                                                 workout: day,
+                                                 log
                                             });
                                         }}
                                     />
@@ -96,17 +93,6 @@ const Day = () => {
                             </Grid>
                         </AccordionDetails>
                     </Accordion>
-                );
-            })}
-
-            <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
-                <DialogContent>
-                    <SubmitForm
-                        initialValues={initialValues}
-                        closeDialog={() => setOpen(false)}
-                    />
-                </DialogContent>
-            </Dialog>
         </>
     );
 };
