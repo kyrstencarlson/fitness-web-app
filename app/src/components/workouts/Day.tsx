@@ -1,125 +1,100 @@
 import { BarChart, Edit, ExpandMore, History, InfoOutlined } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Dialog, DialogContent, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { IEngineWorkoutDay, IEngineWorkoutLog, IEngineWorkoutLogBase } from '../../../../types';
 import { definitions } from '../../data/definitions';
 import ToolTipIcon from '../../utils/ToolTipIcon';
-import { getWeeksFromMonth } from '../../utils/formatDays';
 import { Exercise } from './Exercise';
-import SubmitForm, { SubmitFormProps } from './SubmitForm';
-import { useFetchMonth } from '../../api';
-import { getAuth } from '../../utils/auth-provider';
+import { SubmitFormProps } from './SubmitForm';
 
-const Day = () => {
+export interface DayProps {
+    user_id: string;
+    day: IEngineWorkoutDay;
+    setInitialValues: (value: SubmitFormProps['initialValues']) => void;
+    setOpen: (value: boolean ) => void;
+    log?: IEngineWorkoutLogBase
+}
 
-    // const {_id } = getAuth()
+const Day = (props: DayProps) => {
 
-    // const navigation = useNavigate();
-    // const { pathname } = useLocation();
-    // const [, , , m, w] = pathname.split('/');
+    const { user_id, day, log,  setInitialValues, setOpen } = props;
+    const navigation = useNavigate();
 
-    // const { data: weeks, isLoading } = useFetchMonth(+m);
-    // const week = weeks?.[+w];
+    const windowSize = window.innerWidth;
+    const mobile = windowSize < 650;
+    const fontSize = mobile ? 'small' : 'medium';
 
-    // const windowSize = window.innerWidth;
-    // const mobile = windowSize < 650;
-    // const fontSize = mobile ? 'small' : 'medium';
+    const totalWork = day.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60
+    const def = definitions.find(def => day.type.includes(def.type))?.description;
 
-    // const [open, setOpen] = React.useState(false);
-    // const [initialValues, setInitialValues] = React.useState<SubmitFormProps['initialValues'] | null>(null);
+    return (
+        <>
+            <Accordion key={`${day.day}`} sx={{ alignContent: 'center' }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMore />}
+                            aria-controls='panel1a-content'
+                            id='panel1a-header'
+                        >
+                            <Typography
+                                sx={{
+                                    width: '15%',
+                                    flexShrink: 0,
+                                    alignSelf: 'center'
+                                }}
+                            >
+                                Day {day.day}
+                            </Typography>
 
-    // if (!week || isLoading) {
-    //     return <CircularProgress />;
-    // }
+                            <Typography color={'text.secondary'} textTransform={'capitalize'}
+                                sx={{
+                                    width: '70%',
+                                    alignSelf: 'center'
+                                }}>
+                                {day.type}
+                            </Typography>
 
-    // window.alert('user id'+ _id)
+                            <Typography color={'text.secondary'} sx={{
+                                width: '10%',
+                                alignSelf: 'center'
+                            }}>
+                                {log && `Score: ${log.score / totalWork }`}
+                            </Typography>
 
-    // return (
-    //     <>
-    //         {week.map((days, i) => {
+                            <ToolTipIcon
+                                text={def as string}
+                                icon={<InfoOutlined sx={{ height: '20px' }} />}
+                                placement='bottom-start'
+                            />
+                        </AccordionSummary>
 
-    //             const def = definitions.find(def => def.type === days.type)?.description;
+                        <AccordionDetails>
+                            <Grid container>
+                                <Grid item xs={9.5}>
+                                    <Exercise workouts={day.workout} />
+                                </Grid>
 
-    //             return (
-    //                 <Accordion key={`${m}-${w}-${i}`} sx={{ alignContent: 'center' }}>
-    //                     <AccordionSummary
-    //                         expandIcon={<ExpandMore />}
-    //                         aria-controls='panel1a-content'
-    //                         id='panel1a-header'
-    //                     >
-    //                         <Typography
-    //                             sx={{
-    //                                 width: '15%',
-    //                                 flexShrink: 0,
-    //                                 alignSelf: 'center'
-    //                             }}
-    //                         >
-    //                             Day {days.day}
-    //                         </Typography>
-
-    //                         <Typography color={'text.secondary'} textTransform={'capitalize'}
-    //                             sx={{
-    //                                 width: '70%',
-    //                                 alignSelf: 'center'
-    //                             }}>
-    //                             {days.type}
-    //                         </Typography>
-
-    //                         <Typography color={'text.secondary'} sx={{
-    //                             width: '10%',
-    //                             alignSelf: 'center'
-    //                         }}>
-    //                             {/* {days.completed ? `Completed Pace: ${pace}` : null} */}
-    //                         </Typography>
-
-    //                         <ToolTipIcon
-    //                             text={def as string}
-    //                             icon={<InfoOutlined sx={{ height: '20px' }} />}
-    //                             placement='bottom-start'
-    //                         />
-    //                     </AccordionSummary>
-
-    //                     <AccordionDetails>
-    //                         <Grid container>
-    //                             <Grid item xs={9.5}>
-    //                                 <Exercise workouts={days.workout} />
-    //                             </Grid>
-
-    //                             <Grid item xs={2.5} textAlign={'right'}>
-    //                                 <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
-    //                                 <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
-    //                                 <ToolTipIcon
-    //                                     icon={<Edit fontSize={fontSize} />}
-    //                                     text={'Submit / Edit'}
-    //                                     onClick={() => {
-    //                                         setOpen(true);
-    //                                         setInitialValues({
-    //                                             workout: days._id,
-    //                                             user_id: _id,
-    //                                             day: i + 1,
-    //                                             week: +w,
-    //                                             month: +m,
-    //                                             totalWork: days.workout.reduce((acc, curr) => acc + curr.totalWork, 0),
-    //                                         });
-    //                                     }}
-    //                                 />
-    //                             </Grid>
-    //                         </Grid>
-    //                     </AccordionDetails>
-    //                 </Accordion>
-    //             );
-    //         })}
-
-    //         <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth='md'>
-    //             <DialogContent>
-    //                 <SubmitForm
-    //                     initialValues={initialValues as any}
-    //                     closeDialog={() => setOpen(false)}
-    //                 />
-    //             </DialogContent>
-    //         </Dialog>
-    //     </>
-    // );
+                                <Grid item xs={2.5} textAlign={'right'}>
+                                    <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
+                                    <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
+                                    <ToolTipIcon
+                                        icon={<Edit fontSize={fontSize} />}
+                                        text={'Submit / Edit'}
+                                        onClick={() => {
+                                            setOpen(true);
+                                             setInitialValues({
+                                                 user_id,
+                                                 workout: day,
+                                                 log
+                                            });
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
+        </>
+    );
 };
 
 export default Day;

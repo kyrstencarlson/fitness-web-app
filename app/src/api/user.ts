@@ -36,9 +36,17 @@ const getUser = async (id: string) => {
 };
 
 const findUser = async (params: Partial<IUser>) => {
-  const { data } = await api.post(`/user/find-one`, params);
+  const { data } = await api.post("/user/find-one", params);
 
   return data;
+};
+
+const getUserProfile = async (id: string): Promise<IUser["profile"]> => {
+  const { data } = await api.get(`/user/${id}`);
+
+  const { profile } = data;
+
+  return profile;
 };
 
 export const useFetchUser = (
@@ -48,6 +56,16 @@ export const useFetchUser = (
   useQuery<IUser, unknown>(
     [USER_QUERY_KEY, id],
     () => getUser(id),
+    queryOptions
+  );
+
+export const useGetUserProfile = (
+  id: string,
+  queryOptions?: UseQueryOptions<IUser["profile"], unknown, IUser["profile"]>
+) =>
+  useQuery<IUser["profile"], unknown>(
+    [USER_QUERY_KEY, "profile", id],
+    () => getUserProfile(id),
     queryOptions
   );
 
