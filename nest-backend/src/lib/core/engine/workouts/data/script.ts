@@ -1,7 +1,7 @@
 import {
   IBurst,
   IEngineWorkoutDay,
-  IDayType,
+  EWorkoutType,
   IStage,
   IWorkout,
 } from '../interface';
@@ -131,7 +131,7 @@ export const reshapeData = (file: any): IEngineWorkoutDay[] => {
         phase: f.phase,
         phaseWeek: f.phaseWeek,
         phaseMonth: f.phaseMonth,
-        type: f.type as IDayType,
+        type: f.type as EWorkoutType,
         workout: [workout],
       };
 

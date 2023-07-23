@@ -18,7 +18,7 @@ import {
   IEngineWorkoutLogsController,
 } from './interface';
 import { EngineWorkoutLogService } from './workout_logs.service';
-import { IDayType } from '../workouts';
+import { EWorkoutType } from '../workouts';
 
 @Controller('engine/logs')
 @UseGuards(AuthGuard)
@@ -77,7 +77,7 @@ export class EngineWorkoutLogController
   @Post(':user_id/type/:type')
   async getAllForType(
     @Param('user_id') user_id: string,
-    @Param('type') type: IDayType,
+    @Param('type') type: EWorkoutType,
   ): Promise<IEngineWorkoutLog[]> {
     return this._EngineWorkoutLogService.getAllByType(user_id, type);
   }

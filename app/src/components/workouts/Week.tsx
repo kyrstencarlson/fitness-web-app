@@ -17,8 +17,8 @@ const Week = (props: WeekProps) => {
 
     const { week } = props;
 
-    const { _id } = getAuth()
-      const {data: logs, isLoading } = useFetchUserWorkoutLogs(_id);
+    const { _id } = getAuth();
+    const { data: logs, isLoading } = useFetchUserWorkoutLogs(_id);
 
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
@@ -35,7 +35,7 @@ const Week = (props: WeekProps) => {
     return (
         <>
             {week.map((day, i) => {
-                const log = logs?.find(log => log.workout === day._id)
+                const log = logs?.find(log => log.workout === day._id);
 
                 return (
                     <Day

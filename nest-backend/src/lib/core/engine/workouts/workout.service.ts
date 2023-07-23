@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DB_ENGINE } from 'src/config';
 import {
-  IDayType,
+  EWorkoutType,
   IEngineWorkoutDay,
   ModelEngineWorkout,
   WORKOUT_SCHEMA_NAME,
@@ -86,7 +86,7 @@ export class EngineWorkoutService {
     return workout;
   }
 
-  public async getAllByType(type: IDayType): Promise<IEngineWorkoutDay[]> {
+  public async getAllByType(type: EWorkoutType): Promise<IEngineWorkoutDay[]> {
     if (!type) {
       throw new BadRequestException('type is required');
     }
