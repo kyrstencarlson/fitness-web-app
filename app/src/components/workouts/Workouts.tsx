@@ -6,7 +6,7 @@ import { getAuth } from '../../utils/auth-provider';
 
 const Workouts = () => {
 
-    const { _id } = getAuth()
+    const { _id } = getAuth();
     const navigate = useNavigate();
     const { data: months, isLoading } = useGetMonthsFormatted();
     const { data: completed } = useGetCompletedMonths(_id);
@@ -25,7 +25,7 @@ const Workouts = () => {
         <Container>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Typography variant='h4' mb={1}>
+                    <Typography fontWeight={'600'} textAlign={'center'} variant='h4' mb={1}>
                         Active
                     </Typography>
                 </Grid>
@@ -52,39 +52,42 @@ const Workouts = () => {
                     );
                 })}
 
-            {completed && <>
-                <Grid item xs={12} sx={{mt: 4,mb: 2}}>
-                    <Divider />
-                </Grid>
+                {completed && <>
+                    <Grid item xs={12} sx={{
+                        mt: 4,
+                        mb: 2
+                    }}>
+                        <Divider />
+                    </Grid>
 
                     <Grid item xs={12}>
-                        <Typography variant='h4' mb={1}>
+                        <Typography fontWeight={'600'} textAlign={'center'} variant='h4' mb={1}>
                             Completed
                         </Typography>
                     </Grid>
 
-                {sortedMonths.map((month, i) => {
-                    const complete = month.complete / month.total;
+                    {sortedMonths.map((month, i) => {
+                        const complete = month.complete / month.total;
 
-                    if (complete !== 1) return null;
+                        if (complete !== 1) return null;
 
-                    return (
-                        <Grid item key={i} xs={12} md={4}>
-                            <Card>
-                                <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
-                                    <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
-                                    <CardContent>
-                                        <Typography variant='h5' mb={2}>
-                                            {month.complete} / {month.total}
-                                        </Typography>
-                                        <LinearProgress variant='determinate' value={complete * 100} />
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    );
-                })}
-            </>}
+                        return (
+                            <Grid item key={i} xs={12} md={4}>
+                                <Card>
+                                    <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
+                                        <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
+                                        <CardContent>
+                                            <Typography variant='h5' mb={2}>
+                                                {month.complete} / {month.total}
+                                            </Typography>
+                                            <LinearProgress variant='determinate' value={complete * 100} />
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>
+                        );
+                    })}
+                </>}
             </Grid>
         </Container>
     );

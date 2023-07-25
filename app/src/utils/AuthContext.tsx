@@ -53,11 +53,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [authorization, setAuth] = React.useState<string>('');
     const { accessToken: storedAuthToken, _id, roles } = auth.getAuth();
 
+    const authRoutes = ['/login', '/forgot', '/signup'];
+
     const handle401 = () => {
-        console.log('401');
-        // auth.forceLogout();
-        // setAuth('');
-        // window.location.assign('/login');
+        // console.log('401');
+        auth.forceLogout();
+        setAuth('');
+        window.location.assign('/login');
     };
 
     configureInterceptor(handle401);
@@ -70,9 +72,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
 
         if (!authorization && !storedAuthToken) {
-            console.log('no auth');
-            if (!window.location.pathname.includes('login')) {
-                console.log('redirecting to login');
+            if (!authRoutes.includes(window.location.pathname)) {
+                // console.log('redirecting to login');
                 window.location.replace('/login');
             }
         }

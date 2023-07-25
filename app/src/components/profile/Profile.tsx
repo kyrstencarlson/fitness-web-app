@@ -20,15 +20,21 @@ const Profile = () => {
 
     if (edit) {
         return (
-            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
+            <Paper elevation={3} sx={{
+                p: 3,
+                margin: 'auto',
+                minWidth: 380,
+                maxWidth: 1000,
+                flexGrow: 1
+            }}>
                 <Grid container justifyContent={'space-between'}>
                     <Grid item xs={11}>
-                        <Typography variant="h4" component="div" gutterBottom>
+                        <Typography variant='h4' component='div' gutterBottom>
                             Profile
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton aria-label="edit" onClick={() => setEdit(!edit)}>
+                        <IconButton aria-label='edit' onClick={() => setEdit(!edit)}>
                             <Save />
                         </IconButton>
                     </Grid>
@@ -38,21 +44,27 @@ const Profile = () => {
                     Edit
                 </Typography>
             </Paper>
-        )
+        );
     }
 
     return (
         <>
-            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
+            <Paper elevation={3} sx={{
+                p: 3,
+                margin: 'auto',
+                minWidth: 380,
+                maxWidth: 1000,
+                flexGrow: 1
+            }}>
 
                 <Grid container justifyContent={'space-between'}>
                     <Grid item xs={11}>
-                        <Typography variant="h4" component="div" gutterBottom>
+                        <Typography variant='h4' component='div' gutterBottom>
                             Profile
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton aria-label="edit" onClick={() => setEdit(!edit)}>
+                        <IconButton aria-label='edit' onClick={() => setEdit(!edit)}>
                             <EditSharp />
                         </IconButton>
                     </Grid>
@@ -117,22 +129,28 @@ const Profile = () => {
 
             <Box mt={4} />
 
-            <Paper elevation={3} sx={{ p: 3, margin: 'auto', minWidth: 380, maxWidth: 1000, flexGrow: 1 }}>
+            <Paper elevation={3} sx={{
+                p: 3,
+                margin: 'auto',
+                minWidth: 380,
+                maxWidth: 1000,
+                flexGrow: 1
+            }}>
 
                 <Grid container justifyContent={'space-between'}>
                     <Grid item xs={11}>
-                        <Typography variant="h4" component="div" gutterBottom>
+                        <Typography variant='h4' component='div' gutterBottom>
                             Change Password
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton aria-label="edit" onClick={() => setPassword(!password)}>
+                        <IconButton aria-label='edit' onClick={() => setPassword(!password)}>
                             <EditSharp />
                         </IconButton>
                     </Grid>
                 </Grid>
 
-               {password &&  <Grid container spacing={3} mt={2}>
+                {password && <Grid container spacing={3} mt={2}>
                     <Grid item xs={12} md={6}>
                         <Typography variant='h6' mb={0}>
                             Current Password

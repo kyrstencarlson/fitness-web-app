@@ -12,13 +12,13 @@ const WORKOUT_QUERY_KEY = "engine-workout";
 const fetchMonth = async (month: number) => {
   const { data } = await api.post(`/engine/workout/month/${month}`);
 
-  console.log({ data });
   const weeks = getWeeksFromMonth(data);
+
   return weeks;
 };
 
 const fetchMonths = async () => {
-  const { data } = await api.get(`/engine/workout`);
+  const { data } = await api.get("/engine/workout");
 
   const months = getMonths(data);
 
@@ -40,7 +40,7 @@ const getWorkout = async (id: string) => {
 };
 
 const findWorkout = async (params: Partial<IEngineWorkoutDay>) => {
-  const { data } = await api.post(`/engine/workout/find`, params);
+  const { data } = await api.post("/engine/workout/find", params);
 
   return data;
 };

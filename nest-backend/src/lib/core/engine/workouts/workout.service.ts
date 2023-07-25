@@ -48,7 +48,9 @@ export class EngineWorkoutService {
 
   public async listAll(): Promise<IEngineWorkoutDay[]> {
     try {
-      return await this._ModelEngineWorkout.find();
+      return await this._ModelEngineWorkout.find().sort({
+        day: 1,
+      });
     } catch (error) {
       throw new BadRequestException('Could not find workouts');
     }
@@ -59,7 +61,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('Month is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ month });
+    const workout = await this._ModelEngineWorkout.find({ month }).sort({
+      day: 1,
+    });
 
     if (!workout) {
       throw new BadRequestException(
@@ -75,8 +79,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('week is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ week });
-
+    const workout = await this._ModelEngineWorkout.find({ week }).sort({
+      day: 1,
+    });
     if (!workout) {
       throw new BadRequestException(
         'Could not find workouts for week: ' + week,
@@ -107,7 +112,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('phase is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phase });
+    const workout = await this._ModelEngineWorkout.find({ phase }).sort({
+      day: 1,
+    });
 
     if (!workout) {
       throw new BadRequestException(
@@ -123,7 +130,11 @@ export class EngineWorkoutService {
       throw new BadRequestException('Month is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phaseMonth: month });
+    const workout = await this._ModelEngineWorkout
+      .find({ phaseMonth: month })
+      .sort({
+        day: 1,
+      });
 
     if (!workout) {
       throw new BadRequestException(
@@ -139,7 +150,11 @@ export class EngineWorkoutService {
       throw new BadRequestException('week is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phaseWeek: week });
+    const workout = await this._ModelEngineWorkout
+      .find({ phaseWeek: week })
+      .sort({
+        day: 1,
+      });
 
     if (!workout) {
       throw new BadRequestException(

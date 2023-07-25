@@ -1,13 +1,12 @@
 import { DarkMode, LightMode } from '@mui/icons-material';
 import { CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import {
-    BrowserRouter,
     Route,
     RouterProvider,
     createBrowserRouter,
-    createRoutesFromElements,
-    useNavigate
+    createRoutesFromElements
 } from 'react-router-dom';
 import Admin from './components/Admin';
 import { ResponsiveDrawer } from './components/DefaultLayout';
@@ -24,8 +23,7 @@ import Month from './components/workouts/Month';
 import Workouts from './components/workouts/Workouts';
 import { darkTheme, lightTheme } from './theme';
 import { AuthProvider } from './utils/AuthContext';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -57,11 +55,24 @@ const App = () => {
             <>
                 <Route path='/' element={<HeaderLayout />}>
                     <Route path='/' element={<Home />} />
+                    {/* engine */}
                     <Route path='/engine/workouts' element={<Workouts />} />
                     <Route path='/engine/workouts/:monthId' element={<Month />} />
                     <Route path='/engine/results' element={<Results />} />
                     <Route path='/engine/library' element={<Library />} />
                     <Route path='/engine/leaderboard' element={<Leaderboard />} />
+                    {/* skills */}
+                    <Route path='/skills/workouts' element={<Workouts />} />
+                    <Route path='/skills/workouts/:monthId' element={<Month />} />
+                    <Route path='/skills/results' element={<Results />} />
+                    <Route path='/skills/library' element={<Library />} />
+                    <Route path='/skills/leaderboard' element={<Leaderboard />} />
+                    {/* strength */}
+                    <Route path='/strength/workouts' element={<Workouts />} />
+                    <Route path='/strength/workouts/:monthId' element={<Month />} />
+                    <Route path='/strength/results' element={<Results />} />
+                    <Route path='/strength/library' element={<Library />} />
+                    <Route path='/strength/leaderboard' element={<Leaderboard />} />
                     {/* user */}
                     <Route path='profile' element={<Profile />} />
                     {/* admin */}
@@ -80,15 +91,15 @@ const App = () => {
     return (
         <React.StrictMode>
             <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-                    <CssBaseline />
-                    <RouterProvider router={router} />
-                </ThemeProvider>
-            </AuthProvider>
+                <AuthProvider>
+                    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+                        <CssBaseline />
+                        <RouterProvider router={router} />
+                    </ThemeProvider>
+                </AuthProvider>
 
-            {/* {isDevelopment && <ReactQueryDevtools initialIsOpen={true} />} */}
-           </QueryClientProvider>
+                {/* {isDevelopment && <ReactQueryDevtools  initialIsOpen={true} />} */}
+            </QueryClientProvider>
         </React.StrictMode>
     );
 };

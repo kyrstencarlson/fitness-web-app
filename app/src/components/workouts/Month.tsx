@@ -30,11 +30,17 @@ const Month = () => {
                     const month = week[0].month;
 
                     return (
-                        <Grid key={`${month}-week${i+1}`} item xs={12}>
-                            <Typography variant='h6' sx={{ pl: 1, pb: 1}}>Week {i + 1}</Typography>
+                        <Grid key={`${month}-week${i + 1}`} item xs={12}>
+                            <Typography variant='h6' sx={{
+                                pl: 1,
+                                pb: 1
+                            }}>
+                                Week {i + 1}
+                            </Typography>
                             <Week week={week} />
                         </Grid>
-                    )})
+                    );
+                })
                 }
             </Grid>
         </Container>
