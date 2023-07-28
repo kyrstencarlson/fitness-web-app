@@ -16,6 +16,7 @@ export const userSchema = new Schema(
         },
       },
     },
+    currentMonth: { type: Number, required: true, default: 0 },
     password: { type: String, required: true },
     roles: [{ type: String, enum: EUserRoles }],
     profile: {

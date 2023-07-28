@@ -26,6 +26,13 @@ export class EngineWorkoutController implements IEngineWorkoutController {
     return this.userService.listAll();
   }
 
+  @Get('user/:user_id')
+  async getAllForUser(
+    @Param('user_id') user_id: string,
+  ): Promise<IEngineWorkoutDay[]> {
+    return this.userService.getAllForUser(user_id);
+  }
+
   @Post('month/:month')
   async getAllForMonth(
     @Param('month') month: string,

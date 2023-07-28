@@ -52,7 +52,10 @@ const DropdownSelect = React.forwardRef((props: DropdownSelectProps, ref) => {
                             value={input.value || initialValue || (multiple ? [] : '')}
                             multiple={multiple}
                             renderValue={renderValue}
-                            sx={selectStyle}
+                            sx={{
+                                ...selectStyle,
+                                textTransform: 'capitalize'
+                            }}
                             onChange={(event: SelectChangeEvent<any>) => {
                                 input.onChange(event.target.value);
                                 onChange && onChange(event);

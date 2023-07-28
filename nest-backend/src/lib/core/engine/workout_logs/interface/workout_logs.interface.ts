@@ -6,6 +6,7 @@ export class IEngineWorkoutLogBase {
   workout_month: number;
   workout_type: EWorkoutType;
   score: number;
+  pace: number;
   units: EWorkoutLogUnits;
   modality: EWorkoutLogModality;
   notes?: string;
@@ -45,6 +46,7 @@ export class IEngineWorkoutLogParamsCreate {
   user_id: string;
   workout: string;
   score: number;
+  pace: number;
   units: EWorkoutLogUnits;
   modality: EWorkoutLogModality;
   notes?: string;
@@ -53,6 +55,7 @@ export class IEngineWorkoutLogParamsCreate {
 export class IEngineWorkoutLogParamsUpdate {
   log_id: string;
   score?: number;
+  pace?: number;
   units?: EWorkoutLogUnits;
   modality?: string;
   notes?: string;

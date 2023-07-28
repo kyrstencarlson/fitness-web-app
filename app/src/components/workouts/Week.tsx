@@ -35,7 +35,7 @@ const Week = (props: WeekProps) => {
     return (
         <>
             {week.map((day, i) => {
-                const log = logs?.find(log => log.workout === day._id);
+                const log = logs?.find(log => log.workout._id === day._id);
 
                 return (
                     <Day

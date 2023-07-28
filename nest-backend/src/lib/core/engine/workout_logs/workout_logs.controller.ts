@@ -56,6 +56,11 @@ export class EngineWorkoutLogController
     return this._EngineWorkoutLogService.findOne(user_id, params);
   }
 
+  @Post('list')
+  async list(): Promise<IEngineWorkoutLog[]> {
+    return this._EngineWorkoutLogService.listAll();
+  }
+
   @Get(':id')
   async getById(@Param('id') _id: string): Promise<IEngineWorkoutLog> {
     return this._EngineWorkoutLogService.getById(_id);

@@ -16,6 +16,7 @@ export class IUser {
   email: string;
   password: string;
   token: string;
+  currentMonth: number;
   roles: EUserRoles[];
   profile: IUserProfile;
   createdAt: Date;

@@ -1,25 +1,29 @@
 import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetCompletedMonths, useGetMonthsFormatted } from '../../api';
+import { useFetchUserWorkoutLogs, useGetCompletedMonths, useGetMonthsFormatted } from '../../api';
 import { getAuth } from '../../utils/auth-provider';
+import { IEngineWorkoutDay, IEngineWorkoutMonth } from '../../../../types';
+
+interface SortedMonthsProps {
+    array: IEngineWorkoutMonth[];
+}
 
 const Workouts = () => {
 
     const { _id } = getAuth();
     const navigate = useNavigate();
-    const { data: months, isLoading } = useGetMonthsFormatted();
+    const { data: months, isLoading } = useGetMonthsFormatted(_id);
     const { data: completed } = useGetCompletedMonths(_id);
+    const { data: logs, isLoading: isLoadingLogs } = useFetchUserWorkoutLogs(_id);
 
-    if (!months || isLoading) {
+    if (!months || isLoading || isLoadingLogs || !logs || !completed) {
         return <CircularProgress />;
     }
+    const completedDays = logs?.map(log => log.workout._id);
 
-    const sortedMonths = months.map((month, i) => ({
-        complete: month.filter(day => completed?.includes(day.month)).length,
-        total: month.length
-    }));
-
+    const activeMonths = months.filter(month => !completed.includes(month[0].month));
+    const completedMonths = months.filter(month => completed.includes(month[0].month));
 
     return (
         <Container>
@@ -30,21 +34,22 @@ const Workouts = () => {
                     </Typography>
                 </Grid>
 
-                {sortedMonths.map((month, i) => {
-                    const complete = month.complete / month.total;
+                {activeMonths.map((days, i) => {
+                    if (!days.length) { return null; }
+                    const completed = days.filter(day => completedDays?.includes(day._id)).length;
+                    const number = days[0]?.month;
 
-                    if (complete === 1) return null;
 
                     return (
                         <Grid item key={i} xs={12} md={4}>
                             <Card>
-                                <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
-                                    <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
+                                <CardActionArea onClick={() => navigate(`/engine/workouts/${number}`)}>
+                                    <CardHeader subheader={<Typography variant='h6' mb={0}>Month {number}</Typography>}/>
                                     <CardContent>
                                         <Typography variant='h5' mb={2}>
-                                            {month.complete} / {month.total}
+                                            {completed} / {days.length}
                                         </Typography>
-                                        <LinearProgress variant='determinate' value={complete * 100} />
+                                        <LinearProgress variant='determinate' value={(completed / 20) * 100} />
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
@@ -52,7 +57,7 @@ const Workouts = () => {
                     );
                 })}
 
-                {completed && <>
+                {completedMonths && completedMonths.length > 1 && <>
                     <Grid item xs={12} sx={{
                         mt: 4,
                         mb: 2
@@ -66,21 +71,22 @@ const Workouts = () => {
                         </Typography>
                     </Grid>
 
-                    {sortedMonths.map((month, i) => {
-                        const complete = month.complete / month.total;
+                    {completedMonths.map((days, i) => {
+                        if (!days.length) { return null; }
+                        const completed = days.filter(day => completedDays?.includes(day._id)).length;
+                        const number = days[0]?.month;
 
-                        if (complete !== 1) return null;
 
                         return (
                             <Grid item key={i} xs={12} md={4}>
                                 <Card>
-                                    <CardActionArea onClick={() => navigate(`/engine/workouts/${i + 1}`)}>
-                                        <CardHeader subheader={<Typography variant='h6' mb={0}>Month {i + 1}</Typography>}/>
+                                    <CardActionArea onClick={() => navigate(`/engine/workouts/${number}`)}>
+                                        <CardHeader subheader={<Typography variant='h6' mb={0}>Month {number}</Typography>}/>
                                         <CardContent>
                                             <Typography variant='h5' mb={2}>
-                                                {month.complete} / {month.total}
+                                                {completed} / {days.length}
                                             </Typography>
-                                            <LinearProgress variant='determinate' value={complete * 100} />
+                                            <LinearProgress variant='determinate' value={(completed / 20) * 100} />
                                         </CardContent>
                                     </CardActionArea>
                                 </Card>

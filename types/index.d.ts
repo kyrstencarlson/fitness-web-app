@@ -102,6 +102,11 @@ export class IEngineWorkoutLog extends IEngineWorkoutLogBase {
   workout: IEngineWorkoutDay;
 }
 
+export class IEngineWorkoutLogFormatted extends IEngineWorkoutLogBase {
+  workout: IEngineWorkoutDay;
+  day: number;
+}
+
 export enum EWorkoutLogUnits {
   METERS = "meters",
   REPS = "reps",

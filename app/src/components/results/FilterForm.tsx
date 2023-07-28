@@ -7,34 +7,46 @@ import {
 import React from 'react';
 import { Form } from 'react-final-form';
 import DropdownSelect from '../../utils/DropdownSelect';
-import { MODALITY, WORKOUT_TYPE } from '../workouts/SubmitForm';
-import { useFetchUserWorkoutLogs } from '../../api';
-import { useAuth } from '../../utils/AuthContext';
+import { MODALITY, UNITS, WORKOUT_TYPE } from '../workouts/SubmitForm';
+import { max, min, range, uniq } from 'lodash';
+import { IEngineWorkoutLog } from '../../../../types';
 
 interface FilterFormProps {
     filtered: any;
     setFiltered: (filtered: any) => void;
+    logs: IEngineWorkoutLog[]
 }
 
 const FilterForm = (props: FilterFormProps) => {
-    const { filtered, setFiltered } = props;
+    const { filtered, setFiltered, logs } = props;
+
+    const months = uniq(logs.map((log: any) => log.workout_month));
+
+    const showMonthsOptions = max(months) !== min(months);
 
 
     const onSubmit = (values: any) => {
         const {
-            modality, workout_type, workout_month_from = 0, workout_month_to = 100
+            units, modality, workout_type,
+            workout_month_from = 0, workout_month_to = 100
         } = values;
         const filter = filtered.filter((log: any) => {
+            if (units && units !== log.units) {
+                return false;
+            }
             if (modality && modality !== log.modality) {
                 return false;
             }
-
             if (workout_type && !workout_type.includes(log.workout_type)) {
                 return false;
             }
 
-            //todo
-            if (![workout_month_from, workout_month_to].includes(log.workout_month)) {
+            const from = +workout_month_from * 20;
+            const to = +workout_month_to * 20;
+
+            const dayArray = range(from, to);
+
+            if (!dayArray.includes(log.workout_month)) {
                 return false;
             }
 
@@ -68,40 +80,44 @@ const FilterForm = (props: FilterFormProps) => {
                     </Grid>
 
                     <Grid container spacing={2}>
-                        {/* <DropdownSelect
-                            field='units'
-                            label='Units'
-                            arrayItems={UNITS}
-                        /> */}
-
-                        <DropdownSelect
-                            field='modality'
-                            label='Modality'
-                            arrayItems={MODALITY}
-                            onChange={() => handleSubmit()}
-                        />
-
                         <DropdownSelect
                             field='workout_type'
                             label='Day Type'
                             arrayItems={WORKOUT_TYPE}
                             multiple
                             onChange={() => handleSubmit()}
+                            md={12}
                         />
-
                         <DropdownSelect
-                            field='workout_month'
-                            label='Month From'
-                            arrayItems={Array.from(Array(12).keys()).map(i => i + 1)}
+                            field='modality'
+                            label='Modality'
+                            arrayItems={MODALITY}
                             onChange={() => handleSubmit()}
                         />
-
                         <DropdownSelect
-                            field='workout_month'
-                            label='Month To'
-                            arrayItems={Array.from(Array(12).keys()).map(i => i + 1)}
-                            onChange={() => handleSubmit()}
+                            field='units'
+                            label='Units'
+                            arrayItems={UNITS}
                         />
+
+
+                        {showMonthsOptions &&
+                        <>
+                            <DropdownSelect
+                                field='workout_month'
+                                label='Month From'
+                                arrayItems={months}
+                                onChange={() => handleSubmit()}
+                            />
+
+                            <DropdownSelect
+                                field='workout.day'
+                                label='Month To'
+                                arrayItems={months}
+                                onChange={() => handleSubmit()}
+                            />
+                        </>
+                        }
                     </Grid>
 
                 </div>

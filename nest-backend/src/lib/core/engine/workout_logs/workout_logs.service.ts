@@ -13,6 +13,7 @@ import {
   POPULATE_WORKOUT_LOGS,
   WORKOUT_LOGS_SCHEMA_NAME,
 } from './interface';
+import _, { uniq } from 'lodash';
 
 @Injectable()
 export class EngineWorkoutLogService {
@@ -81,11 +82,30 @@ export class EngineWorkoutLogService {
       throw new BadRequestException('user id is required');
     }
 
-    const logs = await this._ModelEngineWorkoutLog.find({ user: user_id });
+    const logs = await this._ModelEngineWorkoutLog
+      .find({ user: user_id })
+      .populate([
+        {
+          path: 'workout',
+        },
+        {
+          path: 'user',
+          select: 'profile.first_name profile.last_name',
+        },
+      ])
+      .sort({ 'workout.day': 1 });
 
     if (!logs) {
       throw new BadRequestException('Could not find workout logs for user');
     }
+
+    return logs;
+  }
+
+  public async listAll(): Promise<IEngineWorkoutLog[]> {
+    const logs = await this._ModelEngineWorkoutLog
+      .find()
+      .populate({ path: 'workout', options: { sort: { day: 1 } } });
 
     return logs;
   }
@@ -137,7 +157,7 @@ export class EngineWorkoutLogService {
     const workout = await this._ModelEngineWorkoutLog
       .find({
         user: user_id,
-        'workout.month': month,
+        workout_month: month,
       })
       .populate(POPULATE_WORKOUT_LOGS);
 
@@ -242,8 +262,18 @@ export class EngineWorkoutLogService {
 
   public async getCompletedMonths(user_id: string) {
     const logs = await this._ModelEngineWorkoutLog.find({ user: user_id });
+
     const months = logs.map((log) => log.workout_month);
-    const uniqueMonths = [...new Set(months)];
-    return uniqueMonths;
+    const unique = uniq(months);
+
+    const result = [];
+    for (const u of unique) {
+      const count = months.filter((m) => m === u).length;
+      result.push({ month: u, count });
+    }
+
+    const completed = result.filter((r) => r.count === 20).map((r) => r.month);
+
+    return completed;
   }
 }

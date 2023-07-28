@@ -4,6 +4,7 @@ import { DB_ENGINE } from 'src/lib/constant';
 import { WORKOUT_SCHEMA_NAME, engineWorkoutSchema } from './interface';
 import { EngineWorkoutController } from './workout.controller';
 import { EngineWorkoutService } from './workout.service';
+import { USER_SCHEMA_NAME, userSchema } from '../../user';
 
 @Module({
   imports: [
@@ -12,6 +13,10 @@ import { EngineWorkoutService } from './workout.service';
         {
           name: WORKOUT_SCHEMA_NAME,
           schema: engineWorkoutSchema,
+        },
+        {
+          name: USER_SCHEMA_NAME,
+          schema: userSchema,
         },
       ],
       DB_ENGINE,

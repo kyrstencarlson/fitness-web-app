@@ -2,7 +2,7 @@ export interface IEngineWorkoutDay {
   month: number;
   week: number;
   day: number;
-  type: EWorkoutType;
+  type: EWorkoutType | string;
   phase?: number;
   phaseWeek?: number;
   phaseMonth?: number;

@@ -14,71 +14,74 @@ export interface DayProps {
     timerOpen: boolean;
     setWorkouts: (value: IEngineWorkoutDay['workout']) => void;
     setInitialValues: (value: SubmitFormProps['initialValues']) => void;
-    setOpen: (value: boolean ) => void;
-    setTimerOpen: (value: boolean ) => void;
+    setOpen: (value: boolean) => void;
+    setTimerOpen: (value: boolean) => void;
     log?: IEngineWorkoutLogBase
+    totalWork?: number;
 }
 
 const Day = (props: DayProps) => {
 
-    const { user_id, day, log,setTimerOpen, setWorkouts, timerOpen,  setInitialValues, setOpen } = props;
+    const {
+        user_id, day, log, setTimerOpen, setWorkouts, timerOpen, setInitialValues, setOpen
+    } = props;
     const navigation = useNavigate();
 
     const windowSize = window.innerWidth;
     const mobile = windowSize < 650;
     const fontSize = mobile ? 'small' : 'medium';
 
-    const totalWork = day.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60
+    const totalWork = day.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60;
     const def = definitions.find(def => day.type.includes(def.type))?.description;
 
     return (
         <>
             <Accordion key={`${day.day}`} sx={{ alignContent: 'center' }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMore />}
-                            aria-controls='panel1a-content'
-                            id='panel1a-header'
-                        >
-                            <Typography
-                                sx={{
-                                    width: '15%',
-                                    flexShrink: 0,
-                                    alignSelf: 'center'
-                                }}
-                            >
+                <AccordionSummary
+                    expandIcon={<ExpandMore />}
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                >
+                    <Typography
+                        sx={{
+                            width: '15%',
+                            flexShrink: 0,
+                            alignSelf: 'center'
+                        }}
+                    >
                                 Day {day.day}
-                            </Typography>
+                    </Typography>
 
-                            <Typography color={'text.secondary'} textTransform={'capitalize'}
-                                sx={{
-                                    width: '70%',
-                                    alignSelf: 'center'
-                                }}>
-                                {day.type}
-                            </Typography>
+                    <Typography color={'text.secondary'} textTransform={'capitalize'}
+                        sx={{
+                            width: '70%',
+                            alignSelf: 'center'
+                        }}>
+                        {day.type}
+                    </Typography>
 
-                            <Typography color={'text.secondary'} sx={{
-                                width: '10%',
-                                alignSelf: 'center'
-                            }}>
-                                {log && `Score: ${log.score / totalWork }`}
-                            </Typography>
+                    <Typography color={'text.secondary'} sx={{
+                        width: '10%',
+                        alignSelf: 'center'
+                    }}>
+                        {log && `Pace: ${log.score / totalWork}`}
+                    </Typography>
 
-                            <ToolTipIcon
-                                text={def as string}
-                                icon={<InfoOutlined sx={{ height: '20px' }} />}
-                                placement='bottom-start'
-                            />
-                        </AccordionSummary>
+                    <ToolTipIcon
+                        text={def as string}
+                        icon={<InfoOutlined sx={{ height: '20px' }} />}
+                        placement='bottom-start'
+                    />
+                </AccordionSummary>
 
-                        <AccordionDetails>
-                            <Grid container>
-                                <Grid item xs={9.5}>
-                                    <Exercise workouts={day.workout} />
-                                </Grid>
+                <AccordionDetails>
+                    <Grid container>
+                        <Grid item xs={9.5}>
+                            <Exercise workouts={day.workout} />
+                        </Grid>
 
-                                <Grid item xs={2.5} textAlign={'right'}>
-                                    {/* <ToolTipIcon
+                        <Grid item xs={2.5} textAlign={'right'}>
+                            {/* <ToolTipIcon
                                         icon={<Timer fontSize={fontSize}/>}
                                         text={'Timer'}
                                         onClick={() => {
@@ -86,24 +89,25 @@ const Day = (props: DayProps) => {
                                             setWorkouts(day.workout);
                                         }}
                                     /> */}
-                                    <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
-                                    <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
-                                    <ToolTipIcon
-                                        icon={<Edit fontSize={fontSize} />}
-                                        text={'Submit / Edit'}
-                                        onClick={() => {
-                                            setOpen(true);
-                                             setInitialValues({
-                                                 user_id,
-                                                 workout: day,
-                                                 log
-                                            });
-                                        }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </AccordionDetails>
-                    </Accordion>
+                            <ToolTipIcon icon={<BarChart fontSize={fontSize}/>} text={'Leaderboard'} onClick={() => navigation('/leaderboard')} />
+                            <ToolTipIcon icon={<History fontSize={fontSize} />} text={'History'} onClick={() => navigation('/results')} />
+                            <ToolTipIcon
+                                icon={<Edit fontSize={fontSize} />}
+                                text={'Submit / Edit'}
+                                onClick={() => {
+                                    setOpen(true);
+                                    setInitialValues({
+                                        user_id,
+                                        workout: day,
+                                        log,
+                                        totalWork
+                                    });
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                </AccordionDetails>
+            </Accordion>
         </>
     );
 };

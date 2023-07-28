@@ -26,17 +26,17 @@ export enum EWorkoutLogUnits {
 }
 
 export enum EWorkoutLogModality {
-  ROW = 'row',
-  OTHER_BIKE = 'other bike',
-  ASSAULT_BIKE = 'assault bike',
-  ECHO_BIKE = 'echo bike',
-  BIKE_ERG = 'bike erg',
-  AIR_RUNNER = 'air runner',
-  TREADMILL = 'treadmill',
-  RUN = 'run',
-  SKI = 'ski',
-  SWIM = 'swim',
-  OTHER = 'other',
+    ASSAULT_BIKE = 'assault bike',
+    BIKE_ERG = 'bike erg',
+    ECHO_BIKE = 'echo bike',
+    ROW = 'row',
+    AIR_RUNNER = 'air runner',
+    TREADMILL = 'treadmill',
+    RUN = 'run',
+    SKI = 'ski',
+    SWIM = 'swim',
+    OTHER = 'other',
+    OTHER_BIKE = 'other bike',
 }
 
 export enum EWorkoutType {
@@ -66,7 +66,8 @@ export interface SubmitFormProps {
   initialValues: {
     user_id: string;
     workout: IEngineWorkoutDay;
-    log?: IEngineWorkoutLogBase | undefined
+    log?: IEngineWorkoutLogBase | undefined,
+    totalWork: number;
   };
   closeDialog: () => void;
 }
@@ -79,22 +80,22 @@ const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
     const {
         user_id,
         workout,
-        log
+        log,
+        totalWork
     } = initialValues;
 
-    const [pace, setPace] = React.useState<any>(null);
+    const [pace, setPace] = React.useState<any>(log ? log.score / totalWork : null);
 
     const { mutate: createWorkoutLog } = useCreateWorkoutLog();
     const { mutate: updateWorkoutLog } = useUpdateWorkoutLog();
     const { mutate: deleteWorkoutLog } = useDeleteWorkoutLog();
 
-    const totalWork = workout.workout.reduce((acc, curr) => acc + curr.totalWork, 0) / 60;
 
-    React.useEffect(() => {
-        if (log) {
-            setPace(log.score / totalWork);
-        }
-    }, [log, totalWork]);
+    // React.useEffect(() => {
+    //     if (log) {
+    //         setPace(log.score / totalWork);
+    //     }
+    // }, [log, totalWork]);
 
 
     const onSubmit = (values: any) => {
@@ -102,6 +103,7 @@ const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
         if (log) {
             updateWorkoutLog({
                 ...values,
+                pace,
                 log_id: log._id,
                 workout: workout._id,
                 workout_month: workout.month,
@@ -112,6 +114,7 @@ const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
         else {
             const createParams = {
                 ...values,
+                pace,
                 workout: workout._id,
                 workout_month: workout.month,
                 workout_type: workout.type,
@@ -173,7 +176,8 @@ const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
                                 margin='normal'
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     input.onChange(e.target.value);
-                                    setPace(e.target.value);
+                                    const score = e.target.value;
+                                    setPace(+score / totalWork);
                                 }}
                             />
                         )}
@@ -192,7 +196,7 @@ const SubmitForm = ({ initialValues, closeDialog }: SubmitFormProps) => {
                             marginBottom: '5px'
                         }}
                     >
-                        <Typography sx={{ pl: 2 }}>Pace: {pace / totalWork}</Typography>
+                        <Typography sx={{ pl: 2 }}>Pace: {pace}</Typography>
                     </Box>
 
                     <DropdownSelect

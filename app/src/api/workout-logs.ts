@@ -20,13 +20,13 @@ import { toast } from "../utils/alerts";
 const WORKOUT_LOGS_QUERY_KEY = "engine-workout-logs";
 
 const createWorkoutLog = async (params: IEngineWorkoutLogParamsCreate) => {
-  const { data } = await api.post(`/engine/logs`, params);
+  const { data } = await api.post("/engine/logs", params);
 
   return data;
 };
 
 const updateWorkoutLog = async (params: IEngineWorkoutLogParamsUpdate) => {
-  const { data } = await api.put(`/engine/logs`, params);
+  const { data } = await api.put("/engine/logs", params);
 
   return data;
 };
@@ -50,14 +50,14 @@ const fetchLogsType = async (user_id: string, type: string) => {
 };
 
 const fetchLogsModality = async (params: IEngineWorkoutLogParamsModality) => {
-  const { data } = await api.post(`/engine/logs/modality`, params);
+  const { data } = await api.post("/engine/logs/modality", params);
 
   return data;
 };
 const fetchLogsModalityUnits = async (
   params: IEngineWorkoutLogParamsModalityUnits
 ) => {
-  const { data } = await api.post(`/engine/logs/modality-units`, params);
+  const { data } = await api.post("/engine/logs/modality-units", params);
 
   return data;
 };
@@ -85,6 +85,12 @@ const findWorkoutLog = async (params: Partial<IEngineWorkoutLogBase>) => {
 
 const findUserWorkoutLogs = async (user_id: string) => {
   const { data } = await api.get(`/engine/logs/${user_id}/find`);
+
+  return data;
+};
+
+const getAllLogs = async () => {
+  const { data } = await api.post("/engine/logs/list");
 
   return data;
 };
@@ -166,12 +172,12 @@ export const useFetchWorkoutLog = (
 export const useFetchUserWorkoutLogs = (
   id: string,
   queryOptions?: UseQueryOptions<
-    IEngineWorkoutLogBase[],
+    IEngineWorkoutLog[],
     unknown,
-    IEngineWorkoutLogBase[]
+    IEngineWorkoutLog[]
   >
 ) =>
-  useQuery<IEngineWorkoutLogBase[], unknown>(
+  useQuery<IEngineWorkoutLog[], unknown>(
     [WORKOUT_LOGS_QUERY_KEY, id],
     () => findUserWorkoutLogs(id),
     queryOptions
@@ -252,5 +258,18 @@ export const useFindWorkoutLog = (
   useQuery<IEngineWorkoutLog, unknown>(
     [WORKOUT_LOGS_QUERY_KEY, "search"],
     () => findWorkoutLog(params),
+    queryOptions
+  );
+
+export const useGetAllWorkoutLogs = (
+  queryOptions?: UseQueryOptions<
+    IEngineWorkoutLog[],
+    unknown,
+    IEngineWorkoutLog[]
+  >
+) =>
+  useQuery<IEngineWorkoutLog[], unknown>(
+    [WORKOUT_LOGS_QUERY_KEY, "list"],
+    () => getAllLogs(),
     queryOptions
   );
