@@ -73,7 +73,7 @@ export const useFindUser = (
     queryOptions
   );
 
-export const useUpdateAppSetting = (
+export const useUpdateUser = (
   queryOptions?: UseMutationOptions<
     IUserParamsUpdate,
     unknown,
@@ -96,7 +96,7 @@ export const useUpdateAppSetting = (
   });
 };
 
-export const useDeleteAppSetting = () => {
+export const useDeleteUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation((id: string) => deleteUser(id), {

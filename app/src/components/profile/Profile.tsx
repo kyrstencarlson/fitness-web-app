@@ -1,8 +1,10 @@
-import { Typography, Grid, Paper, CircularProgress, IconButton, Box } from '@mui/material';
-import { EditSharp, Save } from '@mui/icons-material';
+import { EditSharp } from '@mui/icons-material';
+import { Box, CircularProgress, Dialog, DialogContent, Grid, IconButton, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { useFetchUser, useGetUserProfile } from '../../api';
+import { useFetchUser } from '../../api';
 import { useAuth } from '../../utils/AuthContext';
+import ProfileForm, { ProfileFormProps } from './ProfileForm';
+import PasswordForm from './PasswordForm';
 
 const Profile = () => {
 
@@ -18,34 +20,6 @@ const Profile = () => {
         return <CircularProgress />;
     }
 
-    if (edit) {
-        return (
-            <Paper elevation={3} sx={{
-                p: 3,
-                margin: 'auto',
-                minWidth: 380,
-                maxWidth: 1000,
-                flexGrow: 1
-            }}>
-                <Grid container justifyContent={'space-between'}>
-                    <Grid item xs={11}>
-                        <Typography variant='h4' component='div' gutterBottom>
-                            Profile
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <IconButton aria-label='edit' onClick={() => setEdit(!edit)}>
-                            <Save />
-                        </IconButton>
-                    </Grid>
-                </Grid>
-
-                <Typography>
-                    Edit
-                </Typography>
-            </Paper>
-        );
-    }
 
     return (
         <>
@@ -64,8 +38,8 @@ const Profile = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton aria-label='edit' onClick={() => setEdit(!edit)}>
-                            <EditSharp />
+                        <IconButton sx={{ textAlign: 'right' }} onClick={() => setEdit(!edit)}>
+                            <EditSharp sx={{ textAlign: 'right' }} />
                         </IconButton>
                     </Grid>
                 </Grid>
@@ -149,36 +123,25 @@ const Profile = () => {
                         </IconButton>
                     </Grid>
                 </Grid>
-
-                {password && <Grid container spacing={3} mt={2}>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant='h6' mb={0}>
-                            Current Password
-                        </Typography>
-                        <Typography variant='body1' mb={2}>
-                            {/* {profile.firstName} */}
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                        <Typography variant='h6' mb={0}>
-                            New Password
-                        </Typography>
-                        <Typography variant='body1' mb={2}>
-                            {/* {profile.lastName} */}
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                        <Typography variant='h6' mb={0}>
-                            Confirm New Password
-                        </Typography>
-                        <Typography variant='body1' mb={2}>
-                            {/* {profile.lastName} */}
-                        </Typography>
-                    </Grid>
-                </Grid>}
             </Paper>
+
+            <Dialog open={edit} onClose={() => setEdit(false)} fullWidth maxWidth='md'>
+                <DialogContent>
+                    <ProfileForm
+                        initialValues={{ user }}
+                        closeDialog={() => setEdit(false)}
+                    />
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={password} onClose={() => setPassword(false)} fullWidth maxWidth='md'>
+                <DialogContent>
+                    <PasswordForm
+                        initialValues={{ user }}
+                        closeDialog={() => setPassword(false)}
+                    />
+                </DialogContent>
+            </Dialog>
         </>
     );
 };

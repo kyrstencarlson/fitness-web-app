@@ -16,8 +16,9 @@ export class IAuthParamsForgotPassword {
 }
 
 export class IAuthParamsResetPassword {
-  token: string;
+  user_id: string;
   password: string;
+  newPassword: string;
   confirmPassword: string;
 }
 

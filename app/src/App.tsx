@@ -24,6 +24,8 @@ import Workouts from './components/workouts/Workouts';
 import { darkTheme, lightTheme } from './theme';
 import { AuthProvider } from './utils/AuthContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import SkillsHome from './skills/Home';
+import StrengthHome from './strength/Home';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -40,7 +42,7 @@ const queryClient = new QueryClient({
 
 const App = () => {
 
-    const [darkMode, setDarkMode] = React.useState(false);
+    const [darkMode, setDarkMode] = React.useState(true);
 
     const HeaderLayout = () => (
         <ResponsiveDrawer>
@@ -62,17 +64,17 @@ const App = () => {
                     <Route path='/engine/library' element={<Library />} />
                     <Route path='/engine/leaderboard' element={<Leaderboard />} />
                     {/* skills */}
-                    <Route path='/skills/workouts' element={<Workouts />} />
-                    <Route path='/skills/workouts/:monthId' element={<Month />} />
+                    <Route path='/skills/workouts' element={<SkillsHome />} />
+                    {/* <Route path='/skills/workouts/:monthId' element={<Month />} />
                     <Route path='/skills/results' element={<Results />} />
                     <Route path='/skills/library' element={<Library />} />
-                    <Route path='/skills/leaderboard' element={<Leaderboard />} />
+                    <Route path='/skills/leaderboard' element={<Leaderboard />} /> */}
                     {/* strength */}
-                    <Route path='/strength/workouts' element={<Workouts />} />
-                    <Route path='/strength/workouts/:monthId' element={<Month />} />
+                    <Route path='/strength/workouts' element={<StrengthHome />} />
+                    {/* <Route path='/strength/workouts/:monthId' element={<Month />} />
                     <Route path='/strength/results' element={<Results />} />
                     <Route path='/strength/library' element={<Library />} />
-                    <Route path='/strength/leaderboard' element={<Leaderboard />} />
+                    <Route path='/strength/leaderboard' element={<Leaderboard />} /> */}
                     {/* user */}
                     <Route path='profile' element={<Profile />} />
                     {/* admin */}

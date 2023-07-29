@@ -11,6 +11,7 @@ import {
   IAuthParamsResetPassword,
 } from './interface/auth.interface';
 import { JwtService } from '@nestjs/jwt';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 export class AuthService {
   // eslint-disable-next-line no-useless-constructor
@@ -61,6 +62,10 @@ export class AuthService {
     return;
   }
 
+  public async refreshToken() {
+    return;
+  }
+
   public async register(params: IAuthParamsRegister) {
     if (!params || !Object.keys(params).length) {
       throw new Error('Missing params');
@@ -107,7 +112,43 @@ export class AuthService {
   }
 
   public async resetPassword(body: IAuthParamsResetPassword) {
-    console.log('resetPassword');
+    const { user_id, password, newPassword, confirmPassword } = body;
+
+    if (newPassword !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    const user = await this.getUser(user_id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const match = this.comparePassword(password, user.password);
+
+    if (!match) {
+      throw new BadRequestException('Password is incorrect');
+    }
+
+    const hashed = this.hashPassword(newPassword);
+
+    try {
+      const accessToken = await this.jwtService.signAsync({
+        email: user.email,
+        sub: user._id,
+      });
+
+      const updatedUser = await this.userService.update({
+        _id: user_id,
+        password: hashed,
+        token: accessToken,
+      });
+
+      return updatedUser;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
   }
 
   public async getUser(userId: string) {

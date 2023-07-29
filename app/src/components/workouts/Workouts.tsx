@@ -18,7 +18,11 @@ const Workouts = () => {
     const { data: logs, isLoading: isLoadingLogs } = useFetchUserWorkoutLogs(_id);
 
     if (!months || isLoading || isLoadingLogs || !logs || !completed) {
-        return <CircularProgress />;
+        return (
+            <Container sx={{ margin: '0 auto' }}>
+                <CircularProgress />
+            </Container>
+        )
     }
     const completedDays = logs?.map(log => log.workout._id);
 

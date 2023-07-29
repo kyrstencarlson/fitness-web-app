@@ -40,8 +40,8 @@ const Home = () => {
         const { title, onClick, Icon } = props;
 
         return (
-            <Grid item xs={12} md={4}>
-                <Card >
+            <Grid item xs={12} md={3.5}>
+                <Card>
                     <CardActionArea onClick={onClick}>
                         <CardContent>
                             <Typography variant='h6' mb={2}>
@@ -57,7 +57,7 @@ const Home = () => {
 
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={4} margin={2}>
             {options.map((option, i) => {
                 if (!roles?.includes(option.title.toLowerCase())) {
                     if (!roles?.includes('admin')) {

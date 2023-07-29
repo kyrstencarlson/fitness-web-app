@@ -69,11 +69,15 @@ export const ResponsiveDrawer = (props: Props) => {
         setMobileOpen(!mobileOpen);
     };
 
-    // React.useEffect(() => {
-    //     if (/admin/.test(pathname) && _scope.includes('admin')) {
-    //         navigate('/admin');
-    //     }
-    // }, [pathname]);
+    React.useEffect(() => {
+        if (/admin/.test(pathname) && _scope.includes('admin')) {
+            navigate('/admin');
+        }
+
+        if (_scope.length === 1 && _scope[0] !== 'admin') {
+            navigate(`/${_scope[0]}/workouts`);
+        }
+    }, [pathname]);
 
     const theme = useTheme();
     const container =
@@ -152,6 +156,7 @@ export const ResponsiveDrawer = (props: Props) => {
         );
     };
 
+    const showHome = _scope.includes('admin') || _scope.length > 1;
 
     const drawer = (
         <div>
@@ -159,18 +164,19 @@ export const ResponsiveDrawer = (props: Props) => {
             <Divider />
 
             <List>
-                <ListItemButton onClick={() => navigate('/')}>
-                    <ListItemIcon sx={{ pl: 1 }}>
-                        <Home />
-                    </ListItemIcon>
-                    <ListItemText primary={'Home'} />
-                </ListItemButton>
+                {showHome &&
+                    <ListItemButton onClick={() => navigate('/')}>
+                        <ListItemIcon sx={{ pl: 1 }}>
+                            <Home />
+                        </ListItemIcon>
+                        <ListItemText primary={'Home'} />
+                    </ListItemButton>
+                }
 
                 <NestedList type='engine' icon={<Rocket />} drawerItems={engineDrawerItems} />
 
                 {/* todo skills app */}
                 <NestedList type='skills' icon={<SportsGymnastics />} drawerItems={skillsDrawerItems} isOpen={false} />
-
                 <NestedList type='strength' icon={<FitnessCenter />} drawerItems={strengthDrawerItems} isOpen={false} />
 
                 <Divider style={{ margin: '20px 0' }} />
