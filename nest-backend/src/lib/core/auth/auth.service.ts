@@ -75,11 +75,20 @@ export class AuthService {
       throw new Error('Email already exists');
     }
 
+    const profile = {};
+    if (params?.firstName) {
+      profile['first_name'] = params?.firstName;
+    }
+    if (params?.lastName) {
+      profile['last_name'] = params?.lastName;
+    }
+
     const hashed = this.hashPassword(password);
     try {
       const newUser = await this.userService.create({
         email,
         password: hashed,
+        profile,
       });
 
       const accessToken = await this.jwtService.signAsync({
@@ -87,7 +96,7 @@ export class AuthService {
         sub: newUser._id,
       });
 
-      return { accessToken };
+      return { accessToken, _id: newUser._id, roles: newUser.roles };
     } catch (error) {
       throw new Error(error);
     }

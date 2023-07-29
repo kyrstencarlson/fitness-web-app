@@ -35,6 +35,7 @@ export class IUserProfile {
 export class IUserParamsCreate {
   email: string;
   password: string;
+  profile?: Partial<IUserProfile>;
 }
 
 export class IUserParamsFindOne {

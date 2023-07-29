@@ -9,15 +9,67 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import AuthLayout from '../AuthLayout';
+import { useAuth } from '../../utils/AuthContext';
+import { toast } from '../../utils/alerts';
+import { useRegisterUser } from '../../api/auth';
+import { IAuthParamsRegister } from '../../../../types';
 
 const SignUpSide = () => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const { login } = useAuth();
+    const { mutate: register } = useRegisterUser();
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+
+        const payload = {
+            firstName: data.get('firstName'),
+            lastName: data.get('lastName'),
             email: data.get('email'),
-            password: data.get('password')
+            password: data.get('password'),
+            confirmPassword: data.get('confirm_password')
+        };
+
+        const verifyEmail = String(payload.email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+
+        if (!verifyEmail) {
+            toast({
+                title: 'Invalid email',
+                icon: 'error'
+            });
+            return
+        }
+
+        if (payload.password !== payload.confirmPassword) {
+            toast({
+                title: 'Passwords do not match',
+                icon: 'error'
+            });
+            return
+        }
+
+
+        const {confirmPassword, email, firstName, lastName, password} = payload;
+        const createParams: IAuthParamsRegister = {
+            password: password as string,
+            email: email as string,
+            confirmPassword: confirmPassword as string,
+            firstName: firstName as string,
+            lastName:   lastName as string
+
+        };
+        register(createParams);
+
+
+        await login({
+            email: `${payload.email}`,
+            password: `${payload.password}`
         });
+
     };
 
     return (
@@ -89,7 +141,7 @@ const SignUpSide = () => {
                                 <TextField
                                     required
                                     fullWidth
-                                    name='password'
+                                    name='confirm_password'
                                     label='Confirm Password'
                                     type='password'
                                     id='confirm-password'

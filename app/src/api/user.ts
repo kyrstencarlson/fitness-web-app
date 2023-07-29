@@ -5,19 +5,13 @@ import {
   useQuery,
   useQueryClient,
 } from "react-query";
-import { IUser } from "../../../types";
+import { IUser, IUserParamsCreate, IUserParamsUpdate } from "../../../types";
 import { toast } from "../utils/alerts";
 import { api } from "../utils/api";
 
 const USER_QUERY_KEY = "user";
 
-const createUser = async (params: Partial<IUser>) => {
-  const { data } = await api.post("/user", params);
-
-  return data;
-};
-
-const updateUser = async (params: Partial<IUser>) => {
+const updateUser = async (params: IUserParamsUpdate) => {
   const { data } = await api.put("/user", params);
 
   return data;
@@ -79,27 +73,12 @@ export const useFindUser = (
     queryOptions
   );
 
-export const useCreateUser = (
-  queryOptions?: UseMutationOptions<IUser, unknown, IUser>
-) => {
-  const queryClient = useQueryClient();
-
-  return useMutation(createUser, {
-    onSettled: () => {
-      queryClient.invalidateQueries(USER_QUERY_KEY);
-    },
-    onSuccess: () => {
-      toast({
-        icon: "success",
-        title: "User Created",
-      });
-    },
-    ...queryOptions,
-  });
-};
-
 export const useUpdateAppSetting = (
-  queryOptions?: UseMutationOptions<IUser, unknown, IUser>
+  queryOptions?: UseMutationOptions<
+    IUserParamsUpdate,
+    unknown,
+    IUserParamsUpdate
+  >
 ) => {
   const queryClient = useQueryClient();
 

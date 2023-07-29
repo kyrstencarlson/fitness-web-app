@@ -86,14 +86,14 @@ const SignInSide = () => {
                                 mb: 2
                             }}
                         >
-                Sign In
+                            Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
+                            {/* <Grid item xs>
                                 <Link href='/forgot' variant='body2'>
-                    Forgot password?
+                                    Forgot password?
                                 </Link>
-                            </Grid>
+                            </Grid> */}
                             <Grid item>
                                 <Link href='/signup' variant='body2'>
                                     {'Don\'t have an account? Sign Up'}

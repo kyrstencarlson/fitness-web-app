@@ -7,6 +7,8 @@ export class IAuthParamsRegister {
   email: string;
   password: string;
   confirmPassword: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export class IAuthParamsForgotPassword {

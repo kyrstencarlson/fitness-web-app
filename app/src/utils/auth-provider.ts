@@ -14,6 +14,11 @@ export const getAuth = (): AuthResponse =>
 
 //TODO DEFINE USER
 
+export const setAuth = (data: AuthResponse) => {
+  localStorage.setItem(localStorageKey, JSON.stringify(data));
+  addAuthorization(data.accessToken);
+};
+
 export const login = async (payload: { email: string; password: string }) =>
   api
     .post("/auth/login", payload)
