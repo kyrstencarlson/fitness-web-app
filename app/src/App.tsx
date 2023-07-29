@@ -8,7 +8,6 @@ import {
     createBrowserRouter,
     createRoutesFromElements
 } from 'react-router-dom';
-import Admin from './components/Admin';
 import { ResponsiveDrawer } from './components/DefaultLayout';
 import Home from './components/Home';
 import { ErrorPage } from './components/NotFoundPage';
@@ -26,6 +25,7 @@ import Results from './components/engine/results/Results';
 import Month from './components/engine/workouts/Month';
 import Workouts from './components/engine/workouts/Workouts';
 import StrengthHome from './components/strength/Home';
+import Admin from './components/admin/Admin';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

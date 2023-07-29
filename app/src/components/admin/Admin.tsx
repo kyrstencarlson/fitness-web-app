@@ -4,7 +4,7 @@ import React from 'react';
 
 const Admin = () => {
 
-    // const x = 1;
+    const x = 1;
 
 
     return (
