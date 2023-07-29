@@ -15,17 +15,17 @@ import { ErrorPage } from './components/NotFoundPage';
 import ForgotPassword from './components/auth/ForgotPassword';
 import Login from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import Leaderboard from './components/leaderboard/Leaderboard';
-import Library from './components/library/Library';
-import Profile from './components/profile/Profile';
-import Results from './components/results/Results';
-import Month from './components/workouts/Month';
-import Workouts from './components/workouts/Workouts';
+import Leaderboard from './components/engine/leaderboard/Leaderboard';
 import { darkTheme, lightTheme } from './theme';
 import { AuthProvider } from './utils/AuthContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import SkillsHome from './skills/Home';
-import StrengthHome from './strength/Home';
+import SkillsHome from './components/skills/Home';
+import Library from './components/engine/library/Library';
+import Profile from './components/engine/profile/Profile';
+import Results from './components/engine/results/Results';
+import Month from './components/engine/workouts/Month';
+import Workouts from './components/engine/workouts/Workouts';
+import StrengthHome from './components/strength/Home';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

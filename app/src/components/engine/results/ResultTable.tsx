@@ -2,18 +2,13 @@ import { Paper } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { startCase } from 'lodash';
 import * as React from 'react';
-import { IEngineWorkoutLogFormatted } from '../../../../types';
+import { IEngineWorkoutLogFormatted } from '../../../../../types';
 
 const columns: GridColDef[] = [
     {
-        field: 'name',
-        headerName: 'Name',
-        flex: 1
-    },
-    {
         field: 'day',
         headerName: 'Day',
-        flex: 1
+        width: 75
     },
     {
         headerAlign: 'left',
@@ -21,23 +16,36 @@ const columns: GridColDef[] = [
         field: 'score',
         headerName: 'Score',
         type: 'number',
-        flex: 1
+        width: 150
+    },
+    {
+        headerAlign: 'left',
+        align: 'left',
+        field: 'pace',
+        headerName: 'Pace',
+        type: 'number',
+        width: 150
     },
     {
         field: 'modality',
         headerName: 'Modality',
-        flex: 1,
+        width: 150,
         valueGetter: (params: GridValueGetterParams) => startCase(params.value as string)
     },
     {
         field: 'units',
         headerName: 'Units',
-        flex: 1,
+        width: 150,
         valueGetter: (params: GridValueGetterParams) => startCase(params.value as string)
+    },
+    {
+        field: 'notes',
+        headerName: 'Notes',
+        flex: 1
     }
 ];
 
-const LeaderboardTable = (props: { logs: IEngineWorkoutLogFormatted[] }) => {
+const ResultTable = (props: { logs: IEngineWorkoutLogFormatted[] }) => {
     const { logs } = props;
 
 
@@ -51,15 +59,15 @@ const LeaderboardTable = (props: { logs: IEngineWorkoutLogFormatted[] }) => {
                     pagination: {
                         paginationModel: {
                             page: 0,
-                            pageSize: 50
+                            pageSize: 20
                         }
                     }
                 }}
                 sx={{ p: 1 }}
-                pageSizeOptions={[25, 50, 75, 100]}
+                pageSizeOptions={[20, 40, 60]}
             />
         </Paper>
     );
 };
 
-export default LeaderboardTable;
+export default ResultTable;

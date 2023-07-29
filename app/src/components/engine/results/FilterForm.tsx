@@ -1,15 +1,14 @@
 import {
     Button,
-    CircularProgress,
     Grid,
     Typography
 } from '@mui/material';
+import { max, min, range, uniq } from 'lodash';
 import React from 'react';
 import { Form } from 'react-final-form';
-import DropdownSelect from '../../utils/DropdownSelect';
+import { IEngineWorkoutLog } from '../../../../../types';
+import DropdownSelect from '../../../utils/DropdownSelect';
 import { MODALITY, UNITS, WORKOUT_TYPE } from '../workouts/SubmitForm';
-import { max, min, range, uniq } from 'lodash';
-import { IEngineWorkoutLog } from '../../../../types';
 
 interface FilterFormProps {
     filtered: any;

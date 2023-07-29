@@ -1,13 +1,9 @@
 import { Card, CardActionArea, CardContent, CardHeader, CircularProgress, Container, Divider, Grid, LinearProgress, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchUserWorkoutLogs, useGetCompletedMonths, useGetMonthsFormatted } from '../../api';
-import { getAuth } from '../../utils/auth-provider';
-import { IEngineWorkoutDay, IEngineWorkoutMonth } from '../../../../types';
-
-interface SortedMonthsProps {
-    array: IEngineWorkoutMonth[];
-}
+import { IEngineWorkoutMonth } from '../../../../../types';
+import { useFetchUserWorkoutLogs, useGetCompletedMonths, useGetMonthsFormatted } from '../../../api';
+import { getAuth } from '../../../utils/auth-provider';
 
 const Workouts = () => {
 
@@ -22,7 +18,7 @@ const Workouts = () => {
             <Container sx={{ margin: '0 auto' }}>
                 <CircularProgress />
             </Container>
-        )
+        );
     }
     const completedDays = logs?.map(log => log.workout._id);
 

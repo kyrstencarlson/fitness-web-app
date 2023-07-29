@@ -1,6 +1,5 @@
-import { Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
-
 import React from 'react';
+import { Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { EWorkoutLogUnits } from '../workouts/SubmitForm';
 
 const ResultLineChart = (props: { logs: any[] }) => {

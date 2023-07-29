@@ -1,6 +1,5 @@
-import { Bar, BarChart, Legend, Line, Tooltip, XAxis, YAxis } from 'recharts';
-
 import React from 'react';
+import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { EWorkoutLogUnits } from '../workouts/SubmitForm';
 
 const ResultBarChart = (props: { logs: any[] }) => {

@@ -6,9 +6,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
-import { IUser } from '../../../../types';
-import { useUpdateUser } from '../../api';
-import DropdownSelect from '../../utils/DropdownSelect';
+import { IUser } from '../../../../../types';
+import { useUpdateUser } from '../../../api';
+import DropdownSelect from '../../../utils/DropdownSelect';
 
 export interface ProfileFormProps {
   initialValues: {

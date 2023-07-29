@@ -1,10 +1,9 @@
 import { Pause, PlayArrowSharp, Square, Timer } from '@mui/icons-material';
 import { Grid, IconButton, Typography } from '@mui/material';
 import React from 'react';
-import { Workout } from '../../types';
-import { convertTime } from '../../utils/convertTime';
+import { IEngineWorkoutDay } from '../../../../../types';
+import { convertTime } from '../../../utils/convertTime';
 import CurrentRound from './CurrentRound';
-import { IEngineWorkoutDay } from '../../../../types';
 
 export interface TimerProps {
     workouts: IEngineWorkoutDay['workout'][] | null;
@@ -39,6 +38,7 @@ const WorkoutTimer = ({ workouts, closeDialog }: TimerProps) => {
             const interval = setInterval(() => {
                 setTimer(timer => timer + 1);
             }, 1000);
+
             return () => clearInterval(interval);
         }
     }, [counting]);
@@ -47,13 +47,13 @@ const WorkoutTimer = ({ workouts, closeDialog }: TimerProps) => {
         <Grid container spacing={2} justifyContent={'center'}>
             <Grid item xs={12}>
                 <IconButton
-                    sx={{ float: 'right'}}
+                    sx={{ float: 'right' }}
                     onClick={() => setCountdownIndex(countdownIndex === 8 ? 0 : countdownIndex + 1)}
                 >
                     <Typography>{countdown}</Typography>
                     <Timer />
                 </IconButton>
-             </Grid>
+            </Grid>
 
             <CurrentRound workout={workout as IEngineWorkoutDay['workout']} />
 
@@ -64,21 +64,21 @@ const WorkoutTimer = ({ workouts, closeDialog }: TimerProps) => {
                 sx={{
                     backgroundColor: 'rgba(0,0,0,0.1)',
                     borderRadius: '4px',
-                    padding: '10px',
+                    padding: '10px'
                 }}>
                 <Typography top={'50%'} variant={'h1'}>{convertTime(timer)}</Typography>
             </Grid>
 
             <Grid item xs={12} textAlign={'center'}>
                 <IconButton onClick={() => setCounting(!counting)}>
-                    {!counting && <PlayArrowSharp fontSize={'inherit'} sx={{ fontSize: '75px'}} />}
-                    {counting && <Pause fontSize={'inherit'} sx={{ fontSize: '75px'}} />}
+                    {!counting && <PlayArrowSharp fontSize={'inherit'} sx={{ fontSize: '75px' }} />}
+                    {counting && <Pause fontSize={'inherit'} sx={{ fontSize: '75px' }} />}
                 </IconButton>
                 <IconButton onClick={() => {
-                    setCounting(false)
-                    setTimer(0)
-                    }}>
-                <Square fontSize={'inherit'} sx={{ fontSize: '60px'}} />
+                    setCounting(false);
+                    setTimer(0);
+                }}>
+                    <Square fontSize={'inherit'} sx={{ fontSize: '60px' }} />
                 </IconButton>
             </Grid>
         </Grid>

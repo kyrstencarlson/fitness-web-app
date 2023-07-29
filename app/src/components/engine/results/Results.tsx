@@ -1,7 +1,7 @@
 import { Box, CircularProgress, FormControlLabel, FormGroup, Grid, Paper, Switch, Typography } from '@mui/material';
 import React from 'react';
-import { useFetchUserWorkoutLogs } from '../../api';
-import { useAuth } from '../../utils/AuthContext';
+import { useFetchUserWorkoutLogs } from '../../../api';
+import { useAuth } from '../../../utils/AuthContext';
 import FilterForm from './FilterForm';
 import ResultBarChart from './ResultBarChart';
 import ResultLineChart from './ResultLineChart';

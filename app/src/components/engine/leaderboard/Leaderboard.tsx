@@ -1,6 +1,6 @@
 import { Typography, Grid, CircularProgress, Box, Paper } from '@mui/material';
 import React from 'react';
-import { useGetAllWorkoutLogs } from '../../api';
+import { useGetAllWorkoutLogs } from '../../../api';
 import LeaderboardTable from './LeaderboardTable';
 
 const Leaderboard = () => {

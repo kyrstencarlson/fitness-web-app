@@ -1,10 +1,10 @@
 import { EditSharp } from '@mui/icons-material';
 import { Box, CircularProgress, Dialog, DialogContent, Grid, IconButton, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { useFetchUser } from '../../api';
-import { useAuth } from '../../utils/AuthContext';
-import ProfileForm, { ProfileFormProps } from './ProfileForm';
+import { useFetchUser } from '../../../api';
+import { useAuth } from '../../../utils/AuthContext';
 import PasswordForm from './PasswordForm';
+import ProfileForm from './ProfileForm';
 
 const Profile = () => {
 

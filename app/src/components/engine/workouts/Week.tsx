@@ -1,13 +1,11 @@
 import { Dialog, DialogContent } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { IEngineWorkoutDay } from '../../../../types';
-import { useFetchUserWorkoutLogs } from '../../api';
-import { Workout } from '../../types';
-import { getAuth } from '../../utils/auth-provider';
 import WorkoutTimer from '../timer/WorkoutTimer';
 import Day from './Day';
 import SubmitForm, { SubmitFormProps } from './SubmitForm';
+import { IEngineWorkoutDay } from '../../../../../types';
+import { useFetchUserWorkoutLogs } from '../../../api';
+import { getAuth } from '../../../utils/auth-provider';
 
 interface WeekProps {
     week: IEngineWorkoutDay[];
