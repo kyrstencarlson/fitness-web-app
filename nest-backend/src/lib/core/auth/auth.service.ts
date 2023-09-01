@@ -1,3 +1,9 @@
+import {
+  BadRequestException,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
@@ -10,8 +16,6 @@ import {
   IAuthParamsRegister,
   IAuthParamsResetPassword,
 } from './interface/auth.interface';
-import { JwtService } from '@nestjs/jwt';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 export class AuthService {
   // eslint-disable-next-line no-useless-constructor
@@ -36,13 +40,13 @@ export class AuthService {
     const user = await this._ModelUser.findOne({ email });
 
     if (!user) {
-      throw new Error('No user found for this email');
+      throw new NotFoundException('No user found for this email');
     }
 
     const match = this.comparePassword(password, user.password);
 
     if (!match) {
-      throw new Error('Password is incorrect');
+      throw new NotAcceptableException('Password is incorrect');
     }
 
     const accessToken = await this.jwtService.signAsync({
@@ -72,12 +76,12 @@ export class AuthService {
     }
     const { email, password, confirmPassword } = params;
     if (password !== confirmPassword) {
-      throw new Error('Passwords do not match');
+      throw new NotAcceptableException('Passwords do not match');
     }
 
     const user = await this._ModelUser.findOne({ email });
     if (user) {
-      throw new Error('Email already exists');
+      throw new NotFoundException('Email already exists');
     }
 
     const profile = {};
@@ -103,7 +107,7 @@ export class AuthService {
 
       return { accessToken, _id: newUser._id, roles: newUser.roles };
     } catch (error) {
-      throw new Error(error);
+      throw new BadRequestException(error);
     }
   }
 
@@ -147,7 +151,7 @@ export class AuthService {
       return updatedUser;
     } catch (error) {
       console.log(error);
-      throw new Error(error);
+      throw new BadRequestException(error);
     }
   }
 

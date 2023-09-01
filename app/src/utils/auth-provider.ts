@@ -1,7 +1,7 @@
-import { toast } from "./alerts";
-import { api, addAuthorization, removeAuthorization } from "./api";
+import { toast } from './alerts';
+import { api, addAuthorization, removeAuthorization } from './api';
 
-export const localStorageKey = "__engine__";
+export const localStorageKey = '__engine__';
 
 export type AuthResponse = {
   accessToken: string;
@@ -9,48 +9,46 @@ export type AuthResponse = {
   roles: string[];
 };
 
-export const getAuth = (): AuthResponse =>
-  JSON.parse(localStorage.getItem(localStorageKey) || "{}");
+export const getAuth = (): AuthResponse => JSON.parse(localStorage.getItem(localStorageKey) || '{}');
 
 //TODO DEFINE USER
 
 export const setAuth = (data: AuthResponse) => {
-  localStorage.setItem(localStorageKey, JSON.stringify(data));
-  addAuthorization(data.accessToken);
+    localStorage.setItem(localStorageKey, JSON.stringify(data));
+    addAuthorization(data.accessToken);
 };
 
-export const login = async (payload: { email: string; password: string }) =>
-  api
-    .post("/auth/login", payload)
+export const login = async (payload: { email: string; password: string }) => api
+    .post('/auth/login', payload)
     .then(({ data }: { data: AuthResponse }) => {
-      // const { scope } = data;
+        // const { scope } = data;
 
-      // const hasAccess = scope.filter((_scope) => _scope !== "user").length;
+        // const hasAccess = scope.filter((_scope) => _scope !== "user").length;
 
-      // if (!hasAccess) {
-      //   throw new Error("Access Denied");
-      // }
+        // if (!hasAccess) {
+        //   throw new Error("Access Denied");
+        // }
 
-      localStorage.setItem(localStorageKey, JSON.stringify(data));
-      addAuthorization(data.accessToken);
-      toast({
-        icon: "success",
-        title: "Signed In",
-      });
+        localStorage.setItem(localStorageKey, JSON.stringify(data));
+        addAuthorization(data.accessToken);
+        toast({
+            icon: 'success',
+            title: 'Signed In'
+        });
 
-      return data;
+        return data;
     })
-    .catch((error) => {
-      toast({
-        title: error.response?.data?.message || error.message,
-        icon: "error",
-      });
+    .catch(error => {
+        console.log(error);
+        toast({
+            title: error.response?.data?.message || error.message,
+            icon: 'error'
+        });
     });
 
 export const forceLogout = () => {
-  localStorage.removeItem(localStorageKey);
-  removeAuthorization();
+    localStorage.removeItem(localStorageKey);
+    removeAuthorization();
 };
 
-export const logout = () =>
-  api.post("/auth/logout").then(forceLogout).catch(forceLogout);
+export const logout = () => api.post('/auth/logout').then(forceLogout).catch(forceLogout);
