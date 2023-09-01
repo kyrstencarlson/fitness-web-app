@@ -1,18 +1,13 @@
 import {
-    AccountCircle,
     AdminPanelSettings,
     ArrowBack,
     Book,
-    Edit,
-    ExpandLess,
-    ExpandMore,
     FitnessCenter,
     Home,
     InfoOutlined,
     Leaderboard,
     LibraryBooks,
-    Logout,
-    Menu,
+    Menu as MenuIcon,
     Rocket,
     SportsGymnastics
 } from '@mui/icons-material';
@@ -20,13 +15,11 @@ import {
     AppBar,
     Box,
     Button,
-    Collapse,
     CssBaseline,
     Divider,
     Drawer,
     IconButton,
     List,
-    ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
@@ -38,15 +31,11 @@ import * as React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 import { getScope } from '../utils/scope';
+import { NestedList } from './drawer/NestedList';
+import { AccountMenu } from './drawer/ProfileMenu';
 
 const drawerWidth = 240;
 
-interface NestedListProps {
-  isOpen?: boolean;
-  type: 'engine' | 'skills' | 'strength';
-  icon: React.ReactNode;
-  drawerItems: any[];
-}
 
 interface Props {
   _window?: () => Window;
@@ -59,7 +48,8 @@ export const ResponsiveDrawer = (props: Props) => {
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
-    const { logout, roles = [] } = useAuth();
+    const { _id, logout, roles = [] } = useAuth();
+
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const _scope = getScope(roles);
@@ -92,69 +82,6 @@ export const ResponsiveDrawer = (props: Props) => {
         : -1;
     const isHome = pathname === '/';
 
-    const NestedList = (props: NestedListProps) => {
-        const {
-            isOpen = true, icon, drawerItems, type
-        } = props;
-        const [open, setOpen] = React.useState(isOpen);
-
-
-        if (type === 'engine' && !_scope.includes('engine') && !_scope.includes('admin')) {
-            return null;
-        }
-
-        if (type === 'skills' && !_scope.includes('skills') && !_scope.includes('admin')) {
-            return null;
-        }
-
-        if (type === 'strength' && !_scope.includes('strength') && !_scope.includes('admin')) {
-            return null;
-        }
-
-        const handleClick = () => {
-            setOpen(!open);
-        };
-
-        return (
-            <List
-                key={drawerItems[0].text}
-                sx={{
-                    width: '100%',
-                    maxWidth: 360,
-                    bgcolor: 'background.paper'
-                }}
-                component='nav'
-            >
-                <ListItemButton onClick={handleClick}>
-                    <ListItemIcon sx={{ pl: 1 }}>
-                        {icon}
-                    </ListItemIcon>
-                    <ListItemText primary={type} sx={{ textTransform: 'capitalize' }} />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-
-                <Collapse in={open} timeout='auto' unmountOnExit>
-                    <List key={`list-${drawerItems[0].text}`} component='div' disablePadding>
-                        {drawerItems.map((item, index) => {
-                            const active = currentIndex === index;
-
-                            return (
-                                <ListItem key={item.path + index} selected={active} disablePadding>
-                                    <ListItemButton onClick={() => (item.path ? navigate(item.path) : window.open(item.open, '_blank'))}>
-                                        <ListItemIcon sx={{ pl: 3 }}>{item.icon}</ListItemIcon>
-                                        <ListItemText primary={item.text} sx={{
-                                            textTransform: 'capitalize',
-                                            pl: 2
-                                        }} />
-                                    </ListItemButton>
-                                </ListItem>
-                            );
-                        })}
-                    </List>
-                </Collapse>
-            </List>
-        );
-    };
 
     const showHome = _scope.includes('admin') || _scope.length > 1;
 
@@ -173,29 +100,34 @@ export const ResponsiveDrawer = (props: Props) => {
                     </ListItemButton>
                 }
 
-                <NestedList type='engine' icon={<Rocket />} drawerItems={engineDrawerItems} />
-
-                {/* todo skills app */}
-                <NestedList type='skills' icon={<SportsGymnastics />} drawerItems={skillsDrawerItems} isOpen={false} />
-                <NestedList type='strength' icon={<FitnessCenter />} drawerItems={strengthDrawerItems} isOpen={false} />
+                <NestedList
+                    type='engine'
+                    icon={<Rocket />}
+                    drawerItems={engineDrawerItems}
+                    currentIndex={currentIndex}
+                    scope={_scope}
+                />
+                <NestedList
+                    type='skills'
+                    icon={<SportsGymnastics />}
+                    drawerItems={skillsDrawerItems}
+                    isOpen={false}
+                    currentIndex={currentIndex}
+                    scope={_scope}
+                />
+                <NestedList
+                    type='strength'
+                    icon={<FitnessCenter />}
+                    drawerItems={strengthDrawerItems}
+                    isOpen={false}
+                    currentIndex={currentIndex}
+                    scope={_scope}
+                />
 
                 <Divider style={{ margin: '20px 0' }} />
 
-                <ListItemButton onClick={() => logout()}>
-                    <ListItemIcon sx={{ pl: 1 }}>
-                        <Logout />
-                    </ListItemIcon>
-                    <ListItemText primary={'Logout'} />
-                </ListItemButton>
-
-                <Divider style={{ margin: '20px 0' }} />
-
-                <ListItemButton onClick={() => navigate('/profile')}>
-                    <ListItemIcon sx={{ pl: 1 }}>
-                        <AccountCircle />
-                    </ListItemIcon>
-                    <ListItemText primary={'Profile'} />
-                </ListItemButton>
+                {/* toggle dark mode from App.tsx */}
+                {/* {children} */}
 
                 {isAdmin &&
                     <ListItemButton onClick={() => navigate('/admin')}>
@@ -231,7 +163,7 @@ export const ResponsiveDrawer = (props: Props) => {
                             display: { sm: 'none' }
                         }}
                     >
-                        <Menu />
+                        <MenuIcon />
                     </IconButton>
 
                     <Typography variant='h6' noWrap component='div'>
@@ -240,7 +172,7 @@ export const ResponsiveDrawer = (props: Props) => {
 
                     <Box sx={{ flexGrow: 1 }} />
 
-                    {children}
+                    <AccountMenu darkMode={children}/>
 
                 </Toolbar>
             </AppBar>

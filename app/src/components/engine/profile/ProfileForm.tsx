@@ -33,7 +33,9 @@ const ProfileForm = ({ initialValues, closeDialog }: ProfileFormProps) => {
 
     const onSubmit = (values: any) => {
         updateUser({
-            ...values,
+            profile: {
+                ...values
+            },
             _id: user._id
         });
         closeDialog();

@@ -1,5 +1,5 @@
 import { DarkMode, LightMode } from '@mui/icons-material';
-import { CssBaseline, IconButton, ThemeProvider } from '@mui/material';
+import { CssBaseline, IconButton, ListItemButton, ListItemIcon, ListItemText, MenuItem, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import {
@@ -46,9 +46,15 @@ const App = () => {
 
     const HeaderLayout = () => (
         <ResponsiveDrawer>
-            <IconButton onClick={() => setDarkMode(!darkMode)} color='inherit'>
-                {darkMode ? <LightMode /> : <DarkMode />}
-            </IconButton>
+            <MenuItem onClick={() => setDarkMode(!darkMode)}>
+                <ListItemIcon>
+                    {darkMode ? <LightMode /> : <DarkMode /> }
+                </ListItemIcon>
+                {`${darkMode ? 'Light' : 'Dark'} Mode`}
+            </MenuItem>
+            {/* <IconButton onClick={() => setDarkMode(!darkMode)} color='inherit'> */}
+            {/* {darkMode ? <LightMode /> : <DarkMode />}
+            </IconButton> */}
         </ResponsiveDrawer>
     );
 
