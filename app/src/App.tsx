@@ -1,5 +1,5 @@
 import { DarkMode, LightMode } from '@mui/icons-material';
-import { CssBaseline, IconButton, ListItemButton, ListItemIcon, ListItemText, MenuItem, ThemeProvider } from '@mui/material';
+import { CssBaseline, ListItemIcon, MenuItem, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import {
@@ -11,21 +11,21 @@ import {
 import { ResponsiveDrawer } from './components/DefaultLayout';
 import Home from './components/Home';
 import { ErrorPage } from './components/NotFoundPage';
+import Admin from './components/admin/Admin';
 import ForgotPassword from './components/auth/ForgotPassword';
 import Login from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import Leaderboard from './components/engine/leaderboard/Leaderboard';
-import { darkTheme, lightTheme } from './theme';
-import { AuthProvider } from './utils/AuthContext';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import SkillsHome from './components/skills/Home';
 import Library from './components/engine/library/Library';
 import Profile from './components/engine/profile/Profile';
 import Results from './components/engine/results/Results';
 import Month from './components/engine/workouts/Month';
 import Workouts from './components/engine/workouts/Workouts';
+import SkillsHome from './components/skills/Home';
 import StrengthHome from './components/strength/Home';
-import Admin from './components/admin/Admin';
+import { darkTheme, lightTheme } from './theme';
+import { AuthProvider } from './utils/AuthContext';
+import { localStorageKey } from './utils/auth-provider';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -42,11 +42,21 @@ const queryClient = new QueryClient({
 
 const App = () => {
 
-    const [darkMode, setDarkMode] = React.useState(true);
+    const storage = JSON.parse(localStorage.getItem(localStorageKey) || '{}');
+    const [darkMode, setDarkMode] = React.useState(storage.darkMode || false);
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        localStorage.setItem(localStorageKey, JSON.stringify({
+            ...storage,
+            darkMode: !darkMode
+        }));
+    };
+
 
     const HeaderLayout = () => (
         <ResponsiveDrawer>
-            <MenuItem onClick={() => setDarkMode(!darkMode)}>
+            <MenuItem onClick={toggleDarkMode}>
                 <ListItemIcon>
                     {darkMode ? <LightMode /> : <DarkMode /> }
                 </ListItemIcon>

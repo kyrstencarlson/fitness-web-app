@@ -41,7 +41,7 @@ export const AccountMenu = (props: { darkMode: React.ReactNode }) => {
                 alignItems: 'center',
                 textAlign: 'center'
             }}>
-                <Tooltip title='Account settings'>
+                <Tooltip title='Profile'>
                     <IconButton
                         onClick={handleClick}
                         size='small'
@@ -52,7 +52,8 @@ export const AccountMenu = (props: { darkMode: React.ReactNode }) => {
                     >
                         <Avatar sx={{
                             width: 32,
-                            height: 32
+                            height: 32,
+                            color: 'black'
                         }}>
                             {initial}
                         </Avatar>
@@ -66,7 +67,7 @@ export const AccountMenu = (props: { darkMode: React.ReactNode }) => {
                 onClose={handleClose}
                 onClick={handleClose}
                 PaperProps={{
-                    elevation: 0,
+                    elevation: 1,
                     sx: {
                         overflow: 'visible',
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',

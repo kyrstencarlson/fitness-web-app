@@ -39,7 +39,6 @@ export const login = async (payload: { email: string; password: string }) => api
         return data;
     })
     .catch(error => {
-        console.log(error);
         toast({
             title: error.response?.data?.message || error.message,
             icon: 'error'

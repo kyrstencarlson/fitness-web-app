@@ -1,7 +1,7 @@
 import Axios, { AxiosError } from 'axios';
 import { toast } from './alerts';
 
-const baseURL = 'http://localhost:4000';
+const baseURL = 'http://localhost:4000' || process.env.REACT_APP_API_URL;
 
 const storedToken = JSON.parse(
     localStorage.getItem('__engine__') || '{}'

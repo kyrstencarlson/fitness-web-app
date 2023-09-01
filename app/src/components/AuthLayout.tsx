@@ -15,32 +15,27 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lightTheme } from '../theme';
 
 
-const AuthLayout = ({ children }:{children: JSX.Element}) => {
-
-
-  return (
+const AuthLayout = ({ children }:{children: JSX.Element}) => (
     <ThemeProvider theme={lightTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://images.squarespace-cdn.com/content/v1/5650ba65e4b0e332af39118e/db2ea7ab-57c9-460a-9159-f8e0f0975655/Gains+Lab+Logo.png?format=1500w)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+        <Grid container component='main' sx={{ height: '100vh' }}>
+            <CssBaseline />
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={7}
+                sx={{
+                    backgroundImage: 'url(https://images.squarespace-cdn.com/content/v1/5650ba65e4b0e332af39118e/db2ea7ab-57c9-460a-9159-f8e0f0975655/Gains+Lab+Logo.png?format=1500w)',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: t => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                }}
+            />
 
-        {children}
+            {children}
 
-      </Grid>
+        </Grid>
     </ThemeProvider>
-  );
-}
+);
 export default AuthLayout;
