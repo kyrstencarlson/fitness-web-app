@@ -29,6 +29,12 @@ const getUser = async (id: string) => {
     return data;
 };
 
+const getUsers = async () => {
+    const { data } = await api.get('/user');
+
+    return data;
+};
+
 const findUser = async (params: Partial<IUser>) => {
     const { data } = await api.post('/user/find-one', params);
 
@@ -49,6 +55,14 @@ export const useFetchUser = (
 ) => useQuery<IUser, unknown>(
     [USER_QUERY_KEY, id],
     () => getUser(id),
+    queryOptions
+);
+
+export const useFetchAllUsers = (
+    queryOptions?: UseQueryOptions<IUser[], unknown, IUser[]>
+) => useQuery<IUser[], unknown>(
+    [USER_QUERY_KEY],
+    () => getUsers(),
     queryOptions
 );
 

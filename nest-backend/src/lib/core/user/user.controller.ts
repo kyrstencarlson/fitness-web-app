@@ -32,6 +32,11 @@ export class UserController implements IUserController {
     return this.userService.getById(id);
   }
 
+  @Get()
+  async listAll(): Promise<IUser[]> {
+    return this.userService.getAll();
+  }
+
   @Post()
   async create(@Body() params: IUserParamsCreate): Promise<IUser> {
     return this.userService.create(params);

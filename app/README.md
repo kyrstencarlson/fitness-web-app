@@ -7,14 +7,7 @@
 
 ### Notes
 
-1. move profile to top right with menu list for logout + profile
-2. add footer for contact info
-3. Chart
-   1. toggle bar and line
-   2. toggle by day type
-   3. toggle by units
-   4. toggle by modality
-4. Admin
+1. Admin
    1. add a nested list on drawer
    2. update user month
    3. total users & total active users
@@ -22,11 +15,12 @@
    5. total completed workouts ( + by month)
    6. NOT YET - place to manage subscriptions ? (stripe)
    7. edit workouts (will change for all users)
-5. Skills
+2. Skills
    1. add skills
-6. Strength
+3. Strength
    1. add strength
-7. Edit home page if you have an account and no active month
+4. Edit home page if you have an account and no active month
+5. send current user_id with every request without passing it from the front end
 
 ### Goals / To Do
 

@@ -43,6 +43,10 @@ export class UserService {
     return user;
   }
 
+  public async getAll(): Promise<IUser[]> {
+    return await this._ModelUser.find();
+  }
+
   public async findOne(params: Partial<IUser>): Promise<IUser> {
     if (!params || !Object.keys(params).length) {
       throw new BadRequestException('Missing params');

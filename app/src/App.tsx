@@ -26,6 +26,7 @@ import StrengthHome from './components/strength/Home';
 import { darkTheme, lightTheme } from './theme';
 import { AuthProvider } from './utils/AuthContext';
 import { localStorageKey } from './utils/auth-provider';
+import Users from './components/admin/users/Users';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -95,6 +96,7 @@ const App = () => {
                     <Route path='profile' element={<Profile />} />
                     {/* admin */}
                     <Route path='admin' element={<Admin />} />
+                    <Route path='admin/users' element={<Users />} />
                 </Route>
 
                 <Route path='*' element={<ErrorPage />} />

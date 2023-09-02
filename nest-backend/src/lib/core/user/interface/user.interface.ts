@@ -50,6 +50,7 @@ export class IUserParamsUpdate {
   password?: string;
   token?: string;
   roles?: IUser['roles'];
+  currentMonth?: IUser['currentMonth'];
   profile?: {
     first_name?: IUserProfile['first_name'];
     last_name?: IUserProfile['last_name'];

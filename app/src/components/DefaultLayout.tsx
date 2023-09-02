@@ -1,5 +1,6 @@
 import {
     AdminPanelSettings,
+    AdminPanelSettingsOutlined,
     ArrowBack,
     Book,
     FitnessCenter,
@@ -8,6 +9,7 @@ import {
     Leaderboard,
     LibraryBooks,
     Menu as MenuIcon,
+    PersonSearch,
     Rocket,
     SportsGymnastics
 } from '@mui/icons-material';
@@ -60,8 +62,8 @@ export const ResponsiveDrawer = (props: Props) => {
     };
 
     React.useEffect(() => {
-        if (/admin/.test(pathname) && _scope.includes('admin')) {
-            navigate('/admin');
+        if (/admin/.test(pathname) && !_scope.includes('admin')) {
+            navigate('/home');
         }
 
         if (_scope.length === 1 && _scope[0] !== 'admin') {
@@ -130,12 +132,13 @@ export const ResponsiveDrawer = (props: Props) => {
                 {/* {children} */}
 
                 {isAdmin &&
-                    <ListItemButton onClick={() => navigate('/admin')}>
-                        <ListItemIcon sx={{ pl: 1 }}>
-                            <AdminPanelSettings />
-                        </ListItemIcon>
-                        <ListItemText primary={'Admin'} />
-                    </ListItemButton>
+                    <NestedList
+                        type='admin'
+                        icon={<AdminPanelSettings />}
+                        drawerItems={adminDrawerItems}
+                        currentIndex={currentIndex}
+                        scope={_scope}
+                    />
                 }
             </List>
 
@@ -332,5 +335,18 @@ const strengthDrawerItems = [
         text: 'About',
         icon: <InfoOutlined />,
         open: 'https://www.thegainslab.com/yoeinfo'
+    }
+];
+
+const adminDrawerItems = [
+    // {
+    //     text: 'Dashboard',
+    //     icon: <AdminPanelSettings />,
+    //     path: '/admin'
+    // },
+    {
+        text: 'Users',
+        icon: <PersonSearch />,
+        path: '/admin/users'
     }
 ];

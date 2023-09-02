@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface NestedListProps {
   isOpen?: boolean;
-  type: 'engine' | 'skills' | 'strength';
+  type: 'engine' | 'skills' | 'strength' | 'admin';
   icon: React.ReactNode;
   drawerItems: any[];
   scope: string[];

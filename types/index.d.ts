@@ -46,6 +46,7 @@ export class IUser {
   token: string;
   roles: EUserRoles[];
   profile: IUserProfile;
+  currentMonth: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -76,6 +77,7 @@ export class IUserParamsUpdate {
   password?: string;
   token?: string;
   roles?: IUser["roles"];
+  currentMonth?: IUser["currentMonth"];
   profile?: {
     first_name?: IUserProfile["first_name"];
     last_name?: IUserProfile["last_name"];
