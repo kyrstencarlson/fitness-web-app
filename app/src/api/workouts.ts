@@ -12,13 +12,21 @@ const WORKOUT_QUERY_KEY = "engine-workout";
 const fetchMonth = async (month: number) => {
   const { data } = await api.post(`/engine/workout/month/${month}`);
 
-  console.log({ data });
   const weeks = getWeeksFromMonth(data);
+
   return weeks;
 };
 
+const fetchUserMonths = async (user_id: string) => {
+  const { data } = await api.get(`/engine/workout/user/${user_id}`);
+
+  const months = getMonths(data);
+
+  return months;
+};
+
 const fetchMonths = async () => {
-  const { data } = await api.get(`/engine/workout`);
+  const { data } = await api.get("/engine/workout");
 
   const months = getMonths(data);
 
@@ -40,7 +48,7 @@ const getWorkout = async (id: string) => {
 };
 
 const findWorkout = async (params: Partial<IEngineWorkoutDay>) => {
-  const { data } = await api.post(`/engine/workout/find`, params);
+  const { data } = await api.post("/engine/workout/find", params);
 
   return data;
 };
@@ -56,6 +64,7 @@ export const useFetchWorkout = (
   );
 
 export const useGetMonthsFormatted = (
+  user_id: string,
   queryOptions?: UseQueryOptions<
     IEngineWorkoutMonth[],
     unknown,
@@ -64,7 +73,7 @@ export const useGetMonthsFormatted = (
 ) =>
   useQuery<IEngineWorkoutMonth[], unknown>(
     [WORKOUT_QUERY_KEY],
-    () => fetchMonths(),
+    () => fetchUserMonths(user_id),
     queryOptions
   );
 
@@ -79,6 +88,20 @@ export const useFetchMonth = (
   useQuery<IEngineWorkoutDay[][], unknown>(
     [WORKOUT_QUERY_KEY, "month", month],
     () => fetchMonth(month),
+    queryOptions
+  );
+
+export const useFetchUserMonths = (
+  user_id: string,
+  queryOptions?: UseQueryOptions<
+    IEngineWorkoutDay[][],
+    unknown,
+    IEngineWorkoutDay[][]
+  >
+) =>
+  useQuery<IEngineWorkoutDay[][], unknown>(
+    [WORKOUT_QUERY_KEY, "user", user_id],
+    () => fetchUserMonths(user_id),
     queryOptions
   );
 

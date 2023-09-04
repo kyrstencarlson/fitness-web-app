@@ -1,18 +1,16 @@
 import { Typography, Grid } from '@mui/material';
 import React from 'react';
 
+const StrengthHome = () => {
 
-const Admin = () => {
-
-    // const x = 1;
-
+    const x = 1;
 
     return (
         <Grid>
-            <Typography>Admin</Typography>
+            <Typography>StrengthHome</Typography>
         </Grid>
     );
 };
 
 
-export default Admin;
+export default StrengthHome;

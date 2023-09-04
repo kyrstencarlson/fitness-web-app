@@ -7,6 +7,8 @@ export class IAuthParamsRegister {
   email: string;
   password: string;
   confirmPassword: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export class IAuthParamsForgotPassword {
@@ -14,8 +16,9 @@ export class IAuthParamsForgotPassword {
 }
 
 export class IAuthParamsResetPassword {
-  token: string;
+  user_id: string;
   password: string;
+  newPassword: string;
   confirmPassword: string;
 }
 

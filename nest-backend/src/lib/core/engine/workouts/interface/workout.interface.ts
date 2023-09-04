@@ -2,7 +2,7 @@ export interface IEngineWorkoutDay {
   month: number;
   week: number;
   day: number;
-  type: IDayType;
+  type: EWorkoutType | string;
   phase?: number;
   phaseWeek?: number;
   phaseMonth?: number;
@@ -42,33 +42,34 @@ export interface ICycle {
 }
 
 export interface IDefinition {
-  type: IDayType;
+  type: EWorkoutType;
   description: string;
   instruction?: string;
   stimuli?: string;
 }
 
-export type IDayType =
-  | 'endurance'
-  | 'threshold'
-  | 'max aerobic power'
-  | 'anaerobic'
-  | 'interval'
-  | 'time trial'
-  | 'polarized'
-  | 'rocket races'
-  | 'flux'
-  | 'hybrid block'
-  | 'flux stages'
-  | 'ascending'
-  | 'devour'
-  | 'infinity block'
-  | 'towers block'
-  | 'afterburners block'
-  | 'atomic block'
-  | 'synthesis block'
-  | 'ascending devour'
-  | 'descending devour';
+export enum EWorkoutType {
+  ENDURANCE = 'endurance',
+  THRESHOLD = 'threshold',
+  MAX_AEROBIC_POWER = 'max aerobic power',
+  ANAEROBIC = 'anaerobic',
+  INTERVAL = 'interval',
+  TIME_TRIAL = 'time trial',
+  POLARIZED = 'polarized',
+  ROCKET_RACES = 'rocket races',
+  FLUX = 'flux',
+  HYBRID_BLOCK = 'hybrid block',
+  FLUX_STAGES = 'flux stages',
+  ASCENDING = 'ascending',
+  DEVOUR = 'devour',
+  INFINITY_BLOCK = 'infinity block',
+  TOWERS_BLOCK = 'towers block',
+  AFTERBURNERS_BLOCK = 'afterburners block',
+  ATOMIC_BLOCK = 'atomic block',
+  SYNTHESIS_BLOCK = 'synthesis block',
+  ASCENDING_DEVOUR = 'ascending devour',
+  DESCENDING_DEVOUR = 'descending devour',
+}
 
 export type Month = IEngineWorkoutDay[];
 

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../auth/auth.guard';
 import { IEngineWorkoutController } from './interface/workout.controller.interface';
 import { EngineWorkoutService } from './workout.service';
-import { IDayType, IEngineWorkoutDay } from './interface';
+import { EWorkoutType, IEngineWorkoutDay } from './interface';
 
 @Controller('engine/workout')
 @UseGuards(AuthGuard)
@@ -26,6 +26,13 @@ export class EngineWorkoutController implements IEngineWorkoutController {
     return this.userService.listAll();
   }
 
+  @Get('user/:user_id')
+  async getAllForUser(
+    @Param('user_id') user_id: string,
+  ): Promise<IEngineWorkoutDay[]> {
+    return this.userService.getAllForUser(user_id);
+  }
+
   @Post('month/:month')
   async getAllForMonth(
     @Param('month') month: string,
@@ -42,7 +49,7 @@ export class EngineWorkoutController implements IEngineWorkoutController {
 
   @Post('type/:type')
   async getAllForType(
-    @Param('type') type: IDayType,
+    @Param('type') type: EWorkoutType,
   ): Promise<IEngineWorkoutDay[]> {
     return this.userService.getAllByType(type);
   }

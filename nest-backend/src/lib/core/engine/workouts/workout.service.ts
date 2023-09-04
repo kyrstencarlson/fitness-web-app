@@ -3,17 +3,25 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DB_ENGINE } from 'src/config';
 import {
-  IDayType,
+  EWorkoutType,
   IEngineWorkoutDay,
   ModelEngineWorkout,
   WORKOUT_SCHEMA_NAME,
 } from './interface';
+import {
+  USER_SCHEMA_NAME,
+  ModelUser,
+  UserService,
+  EUserRoles,
+} from '../../user';
 
 @Injectable()
 export class EngineWorkoutService {
   constructor(
     @InjectModel(WORKOUT_SCHEMA_NAME, DB_ENGINE)
     private readonly _ModelEngineWorkout: Model<ModelEngineWorkout>,
+    @InjectModel(USER_SCHEMA_NAME, DB_ENGINE)
+    private readonly _ModelUser: Model<ModelUser>,
   ) {}
 
   public async findOne(
@@ -48,10 +56,46 @@ export class EngineWorkoutService {
 
   public async listAll(): Promise<IEngineWorkoutDay[]> {
     try {
-      return await this._ModelEngineWorkout.find();
+      return await this._ModelEngineWorkout.find().sort({
+        day: 1,
+      });
     } catch (error) {
       throw new BadRequestException('Could not find workouts');
     }
+  }
+
+  public async getAllForUser(user_id: string): Promise<IEngineWorkoutDay[]> {
+    if (!user_id) {
+      throw new BadRequestException('user id is required');
+    }
+
+    const user = await this._ModelUser.findOne({ _id: user_id });
+
+    if (!user) {
+      throw new BadRequestException('Could not find user for id: ' + user_id);
+    }
+
+    const month = user.engine_current_month;
+
+    if (user.roles.includes(EUserRoles.ADMIN)) {
+      return await this.listAll();
+    }
+
+    const workouts = await this._ModelEngineWorkout
+      .find({
+        month: {
+          $lte: month,
+        },
+      })
+      .sort({
+        day: 1,
+      });
+
+    if (!workouts) {
+      throw new BadRequestException('Could not find workouts this user');
+    }
+
+    return workouts;
   }
 
   public async getAllForMonth(month: number): Promise<IEngineWorkoutDay[]> {
@@ -59,7 +103,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('Month is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ month });
+    const workout = await this._ModelEngineWorkout.find({ month }).sort({
+      day: 1,
+    });
 
     if (!workout) {
       throw new BadRequestException(
@@ -75,8 +121,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('week is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ week });
-
+    const workout = await this._ModelEngineWorkout.find({ week }).sort({
+      day: 1,
+    });
     if (!workout) {
       throw new BadRequestException(
         'Could not find workouts for week: ' + week,
@@ -86,7 +133,7 @@ export class EngineWorkoutService {
     return workout;
   }
 
-  public async getAllByType(type: IDayType): Promise<IEngineWorkoutDay[]> {
+  public async getAllByType(type: EWorkoutType): Promise<IEngineWorkoutDay[]> {
     if (!type) {
       throw new BadRequestException('type is required');
     }
@@ -107,7 +154,9 @@ export class EngineWorkoutService {
       throw new BadRequestException('phase is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phase });
+    const workout = await this._ModelEngineWorkout.find({ phase }).sort({
+      day: 1,
+    });
 
     if (!workout) {
       throw new BadRequestException(
@@ -123,7 +172,11 @@ export class EngineWorkoutService {
       throw new BadRequestException('Month is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phaseMonth: month });
+    const workout = await this._ModelEngineWorkout
+      .find({ phaseMonth: month })
+      .sort({
+        day: 1,
+      });
 
     if (!workout) {
       throw new BadRequestException(
@@ -139,7 +192,11 @@ export class EngineWorkoutService {
       throw new BadRequestException('week is required');
     }
 
-    const workout = await this._ModelEngineWorkout.find({ phaseWeek: week });
+    const workout = await this._ModelEngineWorkout
+      .find({ phaseWeek: week })
+      .sort({
+        day: 1,
+      });
 
     if (!workout) {
       throw new BadRequestException(

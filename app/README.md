@@ -5,6 +5,23 @@
 1. `npm install`
 2. `npm run start`
 
+### Notes
+
+1. Admin
+   1. add a nested list on drawer
+   2. update user month
+   3. total users & total active users
+   4. total users by month
+   5. total completed workouts ( + by month)
+   6. NOT YET - place to manage subscriptions ? (stripe)
+   7. edit workouts (will change for all users)
+2. Skills
+   1. add skills
+3. Strength
+   1. add strength
+4. Edit home page if you have an account and no active month
+5. send current user_id with every request without passing it from the front end
+
 ### Goals / To Do
 
 1. Finish shaping data from excel

@@ -1,7 +1,7 @@
 import { Grid, Container, Card } from '@mui/material';
 import React from 'react';
-import ContentCard from '../../utils/Card';
-import { definitions } from '../../data/definitions';
+import ContentCard from '../../../utils/Card';
+import { definitions } from '../../../data/definitions';
 
 const Library = () => (
     <Container>

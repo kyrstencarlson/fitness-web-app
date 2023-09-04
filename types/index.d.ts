@@ -7,6 +7,8 @@ export class IAuthParamsRegister {
   email: string;
   password: string;
   confirmPassword: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export class IAuthParamsForgotPassword {
@@ -14,8 +16,9 @@ export class IAuthParamsForgotPassword {
 }
 
 export class IAuthParamsResetPassword {
-  token: string;
+  user_id: string;
   password: string;
+  newPassword: string;
   confirmPassword: string;
 }
 
@@ -43,6 +46,10 @@ export class IUser {
   token: string;
   roles: EUserRoles[];
   profile: IUserProfile;
+    engine_current_month: number;
+  skills_current_month: number;
+  strength_current_month: number;
+
   createdAt: Date;
   updatedAt: Date;
 }
@@ -73,6 +80,10 @@ export class IUserParamsUpdate {
   password?: string;
   token?: string;
   roles?: IUser["roles"];
+    engine_current_month?: number;
+  skills_current_month?: number;
+  strength_current_month?: number;
+
   profile?: {
     first_name?: IUserProfile["first_name"];
     last_name?: IUserProfile["last_name"];
@@ -87,10 +98,10 @@ export class IEngineWorkoutLogBase {
   user_id: string;
   workout: string | IEngineWorkoutDay;
   workout_month: number;
-  workout_type: IDayType;
+  workout_type: EWorkoutType;
   score: number;
   units: EWorkoutLogUnits;
-  modality: string;
+  modality: EWorkoutLogModality;
   notes?: string;
 
   _id: string;
@@ -100,6 +111,11 @@ export class IEngineWorkoutLogBase {
 
 export class IEngineWorkoutLog extends IEngineWorkoutLogBase {
   workout: IEngineWorkoutDay;
+}
+
+export class IEngineWorkoutLogFormatted extends IEngineWorkoutLogBase {
+  workout: IEngineWorkoutDay;
+  day: number;
 }
 
 export enum EWorkoutLogUnits {
@@ -130,7 +146,7 @@ export class IEngineWorkoutLogParamsCreate {
   workout: string;
   score: number;
   units: EWorkoutLogUnits;
-  modality: string;
+  modality: EWorkoutLogModality;
   notes?: string;
 }
 
@@ -164,7 +180,7 @@ export interface IEngineWorkoutDay {
   month: number;
   week: number;
   day: number;
-  type: IDayType;
+  type: EWorkoutType;
   phase?: number;
   phaseWeek?: number;
   phaseMonth?: number;
@@ -206,33 +222,34 @@ export interface ICycle {
 }
 
 export interface IDefinition {
-  type: IDayType;
+  type: EWorkoutType;
   description: string;
   instruction?: string;
   stimuli?: string;
 }
 
-export type IDayType =
-  | "endurance"
-  | "threshold"
-  | "max aerobic power"
-  | "anaerobic"
-  | "interval"
-  | "time trial"
-  | "polarized"
-  | "rocket races"
-  | "flux"
-  | "hybrid block"
-  | "flux stages"
-  | "ascending"
-  | "devour"
-  | "infinity block"
-  | "towers block"
-  | "afterburners block"
-  | "atomic block"
-  | "synthesis block"
-  | "ascending devour"
-  | "descending devour";
+export enum EWorkoutType {
+  ENDURANCE = "endurance",
+  THRESHOLD = "threshold",
+  MAX_AEROBIC_POWER = "max aerobic power",
+  ANAEROBIC = "anaerobic",
+  INTERVAL = "interval",
+  TIME_TRIAL = "time trial",
+  POLARIZED = "polarized",
+  ROCKET_RACES = "rocket races",
+  FLUX = "flux",
+  HYBRID_BLOCK = "hybrid block",
+  FLUX_STAGES = "flux stages",
+  ASCENDING = "ascending",
+  DEVOUR = "devour",
+  INFINITY_BLOCK = "infinity block",
+  TOWERS_BLOCK = "towers block",
+  AFTERBURNERS_BLOCK = "afterburners block",
+  ATOMIC_BLOCK = "atomic block",
+  SYNTHESIS_BLOCK = "synthesis block",
+  ASCENDING_DEVOUR = "ascending devour",
+  DESCENDING_DEVOUR = "descending devour",
+}
 
 export type Month = IEngineWorkoutDay[];
 

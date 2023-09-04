@@ -22,6 +22,7 @@ export const engineWorkoutLogSchema = new Schema(
     workout_month: { type: Number, required: true },
     workout_type: { type: String, required: true },
     score: { type: Number, required: true },
+    pace: { type: Number, required: true },
     units: { type: String, enum: EWorkoutLogUnits, required: true },
     modality: { type: String, enum: EWorkoutLogModality, required: true },
     notes: { type: String },
@@ -33,6 +34,6 @@ export const engineWorkoutLogSchema = new Schema(
   },
 );
 
-engineWorkoutLogSchema.index({ day: 1 }, { unique: true });
+engineWorkoutLogSchema.index({ user_id: 1, workout: 1 }, { unique: true });
 
 export type ModelEngineWorkoutLog = IEngineWorkoutLog & Document;

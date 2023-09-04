@@ -1,13 +1,14 @@
-import { IDayType, IEngineWorkoutDay } from '../../workouts';
+import { EWorkoutType, IEngineWorkoutDay } from '../../workouts';
 
 export class IEngineWorkoutLogBase {
   user_id: string;
   workout: string | IEngineWorkoutDay;
   workout_month: number;
-  workout_type: IDayType;
+  workout_type: EWorkoutType;
   score: number;
+  pace: number;
   units: EWorkoutLogUnits;
-  modality: string;
+  modality: EWorkoutLogModality;
   notes?: string;
 
   createdAt: Date;
@@ -45,14 +46,16 @@ export class IEngineWorkoutLogParamsCreate {
   user_id: string;
   workout: string;
   score: number;
+  pace: number;
   units: EWorkoutLogUnits;
-  modality: string;
+  modality: EWorkoutLogModality;
   notes?: string;
 }
 
 export class IEngineWorkoutLogParamsUpdate {
   log_id: string;
   score?: number;
+  pace?: number;
   units?: EWorkoutLogUnits;
   modality?: string;
   notes?: string;

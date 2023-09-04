@@ -1,7 +1,7 @@
 import { Box, Divider, Typography } from '@mui/material';
 import React from 'react';
-import { Workout } from '../../types';
-import { convertTime } from '../../utils/convertTime';
+import { Workout } from '../../../types';
+import { convertTime } from '../../../utils/convertTime';
 import { Bursts } from './Bursts';
 import { Cycles } from './Cycles';
 import { Stages } from './Stages';
@@ -16,7 +16,7 @@ const Exercise = ({ workouts }: ExerciseProps) => (
         {workouts.map((workout, i) => {
 
             const {
-                rounds, work, rest, pace, setRest, comment, stages, bursts, cycles,
+                rounds, work, rest, pace, setRest, comment, stages, bursts, cycles
             } = workout;
             const length = workouts.length;
             const isLast = length - 1 === i;
@@ -24,7 +24,7 @@ const Exercise = ({ workouts }: ExerciseProps) => (
             return (
                 <React.Fragment key={`${rounds}-${work}-${rest}-${i}`}>
                     <Box>
-                        <Typography sx={{ fontWeight: '700'}}>{rounds} {rounds === 1 ? 'Round' : 'Rounds'} {cycles && 'as'}</Typography>
+                        <Typography sx={{ fontWeight: '700' }}>{rounds} {rounds === 1 ? 'Round' : 'Rounds'} {cycles && 'as'}</Typography>
                         {work && <Typography textTransform={'capitalize'}>Work: {convertTime(work)} {pace && `@ ${pace}`}</Typography>}
                         {rest && <Typography>Rest: {convertTime(rest)}</Typography>}
                         {stages && <Stages stages={stages} />}

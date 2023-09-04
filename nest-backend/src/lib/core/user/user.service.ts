@@ -43,6 +43,10 @@ export class UserService {
     return user;
   }
 
+  public async getAll(): Promise<IUser[]> {
+    return await this._ModelUser.find();
+  }
+
   public async findOne(params: Partial<IUser>): Promise<IUser> {
     if (!params || !Object.keys(params).length) {
       throw new BadRequestException('Missing params');
@@ -59,8 +63,13 @@ export class UserService {
 
   public async create(params: IUserParamsCreate): Promise<IUser> {
     const { email, password } = params;
+
+    if (!email || !password) {
+      throw new BadRequestException('Email and password is required');
+    }
+
     try {
-      return await this._ModelUser.create({ email, password });
+      return await this._ModelUser.create(params);
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Could not create user');

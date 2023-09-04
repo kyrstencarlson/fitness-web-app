@@ -1,16 +1,16 @@
 import { Typography, Grid } from '@mui/material';
 import React from 'react';
 
-const Leaderboard = () => {
+const SkillsHome = () => {
 
     const x = 1;
 
     return (
         <Grid>
-            <Typography>Leaderboard</Typography>
+            <Typography>SkillsHome</Typography>
         </Grid>
     );
 };
 
 
-export default Leaderboard;
+export default SkillsHome;

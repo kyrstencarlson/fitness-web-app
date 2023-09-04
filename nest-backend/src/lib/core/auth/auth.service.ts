@@ -1,3 +1,9 @@
+import {
+  BadRequestException,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
@@ -10,7 +16,6 @@ import {
   IAuthParamsRegister,
   IAuthParamsResetPassword,
 } from './interface/auth.interface';
-import { JwtService } from '@nestjs/jwt';
 
 export class AuthService {
   // eslint-disable-next-line no-useless-constructor
@@ -35,13 +40,13 @@ export class AuthService {
     const user = await this._ModelUser.findOne({ email });
 
     if (!user) {
-      throw new Error('No user found for this email');
+      throw new NotFoundException('No user found for this email');
     }
 
     const match = this.comparePassword(password, user.password);
 
     if (!match) {
-      throw new Error('Password is incorrect');
+      throw new NotAcceptableException('Password is incorrect');
     }
 
     const accessToken = await this.jwtService.signAsync({
@@ -61,18 +66,30 @@ export class AuthService {
     return;
   }
 
+  public async refreshToken() {
+    return;
+  }
+
   public async register(params: IAuthParamsRegister) {
     if (!params || !Object.keys(params).length) {
       throw new Error('Missing params');
     }
     const { email, password, confirmPassword } = params;
     if (password !== confirmPassword) {
-      throw new Error('Passwords do not match');
+      throw new NotAcceptableException('Passwords do not match');
     }
 
     const user = await this._ModelUser.findOne({ email });
     if (user) {
-      throw new Error('Email already exists');
+      throw new NotFoundException('Email already exists');
+    }
+
+    const profile = {};
+    if (params?.firstName) {
+      profile['first_name'] = params?.firstName;
+    }
+    if (params?.lastName) {
+      profile['last_name'] = params?.lastName;
     }
 
     const hashed = this.hashPassword(password);
@@ -80,6 +97,7 @@ export class AuthService {
       const newUser = await this.userService.create({
         email,
         password: hashed,
+        profile,
       });
 
       const accessToken = await this.jwtService.signAsync({
@@ -87,9 +105,9 @@ export class AuthService {
         sub: newUser._id,
       });
 
-      return { accessToken };
+      return { accessToken, _id: newUser._id, roles: newUser.roles };
     } catch (error) {
-      throw new Error(error);
+      throw new BadRequestException(error);
     }
   }
 
@@ -98,7 +116,43 @@ export class AuthService {
   }
 
   public async resetPassword(body: IAuthParamsResetPassword) {
-    console.log('resetPassword');
+    const { user_id, password, newPassword, confirmPassword } = body;
+
+    if (newPassword !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    const user = await this.getUser(user_id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const match = this.comparePassword(password, user.password);
+
+    if (!match) {
+      throw new BadRequestException('Password is incorrect');
+    }
+
+    const hashed = this.hashPassword(newPassword);
+
+    try {
+      const accessToken = await this.jwtService.signAsync({
+        email: user.email,
+        sub: user._id,
+      });
+
+      const updatedUser = await this.userService.update({
+        _id: user_id,
+        password: hashed,
+        token: accessToken,
+      });
+
+      return updatedUser;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
   }
 
   public async getUser(userId: string) {

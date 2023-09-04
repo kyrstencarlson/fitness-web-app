@@ -18,7 +18,7 @@ import {
   IEngineWorkoutLogsController,
 } from './interface';
 import { EngineWorkoutLogService } from './workout_logs.service';
-import { IDayType } from '../workouts';
+import { EWorkoutType } from '../workouts';
 
 @Controller('engine/logs')
 @UseGuards(AuthGuard)
@@ -56,6 +56,11 @@ export class EngineWorkoutLogController
     return this._EngineWorkoutLogService.findOne(user_id, params);
   }
 
+  @Post('list')
+  async list(): Promise<IEngineWorkoutLog[]> {
+    return this._EngineWorkoutLogService.listAll();
+  }
+
   @Get(':id')
   async getById(@Param('id') _id: string): Promise<IEngineWorkoutLog> {
     return this._EngineWorkoutLogService.getById(_id);
@@ -77,7 +82,7 @@ export class EngineWorkoutLogController
   @Post(':user_id/type/:type')
   async getAllForType(
     @Param('user_id') user_id: string,
-    @Param('type') type: IDayType,
+    @Param('type') type: EWorkoutType,
   ): Promise<IEngineWorkoutLog[]> {
     return this._EngineWorkoutLogService.getAllByType(user_id, type);
   }

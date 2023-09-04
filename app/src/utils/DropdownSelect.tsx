@@ -1,5 +1,5 @@
 import { Field } from 'react-final-form';
-import { FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, SxProps, Theme } from '@mui/material';
+import { FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, Theme } from '@mui/material';
 import React from 'react';
 
 interface DropdownSelectProps {
@@ -24,6 +24,7 @@ interface DropdownSelectProps {
     selectStyle?: SxProps<Theme>;
     initialValue?: any;
     renderValue?: (value: any) => React.ReactNode;
+    onChange?: (event: SelectChangeEvent<any>) => void;
 }
 
 const DropdownSelect = React.forwardRef((props: DropdownSelectProps, ref) => {
@@ -31,7 +32,7 @@ const DropdownSelect = React.forwardRef((props: DropdownSelectProps, ref) => {
         arrayItems, field, label, xs = 12, md, itemKey, itemValue, itemLabel,
         margin = 'dense', required = true, multiple = false, initialValue,
         sx, formStyle, selectStyle,
-        renderValue
+        renderValue, onChange
     } = props;
 
     return (
@@ -51,7 +52,14 @@ const DropdownSelect = React.forwardRef((props: DropdownSelectProps, ref) => {
                             value={input.value || initialValue || (multiple ? [] : '')}
                             multiple={multiple}
                             renderValue={renderValue}
-                            sx={selectStyle}
+                            sx={{
+                                ...selectStyle,
+                                textTransform: 'capitalize'
+                            }}
+                            onChange={(event: SelectChangeEvent<any>) => {
+                                input.onChange(event.target.value);
+                                onChange && onChange(event);
+                            }}
                         >
                             {arrayItems.map(item => (
                                 <MenuItem key={itemKey ? item?.[itemKey] : item} value={itemValue ? item?.[itemValue] : item} sx={{ textTransform: 'capitalize' }}>
