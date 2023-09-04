@@ -44,7 +44,7 @@ const Users = () => {
             <Grid container>
                 <Grid item xs={12}>
                     <Typography textAlign={'center'} variant='h4' component='div' gutterBottom>
-                        Leaderboard
+                        Users
                     </Typography>
                 </Grid>
             </Grid>

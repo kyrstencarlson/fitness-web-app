@@ -9,30 +9,44 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
-import { IUser } from '../../../../../types';
 import { useUpdateUser } from '../../../api';
 import DropdownSelect from '../../../utils/DropdownSelect';
 
+
 export interface ProfileFormProps {
-user: IUser | null;
-  closeDialog: () => void;
+    user: any;
+    closeDialog: () => void;
 }
 
 
 const AdminUserForm = ({ user, closeDialog }: ProfileFormProps) => {
-    const { mutate: updateUser } = useUpdateUser();
 
+    const { mutate: updateUser } = useUpdateUser();
 
     if (!user) {
         closeDialog();
     }
 
+    const [roles, setRoles] = React.useState(user.roles);
+
     const onSubmit = (values: any) => {
-        user && updateUser({
-            _id: user._id,
-            currentMonth: +values.currentMonth,
+
+        const update: any = {
+            _id: user!._id,
             roles: values.roles
-        });
+        };
+
+        if (values.roles.includes('engine')) {
+            update.engine_current_month = +values.engine_current_month;
+        }
+        if (values.roles.includes('skills')) {
+            update.skills_current_month = +values.skills_current_month;
+        }
+        if (values.roles.includes('strength')) {
+            update.strength_current_month = +values.strength_current_month;
+        }
+
+        user && updateUser(update);
         closeDialog();
     };
 
@@ -57,27 +71,60 @@ const AdminUserForm = ({ user, closeDialog }: ProfileFormProps) => {
                         </Grid>
                     </Grid>
 
-
-                    <Field name='currentMonth'>
-                        {({ input, meta }) => (
-                            <TextField
-                                {...input}
-                                error={meta.error && meta.touched}
-                                helperText={meta.error && meta.touched ? meta.error : null}
-                                label='Current Month'
-                                margin='normal'
-                                fullWidth
-                            />
-                        )}
-                    </Field>
-
                     <DropdownSelect
                         arrayItems={['admin', 'engine', 'skills', 'strength']}
                         field='roles'
                         label='Roles'
                         multiple
                         md={4}
+                        onChange={e => setRoles(e.target.value)}
                     />
+
+
+                    {roles.includes('engine') &&
+                        <Field name='engine_current_month'>
+                            {({ input, meta }) => (
+                                <TextField
+                                    {...input}
+                                    error={meta.error && meta.touched}
+                                    helperText={meta.error && meta.touched ? meta.error : null}
+                                    label='Engine Current Month'
+                                    margin='normal'
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                    }
+
+                    {roles.includes('skills') &&
+                        <Field name='skills_current_month'>
+                            {({ input, meta }) => (
+                                <TextField
+                                    {...input}
+                                    error={meta.error && meta.touched}
+                                    helperText={meta.error && meta.touched ? meta.error : null}
+                                    label='Skills Current Month'
+                                    margin='normal'
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                    }
+
+                    {roles.includes('strength') &&
+                        <Field name='strength_current_month'>
+                            {({ input, meta }) => (
+                                <TextField
+                                    {...input}
+                                    error={meta.error && meta.touched}
+                                    helperText={meta.error && meta.touched ? meta.error : null}
+                                    label='Strength Current Month'
+                                    margin='normal'
+                                    fullWidth
+                                />
+                            )}
+                        </Field>
+                    }
 
                     <Stack
                         direction='row'

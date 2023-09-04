@@ -3,6 +3,11 @@ import { EUserGender, EUserRoles, IUser } from './user.interface';
 
 export const userSchema = new Schema(
   {
+    // tokens: {
+    //   access_token: { type: String },
+    //   refresh_token: { type: String },
+    //   expires_in: { type: Number },
+    // },
     token: { type: String },
     email: {
       type: String,
@@ -16,7 +21,9 @@ export const userSchema = new Schema(
         },
       },
     },
-    currentMonth: { type: Number, required: true, default: 0 },
+    engine_current_month: { type: Number },
+    skills_current_month: { type: Number },
+    strength_current_month: { type: Number },
     password: { type: String, required: true },
     roles: [{ type: String, enum: EUserRoles }],
     profile: {

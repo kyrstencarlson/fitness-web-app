@@ -75,7 +75,7 @@ export class EngineWorkoutService {
       throw new BadRequestException('Could not find user for id: ' + user_id);
     }
 
-    const month = user.currentMonth;
+    const month = user.engine_current_month;
 
     if (user.roles.includes(EUserRoles.ADMIN)) {
       return await this.listAll();

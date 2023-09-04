@@ -17,15 +17,25 @@ const columns: GridColDef[] = [
         flex: 1
     },
     {
-        field: 'currentMonth',
-        headerName: 'Current Month Index',
-        flex: 1
-    },
-    {
         field: 'roles',
         headerName: 'Roles',
         flex: 1,
         valueGetter: (params: GridValueGetterParams) => params.value.join(', ')
+    },
+    {
+        field: 'engine_current_month',
+        headerName: 'Engine Month Index',
+        flex: 1
+    },
+    {
+        field: 'skills_current_month',
+        headerName: 'Skills Month Index',
+        flex: 1
+    },
+    {
+        field: 'strength_current_month',
+        headerName: 'Strength Month Index',
+        flex: 1
     }
 ];
 
@@ -44,7 +54,6 @@ const UsersTable = (props: { users: IUser[] }) => {
     return (
         <>
             <Paper>
-
                 <QuickFilterGrid
                     rows={users}
                     columns={columns}
@@ -58,7 +67,7 @@ const UsersTable = (props: { users: IUser[] }) => {
             <Dialog open={edit} onClose={() => setEdit(false)} fullWidth maxWidth='sm'>
                 <DialogContent>
                     <AdminUserForm
-                        user={user}
+                        user={user as IUser}
                         closeDialog={() => setEdit(false)}
                     />
                 </DialogContent>
